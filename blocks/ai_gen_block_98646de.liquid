@@ -1,0 +1,215 @@
+{% doc %}
+  @prompt
+    border
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-border-block-{{ ai_gen_id }} {
+    width: 100%;
+    height: {{ block.settings.border_height }}px;
+    background-color: {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    margin: {{ block.settings.margin_top }}px 0 {{ block.settings.margin_bottom }}px 0;
+    opacity: {{ block.settings.opacity | divided_by: 100.0 }};
+  }
+
+  .ai-border-block-{{ ai_gen_id }}--gradient {
+    background: linear-gradient(
+      {{ block.settings.gradient_direction }}deg,
+      {{ block.settings.gradient_start_color }},
+      {{ block.settings.gradient_end_color }}
+    );
+  }
+
+  .ai-border-block-{{ ai_gen_id }}--dashed {
+    background: none;
+    border-top: {{ block.settings.border_height }}px dashed {{ block.settings.border_color }};
+    height: 0;
+  }
+
+  .ai-border-block-{{ ai_gen_id }}--dotted {
+    background: none;
+    border-top: {{ block.settings.border_height }}px dotted {{ block.settings.border_color }};
+    height: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-border-block-{{ ai_gen_id }} {
+      height: {{ block.settings.mobile_border_height }}px;
+      margin: {{ block.settings.mobile_margin_top }}px 0 {{ block.settings.mobile_margin_bottom }}px 0;
+    }
+
+    .ai-border-block-{{ ai_gen_id }}--dashed,
+    .ai-border-block-{{ ai_gen_id }}--dotted {
+      border-top-width: {{ block.settings.mobile_border_height }}px;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-border-block-{{ ai_gen_id }} 
+    {% if block.settings.border_style == 'gradient' %}ai-border-block-{{ ai_gen_id }}--gradient{% endif %}
+    {% if block.settings.border_style == 'dashed' %}ai-border-block-{{ ai_gen_id }}--dashed{% endif %}
+    {% if block.settings.border_style == 'dotted' %}ai-border-block-{{ ai_gen_id }}--dotted{% endif %}"
+  {{ block.shopify_attributes }}
+>
+</div>
+
+{% schema %}
+{
+  "name": "Border",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Border style"
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "Style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "dashed",
+          "label": "Dashed"
+        },
+        {
+          "value": "dotted",
+          "label": "Dotted"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start_color",
+      "label": "Gradient start color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end_color",
+      "label": "Gradient end color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "gradient_direction",
+      "min": 0,
+      "max": 360,
+      "step": 10,
+      "unit": "deg",
+      "label": "Gradient direction",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "border_height",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Height",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "min": 10,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Opacity",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile settings"
+    },
+    {
+      "type": "range",
+      "id": "mobile_border_height",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile height",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "mobile_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile top margin",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "mobile_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile bottom margin",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "Border"
+    }
+  ]
+}
+{% endschema %}

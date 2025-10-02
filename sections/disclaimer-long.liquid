@@ -1,0 +1,56 @@
+{%- comment -%}
+  Dementia Aide — Disclaimer (Full/Long)
+  File: sections/disclaimer-long.liquid
+  Use on a dedicated Legal/Disclaimer page or sensitive pages.
+{%- endcomment -%}
+
+{%- style -%}
+  .section-{{ section.id }}-pad {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media (min-width: 750px) {
+    .section-{{ section.id }}-pad {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width {% if section.settings.narrow %}page-width--narrow{% endif %} section-{{ section.id }}-pad">
+    <div role="note"
+         aria-label="{{ section.settings.heading | default: 'Important Information & Legal Disclaimer' | escape }}"
+         style="margin-top:30px; padding:15px; font-size:14px; line-height:1.6; {% if section.settings.show_border %}border-top:1px solid #ccc;{% endif %}">
+      {% if section.settings.show_heading %}
+        <p><strong>{{ section.settings.heading | default: 'Important Information & Legal Disclaimer' }}</strong></p>
+      {% endif %}
+
+      <p>All content on this page—including text, articles, charts, comparison tables, downloads, graphics, images, videos, and interactive tools (collectively, “Content”)—is provided for general informational and educational purposes only. Dementia varies significantly from person to person, and establishing an exact diagnosis is complex. Any comparisons or summaries presented here are simplified and may not reflect individual circumstances. The Content is <strong>not</strong> medical, diagnostic, or treatment advice, and it is <strong>not</strong> a substitute for consultation with a qualified healthcare professional. Never disregard professional medical advice or delay seeking it because of something you read here. If this is an emergency, call your local emergency number immediately.</p>
+
+      <p>While we strive to keep information accurate and current, Dementia Aide LLC makes no representations or warranties, express or implied, about the accuracy, completeness, or timeliness of the Content and assumes no obligation to update it. <strong>Your use of the Content is at your own risk.</strong> To the fullest extent permitted by law, Dementia Aide LLC and its owners, employees, contributors, and partners disclaim all liability for any loss, injury, or damages arising from your use of, or reliance on, the Content.</p>
+
+      <p><strong>Copyright Notice:</strong> &copy; {{ 'now' | date: '%Y' }} Dementia Aide LLC. All rights reserved. All Content on this page is protected by U.S. and international copyright laws and may not be reproduced, distributed, transmitted, displayed, published, or broadcast without our prior written permission. You may not alter or remove any copyright or other notice from copies of this Content.</p>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Disclaimer — Long",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "checkbox", "id": "show_heading", "label": "Show heading", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Important Information & Legal Disclaimer" },
+    { "type": "checkbox", "id": "narrow", "label": "Use narrow width", "default": true },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "checkbox", "id": "show_border", "label": "Show top border", "default": true },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 24 }
+  ],
+  "presets": [
+    { "name": "Disclaimer — Long" }
+  ]
+}
+{% endschema %}
