@@ -2649,6 +2649,9 @@ html {
   body, body * {
     transform: translateZ(0);
     backface-visibility: hidden;
+    /* Force Chrome to use GPU layers for better color rendering */
+    will-change: transform;
+    contain: layout style paint;
   }
 }
 .selection\:bg-primary *::-moz-selection {
