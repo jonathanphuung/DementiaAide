@@ -27,6 +27,7 @@ export default function RootLayout({
                 
                 if (isChrome) {
                   console.log('Chrome detected - injecting emergency color styles');
+                  console.log('Document ready state:', document.readyState);
                   
                   // Multiple fallback strategies for Chrome
                   var emergencyStyle = document.createElement('style');

@@ -10,10 +10,18 @@ export default function ColorFix() {
     const chromeDetected = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     setIsChrome(chromeDetected);
 
-    if (chromeDetected) {
-      console.log('Chrome detected - applying aggressive color fixes');
-      
-      // Create and inject Chrome-specific stylesheet
+      if (chromeDetected) {
+        console.log('Chrome detected - applying aggressive color fixes');
+        console.log('Current text colors before fix:');
+        
+        // Log current state of some key elements
+        const sampleElements = document.querySelectorAll('h1, h2, p');
+        sampleElements.forEach((el, i) => {
+          if (i < 3) { // Only log first 3 to avoid spam
+            const computedStyle = window.getComputedStyle(el);
+            console.log(`Element ${i}:`, el.tagName, 'color:', computedStyle.color, 'text:', el.textContent?.substring(0, 30));
+          }
+        });      // Create and inject Chrome-specific stylesheet
       const chromeStyleId = 'chrome-color-fix';
       let chromeStyle = document.getElementById(chromeStyleId) as HTMLStyleElement;
       
@@ -90,10 +98,36 @@ export default function ColorFix() {
 
       // Apply fixes immediately and on intervals
       forceColorUpdate();
-      setTimeout(forceColorUpdate, 50);
-      setTimeout(forceColorUpdate, 200);
-      setTimeout(forceColorUpdate, 500);
-      setTimeout(forceColorUpdate, 1000);
+      console.log('Applied immediate color fix');
+      
+      setTimeout(() => {
+        forceColorUpdate();
+        console.log('Applied 50ms color fix');
+      }, 50);
+      
+      setTimeout(() => {
+        forceColorUpdate();
+        console.log('Applied 200ms color fix');
+      }, 200);
+      
+      setTimeout(() => {
+        forceColorUpdate();
+        console.log('Applied 500ms color fix');
+      }, 500);
+      
+      setTimeout(() => {
+        forceColorUpdate();
+        console.log('Applied 1000ms color fix - checking final state:');
+        
+        // Final state check
+        const finalCheck = document.querySelectorAll('h1, h2, p');
+        finalCheck.forEach((el, i) => {
+          if (i < 3) {
+            const computedStyle = window.getComputedStyle(el);
+            console.log(`Final Element ${i}:`, el.tagName, 'color:', computedStyle.color);
+          }
+        });
+      }, 1000);
 
       // Monitor for DOM changes and reapply
       const observer = new MutationObserver(() => {
