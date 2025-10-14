@@ -121,7 +121,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="relative"
+            className="relative pb-8 pl-8"
           >
             <div className="grid grid-cols-2 gap-4">
               <motion.div
@@ -177,12 +177,12 @@ export function Hero() {
               </motion.div>
             </div>
 
-            {/* Floating badge */}
+            {/* Floating badge - positioned at bottom-left of image grid */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: 'spring' }}
-              className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-2xl p-4 backdrop-blur-sm"
+              className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-2xl p-4 backdrop-blur-sm z-10"
             >
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
