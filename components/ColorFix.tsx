@@ -31,7 +31,7 @@ export default function ColorFix() {
         document.head.appendChild(chromeStyle);
       }
 
-      chromeStyle.textContent = `
+        chromeStyle.textContent = `
         /* Chrome-specific color enforcement */
         * {
           color: rgb(15, 23, 42) !important;
@@ -68,9 +68,7 @@ export default function ColorFix() {
           -webkit-transform: translateZ(0);
           transform: translateZ(0);
         }
-      `;
-
-      // Force immediate style application
+      `;      // Force immediate style application
       const forceColorUpdate = () => {
         // Set inline styles on all elements
         const allElements = document.querySelectorAll('*');
