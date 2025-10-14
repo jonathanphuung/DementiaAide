@@ -121,7 +121,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="relative pb-8 pl-8"
+            className="relative overflow-visible"
           >
             <div className="grid grid-cols-2 gap-4">
               <motion.div
@@ -134,7 +134,7 @@ export function Hero() {
                   alt="Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
               </motion.div>
 
               <motion.div
@@ -147,7 +147,7 @@ export function Hero() {
                   alt="Support"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
               </motion.div>
 
               <motion.div
@@ -160,7 +160,7 @@ export function Hero() {
                   alt="Professional Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
               </motion.div>
 
               <motion.div
@@ -173,7 +173,7 @@ export function Hero() {
                   alt="Happy Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
               </motion.div>
             </div>
 
@@ -182,7 +182,7 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, type: 'spring' }}
-              className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-2xl p-4 backdrop-blur-sm z-10"
+              className="absolute bottom-4 -left-2 bg-white rounded-2xl shadow-lg p-4 backdrop-blur-sm z-10"
             >
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
