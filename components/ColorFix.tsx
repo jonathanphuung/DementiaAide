@@ -42,7 +42,7 @@ export default function ColorFix() {
           color: rgb(15, 23, 42) !important;
         }
         
-        h1, h2, h3, h4, h5, h6, p, span, div, a, button, label, li, td, th {
+        h1, h2, h3, h4, h5, h6, p, span, div, a, button, label {
           color: rgb(15, 23, 42) !important;
         }
         
