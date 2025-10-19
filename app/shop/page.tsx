@@ -1,13 +1,15 @@
+import { ProductShowcase } from '@/components/ProductShowcase';
+import { ProductCatalog } from '@/components/ProductCatalog';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
-import { SearchHero } from '@/components/SearchHero';
 
-export default function HomePage() {
+export default function ShopPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <main>
-        <SearchHero />
+        <ProductShowcase />
+        <ProductCatalog />
       </main>
       <Footer />
     </div>
