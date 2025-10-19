@@ -51,9 +51,9 @@ export function SearchResults() {
 
   return (
     <div className="min-h-screen">
-      {/* Fixed Search Header */}
-      <div className="sticky top-0 bg-background/80 backdrop-blur-lg z-10 py-6 border-b">
-        <div className="max-w-2xl mx-auto">
+      {/* Search Header */}
+      <div className="py-12 md:py-20">
+        <div className="max-w-2xl mx-auto px-4">
           <div className="relative">
             <Input
               type="text"
