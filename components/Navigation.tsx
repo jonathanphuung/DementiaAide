@@ -48,7 +48,9 @@ export function Navigation() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
               <Heart className="w-5 h-5 text-white fill-white" />
             </div>
-            <span className="text-xl text-foreground tracking-tight">
+            <span className={`text-xl tracking-tight transition-colors ${
+              isScrolled ? 'text-foreground' : 'text-white'
+            }`}>
               Dementia<span className="text-blue-600">Aide</span>
             </span>
           </motion.a>
