@@ -80,7 +80,7 @@ export function Hero() {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all group"
-                onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => window.location.href = '/shop'}
               >
                 Shop Products
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

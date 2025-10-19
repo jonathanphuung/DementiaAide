@@ -91,7 +91,7 @@ export function CTA() {
                 <Button
                   size="lg"
                   className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all group"
-                  onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => window.location.href = '/shop'}
                 >
                   Shop All Products
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />

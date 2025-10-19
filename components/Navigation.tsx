@@ -79,7 +79,10 @@ export function Navigation() {
             <Button variant="ghost" className="text-sm" onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}>
               Free Resources
             </Button>
-            <Button className="text-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800" onClick={() => document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button 
+              className="text-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+              onClick={() => window.location.href = '/shop'}
+            >
               Shop Now
             </Button>
           </motion.div>
