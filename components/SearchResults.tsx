@@ -50,31 +50,37 @@ export function SearchResults() {
   }, [searchQuery]);
 
   return (
-    <div className="space-y-8">
-      {/* Search Bar */}
-      <div className="relative">
-        <Input
-          type="text"
-          placeholder="What do you need help with?"
-          className="w-full px-4 py-6 text-lg rounded-2xl shadow-lg pr-12"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Button 
-          className="absolute right-2 top-1/2 transform -translate-y-1/2"
-          variant="ghost"
-          size="icon"
-        >
-          <Search className="w-5 h-5" />
-        </Button>
+    <div className="min-h-screen">
+      {/* Fixed Search Header */}
+      <div className="sticky top-0 bg-background/80 backdrop-blur-lg z-10 py-6 border-b">
+        <div className="max-w-2xl mx-auto">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="What do you need help with?"
+              className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button 
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
+              size="icon"
+            >
+              <Search className="w-5 h-5 text-white" />
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {searchQuery && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-12"
-        >
+      {/* Results Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="space-y-12 mt-8">
+          {searchQuery && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-12"
+            >
           {/* Information Section */}
           <section className="bg-white rounded-2xl p-8 shadow-lg">
             <div className="flex justify-between items-start mb-6">
@@ -137,6 +143,8 @@ export function SearchResults() {
           </section>
         </motion.div>
       )}
+        </div>
+      </div>
     </div>
   );
 }
