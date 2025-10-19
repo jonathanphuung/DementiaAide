@@ -50,31 +50,33 @@ export function SearchResults() {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-24">
       {/* Search Header */}
-      <div className="py-12 md:py-20">
-        <div className="max-w-2xl mx-auto px-4">
-          <div className="relative">
-            <Input
-              type="text"
-              placeholder="What do you need help with?"
-              className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button 
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
-              size="icon"
-            >
-              <Search className="w-5 h-5 text-white" />
-            </Button>
+      <div className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-lg border-b">
+        <div className="h-24 flex items-center">
+          <div className="max-w-2xl mx-auto px-4 w-full">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="What do you need help with?"
+                className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button 
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
+                size="icon"
+              >
+                <Search className="w-5 h-5 text-white" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Results Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-12 mt-8">
+        <div className="space-y-12 mt-16">
           {searchQuery && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
