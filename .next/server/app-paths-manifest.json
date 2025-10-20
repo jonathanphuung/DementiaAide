@@ -1,9 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/shop/page": "app/shop/page.js",
   "/page": "app/page.js",
-  "/caregiver-support/page": "app/caregiver-support/page.js",
-  "/resources/page": "app/resources/page.js",
   "/search/page": "app/search/page.js",
-  "/about/page": "app/about/page.js"
+  "/shop/page": "app/shop/page.js",
+  "/caregiver-support/page": "app/caregiver-support/page.js",
+  "/resources/page": "app/resources/page.js"
 }
