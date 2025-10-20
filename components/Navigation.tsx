@@ -20,9 +20,9 @@ export function Navigation() {
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Shop', href: '/shop' },
-    { label: 'Resources', href: '#resources' },
-    { label: 'Caregiver Support', href: '#caregiver-support' },
-    { label: 'About', href: '#about' },
+    { label: 'Resources', href: '/resources' },
+    { label: 'Caregiver Support', href: '/caregiver-support' },
+    { label: 'About', href: '/about' },
   ];
 
   return (
@@ -48,9 +48,7 @@ export function Navigation() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
               <Heart className="w-5 h-5 text-white fill-white" />
             </div>
-            <span className={`text-xl tracking-tight transition-colors ${
-              isScrolled ? 'text-foreground' : 'text-white'
-            }`}>
+            <span className="text-xl text-foreground tracking-tight">
               Dementia<span className="text-blue-600">Aide</span>
             </span>
           </motion.a>
@@ -64,15 +62,8 @@ export function Navigation() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + index * 0.05 }}
-                className={`text-sm hover:text-foreground transition-colors relative group ${
-                isScrolled ? 'text-foreground/70' : 'text-white'
-              }`}
-                onClick={(e) => {
-                  if (item.href.startsWith('#')) {
-                    e.preventDefault();
-                    document.getElementById(item.href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
+                className="text-sm text-foreground/70 hover:text-foreground transition-colors relative group"
+                onClick={() => {}}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
@@ -128,11 +119,7 @@ export function Navigation() {
                 className="block text-sm text-foreground/70 hover:text-foreground transition-colors py-2"
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  if (item.href.startsWith('#')) {
-                    document.getElementById(item.href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    window.location.href = item.href;
-                  }
+                  window.location.href = item.href;
                 }}
               >
                 {item.label}
