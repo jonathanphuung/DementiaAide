@@ -12,10 +12,15 @@ import { type YouTubeVideo, searchYouTubeVideos } from '@/lib/youtube';
 
 interface Product {
   id: string;
-  name: string;
-  price: number;
-  image: string;
-  link: string;
+  title: string;
+  description: string;
+  price: string;
+  currency: string;
+  imageUrl: string;
+  productUrl: string;
+  retailer: string;
+  rating?: number;
+  reviews?: number;
 }
 
 interface RelatedTopic {
@@ -29,54 +34,63 @@ export function SearchResults() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [isSearching, setIsSearching] = useState(false);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
+  const [productsLoading, setProductsLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchVideos() {
+    async function fetchData() {
       if (!searchQuery) return;
       
       setLoading(true);
+      setProductsLoading(true);
+      
       try {
-        const results = await searchYouTubeVideos(searchQuery);
-        setVideos(results);
+        // Fetch videos and products in parallel
+        const [videoResults, productResults] = await Promise.all([
+          searchYouTubeVideos(searchQuery),
+          fetch(`/api/products?q=${encodeURIComponent(searchQuery)}`).then(res => res.json())
+        ]);
+        
+        setVideos(videoResults);
+        setProducts(productResults.products);
       } catch (error) {
-        console.error('Error fetching videos:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
+        setProductsLoading(false);
       }
     }
 
-    fetchVideos();
+    fetchData();
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen pt-24">
-      {/* Search Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-lg border-b">
-        <div className="h-24 flex items-center">
-          <div className="max-w-2xl mx-auto px-4 w-full">
-            <div className="relative">
-              <Input
-                type="text"
-                placeholder="What do you need help with?"
-                className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button 
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
-                size="icon"
-              >
-                <Search className="w-5 h-5 text-white" />
-              </Button>
-            </div>
+    <div className="min-h-screen">
+      {/* Search Section */}
+      <div className="pt-32 pb-16 bg-gradient-to-b from-blue-50/50">
+        <div className="max-w-2xl mx-auto px-4 w-full">
+          <div className="relative">
+            <Input
+              type="text"
+              placeholder="What do you need help with?"
+              className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button 
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
+              size="icon"
+            >
+              <Search className="w-5 h-5 text-white" />
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Results Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-12 mt-16">
+        <div className="space-y-12">
           {searchQuery && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -128,11 +142,57 @@ export function SearchResults() {
             </div>
           </section>
 
-          {/* Assistive Technology Section */}
+          {/* Product Recommendations Section */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6">Assistive Technology</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {/* Product cards will be dynamically populated */}
+            <h2 className="text-2xl font-semibold mb-6">Recommended Products</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {productsLoading ? (
+                // Loading skeleton
+                [...Array(4)].map((_, i) => (
+                  <Card key={i} className="animate-pulse">
+                    <div className="aspect-square bg-gray-200" />
+                    <div className="p-4 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-3/4" />
+                      <div className="h-6 bg-gray-200 rounded w-1/3" />
+                    </div>
+                  </Card>
+                ))
+              ) : products.length > 0 ? (
+                products.map((product) => (
+                  <a
+                    key={product.id}
+                    href={product.productUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block group"
+                  >
+                    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="relative aspect-square">
+                        <img
+                          src={product.imageUrl}
+                          alt={product.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-sm font-medium">
+                          {product.retailer}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-sm mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                          {product.title}
+                        </h3>
+                        <p className="text-lg font-bold text-blue-600">
+                          {product.currency} {product.price}
+                        </p>
+                      </div>
+                    </Card>
+                  </a>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8 text-muted-foreground">
+                  No product recommendations available.
+                </div>
+              )}
             </div>
           </section>
 
