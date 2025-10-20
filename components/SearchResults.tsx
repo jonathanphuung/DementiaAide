@@ -2,13 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Share2, Bookmark } from 'lucide-react';
+import { Search, Share2, Bookmark, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
+import { Badge } from './ui/badge';
 import { useSearchParams } from 'next/navigation';
 import { VideoCard } from './VideoCard';
 import { type YouTubeVideo, searchYouTubeVideos } from '@/lib/youtube';
+import { type AICareResponse } from '@/lib/ai';
 
 
 
@@ -24,20 +26,34 @@ export function SearchResults() {
   const [isSearching, setIsSearching] = useState(false);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiResponse, setAiResponse] = useState<AICareResponse | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       if (!searchQuery) return;
       
       setLoading(true);
+      setAiLoading(true);
       
       try {
-        const videoResults = await searchYouTubeVideos(searchQuery);
+        // Fetch videos and AI analysis in parallel
+        const [videoResults, aiAnalysis] = await Promise.all([
+          searchYouTubeVideos(searchQuery),
+          fetch('/api/ai/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: searchQuery })
+          }).then(res => res.json())
+        ]);
+
         setVideos(videoResults);
+        setAiResponse(aiAnalysis);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
+        setAiLoading(false);
       }
     }
 
@@ -76,10 +92,15 @@ export function SearchResults() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-12"
             >
-          {/* Information Section */}
+          {/* AI Response Section */}
           <section className="bg-white rounded-2xl p-8 shadow-lg">
             <div className="flex justify-between items-start mb-6">
-              <h2 className="text-2xl font-semibold">Understanding the Situation</h2>
+              <div className="flex items-center gap-3">
+                <h2 className="text-2xl font-semibold">Understanding the Situation</h2>
+                <Badge variant="outline" className="bg-blue-50">
+                  {aiResponse?.category || 'General'}
+                </Badge>
+              </div>
               <div className="flex gap-2">
                 <Button variant="ghost" size="icon">
                   <Share2 className="w-5 h-5" />
@@ -89,9 +110,57 @@ export function SearchResults() {
                 </Button>
               </div>
             </div>
-            <div className="prose max-w-none">
-              {/* Content will be dynamically populated */}
-            </div>
+            {aiLoading ? (
+              <div className="space-y-4">
+                <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse" />
+              </div>
+            ) : aiResponse ? (
+              <div className="space-y-6">
+                {/* Main Explanation */}
+                <div className="prose max-w-none">
+                  <p className="text-gray-700">{aiResponse.explanation}</p>
+                </div>
+
+                {/* Tips */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-yellow-500" />
+                    Helpful Tips
+                  </h3>
+                  <ul className="space-y-2">
+                    {aiResponse.tips.map((tip, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-blue-600 font-medium">•</span>
+                        <span className="text-gray-700">{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Related Topics */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold">Related Topics</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {aiResponse.relatedTopics.map((topic, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="cursor-pointer hover:bg-blue-100 transition-colors"
+                        onClick={() => setSearchQuery(topic)}
+                      >
+                        {topic}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500">
+                Enter a question above to get AI-powered assistance
+              </div>
+            )}
           </section>
 
           {/* Videos Section */}
