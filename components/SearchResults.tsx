@@ -10,18 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { VideoCard } from './VideoCard';
 import { type YouTubeVideo, searchYouTubeVideos } from '@/lib/youtube';
 
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  price: string;
-  currency: string;
-  imageUrl: string;
-  productUrl: string;
-  retailer: string;
-  rating?: number;
-  reviews?: number;
-}
+
 
 interface RelatedTopic {
   id: string;
@@ -34,31 +23,21 @@ export function SearchResults() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [isSearching, setIsSearching] = useState(false);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const [productsLoading, setProductsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       if (!searchQuery) return;
       
       setLoading(true);
-      setProductsLoading(true);
       
       try {
-        // Fetch videos and products in parallel
-        const [videoResults, productResults] = await Promise.all([
-          searchYouTubeVideos(searchQuery),
-          fetch(`/api/products?q=${encodeURIComponent(searchQuery)}`).then(res => res.json())
-        ]);
-        
+        const videoResults = await searchYouTubeVideos(searchQuery);
         setVideos(videoResults);
-        setProducts(productResults.products);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
-        setProductsLoading(false);
       }
     }
 
@@ -142,59 +121,7 @@ export function SearchResults() {
             </div>
           </section>
 
-          {/* Product Recommendations Section */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-6">Recommended Products</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {productsLoading ? (
-                // Loading skeleton
-                [...Array(4)].map((_, i) => (
-                  <Card key={i} className="animate-pulse">
-                    <div className="aspect-square bg-gray-200" />
-                    <div className="p-4 space-y-2">
-                      <div className="h-4 bg-gray-200 rounded w-3/4" />
-                      <div className="h-6 bg-gray-200 rounded w-1/3" />
-                    </div>
-                  </Card>
-                ))
-              ) : products.length > 0 ? (
-                products.map((product) => (
-                  <a
-                    key={product.id}
-                    href={product.productUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block group"
-                  >
-                    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                      <div className="relative aspect-square">
-                        <img
-                          src={product.imageUrl}
-                          alt={product.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded text-sm font-medium">
-                          {product.retailer}
-                        </div>
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-sm mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                          {product.title}
-                        </h3>
-                        <p className="text-lg font-bold text-blue-600">
-                          {product.currency} {product.price}
-                        </p>
-                      </div>
-                    </Card>
-                  </a>
-                ))
-              ) : (
-                <div className="col-span-full text-center py-8 text-muted-foreground">
-                  No product recommendations available.
-                </div>
-              )}
-            </div>
-          </section>
+          {/* Products section removed */}
 
           {/* Related Topics Section */}
           <section>
