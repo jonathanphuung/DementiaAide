@@ -1,7 +1,8 @@
 {
+  "/resources/page": "app/resources/page.js",
   "/page": "app/page.js",
+  "/about/page": "app/about/page.js",
   "/search/page": "app/search/page.js",
   "/shop/page": "app/shop/page.js",
-  "/caregiver-support/page": "app/caregiver-support/page.js",
-  "/resources/page": "app/resources/page.js"
+  "/api/ai/analyze/route": "app/api/ai/analyze/route.js"
 }
