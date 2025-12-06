@@ -14,6 +14,7 @@ A comprehensive digital platform designed to support dementia caregivers through
 - **Care Categories**: Organizes responses into specific areas (Behavior, Safety, Daily Care, Communication, Activities, Health)
 - **Contextual Tips**: Delivers actionable, evidence-based care tips and strategies
 - **Smart Search Suggestions**: Generates relevant search terms based on query analysis
+- **Product Recommendations**: Integrates relevant Amazon product suggestions based on search context
 
 ### 🔍 Intelligent Search System
 - **Natural Language Processing**: Processes caregiver questions in natural language
@@ -26,11 +27,21 @@ A comprehensive digital platform designed to support dementia caregivers through
 - **Product Categories**: Clothing, Accessories, Adaptive Wear, Awareness products
 - **E-commerce Features**: Pricing, reviews, ratings, inventory management
 - **Product Search & Filter**: Advanced product discovery capabilities
+- **Amazon Integration**: Real-time product recommendations with affiliate partnerships
+- **Smart Product Matching**: Context-aware recommendations based on specific care needs
+- **Clean Icon-Based Design**: Professional product cards without image loading issues
+- **Relevant Product Categories**: 
+  - Eating difficulties → Weighted utensils, non-slip plates, easy grip cups
+  - Memory problems → Digital clocks, picture phones, memory aids
+  - Safety concerns → Door alarms, motion sensors, wandering prevention
+  - Medication management → Pill organizers, automatic dispensers
 
 ### 🎨 Modern User Interface
 - **Responsive Design**: Fully responsive across desktop, tablet, and mobile devices
 - **Component Library**: Built with Radix UI components for accessibility
 - **Animation System**: Smooth animations using Framer Motion
+- **Loading States**: Comprehensive loading indicators with spinning wheels for all async operations
+- **User Feedback**: Clear status messages during AI analysis, video search, and product loading
 - **Dark/Light Theme**: Theme switching capability with next-themes
 - **Gradient Aesthetics**: Modern gradient designs with blue/purple color schemes
 
@@ -55,7 +66,12 @@ A comprehensive digital platform designed to support dementia caregivers through
 - **Models Used**: 
   - `j-hartmann/emotion-english-distilroberta-base` for emotion detection
 - **Content Management**: Static product data with TypeScript interfaces
-- **Video Content**: YouTube API integration with fallback content
+- **Video Content**: YouTube API integration with multi-key rotation system
+- **API Key Management**: Automatic rotation across 5 YouTube API keys for high availability
+- **Quota Management**: Smart key rotation with error tracking and auto-recovery
+- **E-commerce Integration**: Amazon SPP (Seller Partner Program) with affiliate tracking
+- **Product Matching**: Intelligent product recommendations based on search context
+- **Caching System**: 24-hour cache for improved performance and reduced API calls
 
 ### Development Tools
 - **Build Tool**: Next.js built-in bundling
@@ -71,6 +87,7 @@ dementiaAide/
 ├── app/                          # Next.js App Router pages
 │   ├── api/                      # API routes
 │   │   ├── ai/analyze/          # AI analysis endpoint
+│   │   ├── amazon/search/       # Amazon SPP product search endpoint
 │   │   ├── test/                # Test endpoints
 │   │   └── youtube/test/        # YouTube integration tests
 │   ├── about/                   # About page (under construction)
@@ -86,10 +103,12 @@ dementiaAide/
 │   ├── Navigation.tsx           # Main navigation component
 │   ├── SearchHero.tsx           # Homepage hero with search
 │   ├── SearchResults.tsx        # Search results display
+│   ├── AmazonProducts.tsx       # Amazon product recommendations
 │   ├── ProductCatalog.tsx       # Product listing component
 │   └── [other components]       # Various UI components
 ├── lib/                         # Utility libraries
 │   ├── ai.ts                    # AI analysis logic
+│   ├── amazon.ts                # Amazon product integration
 │   ├── products.ts              # Product data management
 │   ├── youtube.ts               # YouTube integration
 │   └── utils.ts                 # Shared utilities
@@ -108,8 +127,14 @@ dementiaAide/
 - [x] Responsive homepage with search functionality
 - [x] Product catalog with filtering and search
 - [x] YouTube video integration for educational content
+- [x] Multi-API key rotation system for YouTube (5 keys, ~500 searches/day)
+- [x] Amazon product recommendations with affiliate integration
+- [x] Context-aware product matching (eating, memory, safety, medication categories)
+- [x] Clean icon-based product design without image loading issues
+- [x] Comprehensive loading indicators with spinning animations
 - [x] Modern UI/UX with animations and responsive design
 - [x] API endpoints for AI analysis and testing
+- [x] YouTube API key testing and monitoring endpoints
 - [x] TypeScript implementation throughout
 - [x] Component library setup with Radix UI
 
@@ -141,8 +166,20 @@ dementiaAide/
 ### Environment Variables
 Create a `.env.local` file with:
 ```env
+# Required
 HUGGINGFACE_API_KEY=your_huggingface_api_key
-YOUTUBE_API_KEY=your_youtube_api_key (optional)
+
+# YouTube API (comma-separated for multiple keys)
+NEXT_PUBLIC_YOUTUBE_API_KEYS=key1,key2,key3,key4,key5
+
+# Amazon SPP Integration (optional)
+AMAZON_SPP_ACCESS_KEY=your_spp_access_key
+AMAZON_SPP_SECRET_KEY=your_spp_secret_key
+AMAZON_SPP_REFRESH_TOKEN=your_refresh_token
+AMAZON_SPP_CLIENT_ID=your_client_id
+AMAZON_ASSOCIATE_TAG=your_associate_tag
+AMAZON_MARKETPLACE_ID=ATVPDKIKX0DER
+NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=your_associate_tag
 ```
 
 ### Installation & Running
@@ -195,9 +232,10 @@ We welcome contributions from the community! Here's how you can help:
 
 ## 📊 Project Metrics
 
-- **Components**: 25+ reusable UI components
+- **Components**: 27+ reusable UI components
 - **Pages**: 6 main application pages
-- **API Routes**: 3+ backend endpoints
+- **API Routes**: 4+ backend endpoints
+- **Integrations**: 3 external APIs (HuggingFace, YouTube, Amazon)
 - **Dependencies**: 40+ carefully selected packages
 - **TypeScript Coverage**: 100% of application code
 
@@ -229,6 +267,6 @@ We welcome contributions from the community! Here's how you can help:
 
 ---
 
-*Last Updated: December 5, 2025*
+*Last Updated: December 6, 2025*
 
 **Note**: This README will be continuously updated as development progresses. Check the git history for the latest changes and feature additions.

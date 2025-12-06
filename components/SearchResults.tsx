@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Share2, Bookmark, Lightbulb } from 'lucide-react';
+import { Search, Share2, Bookmark, Lightbulb, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { useSearchParams } from 'next/navigation';
 import { VideoCard } from './VideoCard';
+import { AmazonProducts } from './AmazonProducts';
 import { type YouTubeVideo, searchYouTubeVideos } from '@/lib/youtube';
 import { type AICareResponse } from '@/lib/ai';
+import { type AmazonProduct, searchAmazonProducts } from '@/lib/amazon';
 
 
 
@@ -25,7 +27,9 @@ export function SearchResults() {
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [isSearching, setIsSearching] = useState(false);
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [amazonProducts, setAmazonProducts] = useState<AmazonProduct[]>([]);
   const [loading, setLoading] = useState(false);
+  const [amazonLoading, setAmazonLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState<AICareResponse | null>(null);
 
@@ -35,11 +39,13 @@ export function SearchResults() {
       
       setLoading(true);
       setAiLoading(true);
+      setAmazonLoading(true);
       
       try {
-        // Fetch videos and AI analysis in parallel
-        const [videoResults, aiAnalysis] = await Promise.all([
+        // Fetch videos, Amazon products, and AI analysis in parallel
+        const [videoResults, amazonResults, aiAnalysis] = await Promise.all([
           searchYouTubeVideos(searchQuery),
+          searchAmazonProducts(searchQuery),
           fetch('/api/ai/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -48,11 +54,13 @@ export function SearchResults() {
         ]);
 
         setVideos(videoResults);
+        setAmazonProducts(amazonResults);
         setAiResponse(aiAnalysis);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
+        setAmazonLoading(false);
         setAiLoading(false);
       }
     }
@@ -86,6 +94,26 @@ export function SearchResults() {
       {/* Results Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-12">
+          {searchQuery && loading && aiLoading && amazonLoading && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-12"
+            >
+              <div className="flex items-center justify-center gap-3 text-blue-600 mb-4">
+                <Loader2 
+                  className="w-8 h-8 animate-spin" 
+                  style={{ 
+                    animation: 'spin 1s linear infinite',
+                    transformOrigin: 'center'
+                  }}
+                />
+                <span className="text-xl font-semibold">Searching for helpful information...</span>
+              </div>
+              <p className="text-gray-600">We're gathering AI insights, videos, and product recommendations for you</p>
+            </motion.div>
+          )}
+          
           {searchQuery && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -111,10 +139,17 @@ export function SearchResults() {
               </div>
             </div>
             {aiLoading ? (
-              <div className="space-y-4">
-                <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
-                <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse" />
-                <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse" />
+              <div className="flex items-center justify-center py-12">
+                <div className="flex items-center gap-3 text-blue-600">
+                  <Loader2 
+                    className="w-6 h-6 animate-spin" 
+                    style={{ 
+                      animation: 'spin 1s linear infinite',
+                      transformOrigin: 'center'
+                    }}
+                  />
+                  <span className="text-lg font-medium">AI is analyzing your question...</span>
+                </div>
               </div>
             ) : aiResponse ? (
               <div className="space-y-6">
@@ -166,31 +201,40 @@ export function SearchResults() {
           {/* Videos Section */}
           <section>
             <h2 className="text-2xl font-semibold mb-6">Videos For You</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {loading ? (
-                // Loading skeleton
-                [...Array(5)].map((_, i) => (
-                  <Card key={i} className="animate-pulse">
-                    <div className="aspect-video bg-gray-200" />
-                    <div className="p-4 space-y-2">
-                      <div className="h-4 bg-gray-200 rounded w-3/4" />
-                      <div className="h-3 bg-gray-200 rounded w-1/2" />
-                    </div>
-                  </Card>
-                ))
-              ) : videos.length > 0 ? (
-                videos.map((video) => (
-                  <VideoCard key={video.id} video={video} />
-                ))
-              ) : (
-                <div className="col-span-full text-center py-8 text-muted-foreground">
-                  No videos found for this topic.
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="flex items-center gap-3 text-blue-600">
+                  <Loader2 
+                    className="w-6 h-6 animate-spin" 
+                    style={{ 
+                      animation: 'spin 1s linear infinite',
+                      transformOrigin: 'center'
+                    }}
+                  />
+                  <span className="text-lg font-medium">Finding helpful videos...</span>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {videos.length > 0 ? (
+                  videos.map((video) => (
+                    <VideoCard key={video.id} video={video} />
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-8 text-muted-foreground">
+                    No videos found for this topic.
+                  </div>
+                )}
+              </div>
+            )}
           </section>
 
-          {/* Products section removed */}
+          {/* Amazon Products Section */}
+          <AmazonProducts 
+            products={amazonProducts}
+            loading={amazonLoading}
+            query={searchQuery}
+          />
 
           {/* Related Topics Section */}
           <section>
