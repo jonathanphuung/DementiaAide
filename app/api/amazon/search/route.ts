@@ -162,7 +162,7 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
   // Define comprehensive product mapping based on specific search terms
   const productMapping: { keywords: string[], products: any[] }[] = [
     {
-      keywords: ['eat', 'eating', 'food', 'nutrition', 'appetite', 'swallow', 'feeding', 'refuses to eat', 'won\'t eat'],
+      keywords: ['eat', 'eating', 'food', 'nutrition', 'appetite', 'swallow', 'feeding', 'refuses to eat', 'won\'t eat', 'difficulty swallowing', 'eating utensils'],
       products: [
         {
           title: 'Adaptive Weighted Utensils for Eating Difficulties',
@@ -185,11 +185,18 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Easy Grip Cup Two Handles'),
           rating: 4.5,
           reviewCount: 334
+        },
+        {
+          title: 'Silicone Feeding Bib for Adults',
+          price: '$14.99',
+          image: getProductImageFromService('Adult Feeding Bib Silicone'),
+          rating: 4.2,
+          reviewCount: 445
         }
       ]
     },
     {
-      keywords: ['memory', 'remember', 'forget', 'alzheimer', 'dementia', 'cognitive'],
+      keywords: ['memory', 'remember', 'forget', 'alzheimer', 'dementia', 'cognitive', 'forgets appointments', 'memory loss', 'cant remember names', 'forgets medication', 'activities for dementia'],
       products: [
         {
           title: 'Memory Care Digital Clock with Day/Date Display',
@@ -205,11 +212,25 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Picture Phone Memory Seniors'),
           rating: 4.3,
           reviewCount: 892
+        },
+        {
+          title: 'Memory Foam for Medication Reminders',
+          price: '$29.99',
+          image: getProductImageFromService('Medication Reminder Memory Aid'),
+          rating: 4.4,
+          reviewCount: 678
+        },
+        {
+          title: 'Large Print Daily Planner with Reminders',
+          price: '$19.99',
+          image: getProductImageFromService('Large Print Daily Planner Seniors'),
+          rating: 4.6,
+          reviewCount: 523
         }
       ]
     },
     {
-      keywords: ['safety', 'wander', 'fall', 'alarm', 'secure', 'protection'],
+      keywords: ['safety', 'wander', 'fall', 'alarm', 'secure', 'protection', 'wandering at night', 'falls frequently', 'getting lost'],
       products: [
         {
           title: 'Door Alarm for Wandering Prevention',
@@ -225,11 +246,25 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Motion Sensor Night Light Seniors'),
           rating: 4.2,
           reviewCount: 1123
+        },
+        {
+          title: 'GPS Tracking Watch for Seniors',
+          price: '$89.99',
+          image: getProductImageFromService('GPS Watch Seniors Safety'),
+          rating: 4.3,
+          reviewCount: 789
+        },
+        {
+          title: 'Bed Rails for Fall Prevention',
+          price: '$39.99',
+          image: getProductImageFromService('Bed Rails Fall Prevention Seniors'),
+          rating: 4.1,
+          reviewCount: 656
         }
       ]
     },
     {
-      keywords: ['sleep', 'insomnia', 'restless', 'night', 'bedroom', 'rest'],
+      keywords: ['sleep', 'insomnia', 'restless', 'night', 'bedroom', 'rest', 'restless behavior', 'sundowning'],
       products: [
         {
           title: 'Weighted Blanket for Better Sleep',
@@ -244,11 +279,18 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Sunrise Alarm Clock Sleep Aid'),
           rating: 4.2,
           reviewCount: 788
+        },
+        {
+          title: 'White Noise Machine for Better Sleep',
+          price: '$29.99',
+          image: getProductImageFromService('White Noise Machine Sleep'),
+          rating: 4.5,
+          reviewCount: 1234
         }
       ]
     },
     {
-      keywords: ['medication', 'pills', 'medicine', 'dose', 'reminder'],
+      keywords: ['medication', 'pills', 'medicine', 'dose', 'reminder', 'forgets medication'],
       products: [
         {
           title: '7-Day Pill Organizer with Alarms',
@@ -264,11 +306,18 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Automatic Pill Dispenser Seniors'),
           rating: 4.3,
           reviewCount: 445
+        },
+        {
+          title: 'Daily Medication Reminder Watch',
+          price: '$45.99',
+          image: getProductImageFromService('Medication Reminder Watch Seniors'),
+          rating: 4.2,
+          reviewCount: 678
         }
       ]
     },
     {
-      keywords: ['bathing', 'shower', 'hygiene', 'washing', 'bathroom'],
+      keywords: ['bathing', 'shower', 'hygiene', 'washing', 'bathroom', 'toilet accidents', 'incontinence'],
       products: [
         {
           title: 'Shower Chair with Back Support',
@@ -283,11 +332,130 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Non Slip Bath Mat Suction'),
           rating: 4.1,
           reviewCount: 656
+        },
+        {
+          title: 'Adult Incontinence Protection Underwear',
+          price: '$24.99',
+          image: getProductImageFromService('Adult Incontinence Underwear'),
+          rating: 4.3,
+          reviewCount: 1234
+        },
+        {
+          title: 'Waterproof Mattress Protector',
+          price: '$29.99',
+          image: getProductImageFromService('Waterproof Mattress Protector'),
+          rating: 4.5,
+          reviewCount: 892
         }
       ]
     },
     {
-      keywords: ['activities', 'bored', 'entertainment', 'games', 'puzzles'],
+      keywords: ['dressing', 'clothing', 'dress', 'clothes', 'buttons', 'zipper', 'dressing problems'],
+      products: [
+        {
+          title: 'Adaptive Clothing with Magnetic Closures',
+          price: '$39.99',
+          image: getProductImageFromService('Adaptive Clothing Magnetic Seniors'),
+          rating: 4.5,
+          reviewCount: 567
+        },
+        {
+          title: 'Easy-On Shoes with Velcro Straps',
+          price: '$34.99',
+          image: getProductImageFromService('Easy On Shoes Velcro Seniors'),
+          rating: 4.3,
+          reviewCount: 445
+        },
+        {
+          title: 'Button Hook and Zipper Pull Aid',
+          price: '$12.99',
+          image: getProductImageFromService('Button Hook Zipper Aid'),
+          rating: 4.2,
+          reviewCount: 334
+        }
+      ]
+    },
+    {
+      keywords: ['behavior', 'agitation', 'anger', 'aggressive', 'calm', 'soothing', 'agitation and anger'],
+      products: [
+        {
+          title: 'Weighted Lap Pad for Calming',
+          price: '$24.99',
+          image: getProductImageFromService('Weighted Lap Pad Calming Dementia'),
+          rating: 4.4,
+          reviewCount: 678
+        },
+        {
+          title: 'Sensory Fidget Blanket for Anxiety',
+          price: '$32.99',
+          image: getProductImageFromService('Fidget Blanket Sensory Dementia'),
+          rating: 4.6,
+          reviewCount: 789
+        },
+        {
+          title: 'Aromatherapy Diffuser with Lavender',
+          price: '$29.99',
+          originalPrice: '$34.99',
+          image: getProductImageFromService('Aromatherapy Diffuser Lavender'),
+          rating: 4.3,
+          reviewCount: 456
+        }
+      ]
+    },
+    {
+      keywords: ['communication', 'speaking', 'talk', 'voice', 'speech', 'difficulty speaking'],
+      products: [
+        {
+          title: 'Voice Amplifier for Clear Communication',
+          price: '$39.99',
+          image: getProductImageFromService('Voice Amplifier Communication Aid'),
+          rating: 4.2,
+          reviewCount: 445
+        },
+        {
+          title: 'Communication Board with Pictures',
+          price: '$19.99',
+          image: getProductImageFromService('Communication Board Pictures Seniors'),
+          rating: 4.5,
+          reviewCount: 334
+        },
+        {
+          title: 'Large Button Speaker Phone',
+          price: '$49.99',
+          image: getProductImageFromService('Large Button Speaker Phone'),
+          rating: 4.3,
+          reviewCount: 567
+        }
+      ]
+    },
+    {
+      keywords: ['caregiver', 'support', 'burnout', 'stress', 'respite', 'caregiver burnout', 'respite care'],
+      products: [
+        {
+          title: 'Caregiver Support Guide Book',
+          price: '$16.99',
+          image: getProductImageFromService('Caregiver Support Guide Book'),
+          rating: 4.7,
+          reviewCount: 892
+        },
+        {
+          title: 'Stress Relief Essential Oil Kit',
+          price: '$24.99',
+          image: getProductImageFromService('Stress Relief Essential Oil Kit'),
+          rating: 4.4,
+          reviewCount: 567
+        },
+        {
+          title: 'Baby Monitor for Elderly Care',
+          price: '$79.99',
+          image: getProductImageFromService('Baby Monitor Elderly Care'),
+          rating: 4.2,
+          reviewCount: 678
+        }
+      ]
+    },
+    {
+      keywords: ['activities', 'bored', 'entertainment', 'games', 'puzzles', 'social isolation'],
       products: [
         {
           title: 'Large Print Word Search Books',
@@ -303,6 +471,13 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
           image: getProductImageFromService('Fidget Activity Board Dementia'),
           rating: 4.3,
           reviewCount: 678
+        },
+        {
+          title: 'Memory Stimulation Card Games',
+          price: '$18.99',
+          image: getProductImageFromService('Memory Card Games Seniors'),
+          rating: 4.5,
+          reviewCount: 523
         }
       ]
     }
