@@ -77,42 +77,6 @@ export async function POST(request: NextRequest) {
       // Continue to fallback below
     }
 
-    // TODO: Implement Amazon SPP (Seller Partner Program) API integration
-    // This would involve:
-    // 1. Setting up Amazon SPP SDK or direct API calls
-    // 2. Managing OAuth 2.0 token refresh for SPP
-    // 3. Calling Catalog Items API for product search
-    // 4. Formatting product data and adding tracking
-
-    /* Future SPP implementation example:
-    
-    const amazonSPP = require('amazon-sp-api');
-    
-    const sellingPartner = new amazonSPP({
-      region: 'na', // North America
-      refresh_token: process.env.AMAZON_SPP_REFRESH_TOKEN,
-      credentials: {
-        SELLING_PARTNER_APP_CLIENT_ID: process.env.AMAZON_SPP_CLIENT_ID,
-        SELLING_PARTNER_APP_CLIENT_SECRET: process.env.AMAZON_SPP_SECRET_KEY,
-      }
-    });
-    
-    const searchParams = {
-      marketplaceIds: [process.env.AMAZON_MARKETPLACE_ID || 'ATVPDKIKX0DER'],
-      keywords: [query],
-      includedData: ['summaries', 'attributes', 'images', 'salesRanks']
-    };
-    
-    const response = await sellingPartner.callAPI({
-      operation: 'searchCatalogItems',
-      path: '/catalog/2022-04-01/items',
-      query: searchParams
-    });
-    
-    const products = formatSPPResponse(response.items);
-    
-    */
-
     // For now, return a placeholder response indicating fallback mode
     return new Response(
       JSON.stringify({
@@ -141,381 +105,280 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Helper function to generate Amazon search-based image URLs
-function generateAmazonImageUrl(searchTerm: string): string {
-  // Create Amazon search URL that will redirect to product images
-  const encodedSearch = encodeURIComponent(searchTerm);
-  return `https://www.amazon.com/s?k=${encodedSearch}&ref=sr_pg_1`;
-}
-
-// Simplified function - no images needed for clean UI
-function getProductImageFromService(productName: string): string {
-  // Return empty string - we'll use icon-based design instead
-  return '';
-}
-
-// Helper function to generate products based on search query
+// Advanced matching system with contextual intelligence
 function generateQueryBasedProducts(query: string, maxResults: number): any[] {
   const queryLower = query.toLowerCase();
   const timestamp = Date.now();
   
-  // Define comprehensive product mapping based on specific search terms
-  const productMapping: { keywords: string[], products: any[] }[] = [
+  // Advanced symptom-to-solution mapping with context scoring
+  const intelligentMapping = [
     {
-      keywords: ['eat', 'eating', 'food', 'nutrition', 'appetite', 'swallow', 'feeding', 'refuses to eat', 'won\'t eat', 'difficulty swallowing', 'eating utensils'],
+      category: 'eating_difficulties',
+      triggers: [
+        { phrase: 'refuses to eat', weight: 10, context: 'behavioral_resistance' },
+        { phrase: 'won\'t eat', weight: 10, context: 'behavioral_resistance' },
+        { phrase: 'difficulty swallowing', weight: 9, context: 'physical_limitation' },
+        { phrase: 'eating problems', weight: 8, context: 'general_difficulty' },
+        { phrase: 'food refusal', weight: 9, context: 'behavioral_resistance' },
+        { phrase: 'poor appetite', weight: 7, context: 'medical_issue' },
+        { phrase: 'weight loss', weight: 6, context: 'medical_concern' },
+        { phrase: 'malnutrition', weight: 8, context: 'medical_concern' },
+        { phrase: 'eating utensils', weight: 5, context: 'equipment_need' },
+        { phrase: 'feeding', weight: 6, context: 'assistance_need' }
+      ],
       products: [
         {
           title: 'Adaptive Weighted Utensils for Eating Difficulties',
           price: '$24.99',
-          image: getProductImageFromService('Weighted Utensils Eating Dementia'),
+          image: '',
           rating: 4.6,
-          reviewCount: 892
+          reviewCount: 892,
+          contexts: ['physical_limitation', 'equipment_need']
         },
         {
           title: 'Non-Slip Plate with High Edges - Eating Aid',
           price: '$18.99',
           originalPrice: '$22.99',
-          image: getProductImageFromService('Non Slip Plate Eating Aid'),
+          image: '',
           rating: 4.3,
-          reviewCount: 567
+          reviewCount: 567,
+          contexts: ['physical_limitation', 'equipment_need']
         },
         {
           title: 'Easy Grip Cup with Two Handles',
           price: '$16.99',
-          image: getProductImageFromService('Easy Grip Cup Two Handles'),
+          image: '',
           rating: 4.5,
-          reviewCount: 334
+          reviewCount: 334,
+          contexts: ['physical_limitation', 'equipment_need']
         },
         {
-          title: 'Silicone Feeding Bib for Adults',
-          price: '$14.99',
-          image: getProductImageFromService('Adult Feeding Bib Silicone'),
-          rating: 4.2,
-          reviewCount: 445
+          title: 'High-Calorie Nutrition Supplement Drinks',
+          price: '$32.99',
+          image: '',
+          rating: 4.4,
+          reviewCount: 678,
+          contexts: ['medical_concern', 'behavioral_resistance']
         }
       ]
     },
     {
-      keywords: ['memory', 'remember', 'forget', 'alzheimer', 'dementia', 'cognitive', 'forgets appointments', 'memory loss', 'cant remember names', 'forgets medication', 'activities for dementia'],
+      category: 'memory_cognitive',
+      triggers: [
+        { phrase: 'forgets appointments', weight: 9, context: 'scheduling_issues' },
+        { phrase: 'memory loss', weight: 10, context: 'cognitive_decline' },
+        { phrase: 'can\'t remember names', weight: 8, context: 'social_memory' },
+        { phrase: 'forgets medication', weight: 9, context: 'medication_management' },
+        { phrase: 'gets confused', weight: 7, context: 'cognitive_confusion' },
+        { phrase: 'dementia activities', weight: 6, context: 'therapeutic_engagement' },
+        { phrase: 'alzheimer', weight: 10, context: 'diagnosis_specific' },
+        { phrase: 'cognitive decline', weight: 9, context: 'progressive_condition' },
+        { phrase: 'disorientation', weight: 8, context: 'spatial_temporal' }
+      ],
       products: [
         {
           title: 'Memory Care Digital Clock with Day/Date Display',
           price: '$79.99',
           originalPrice: '$99.99',
-          image: getProductImageFromService('Digital Clock Day Date Dementia'),
+          image: '',
           rating: 4.5,
-          reviewCount: 1247
+          reviewCount: 1247,
+          contexts: ['scheduling_issues', 'spatial_temporal', 'cognitive_confusion']
         },
         {
           title: 'Picture Phone for Memory Impaired Adults',
           price: '$45.99',
-          image: getProductImageFromService('Picture Phone Memory Seniors'),
+          image: '',
           rating: 4.3,
-          reviewCount: 892
+          reviewCount: 892,
+          contexts: ['social_memory', 'cognitive_decline']
         },
         {
-          title: 'Memory Foam for Medication Reminders',
-          price: '$29.99',
-          image: getProductImageFromService('Medication Reminder Memory Aid'),
-          rating: 4.4,
-          reviewCount: 678
-        },
-        {
-          title: 'Large Print Daily Planner with Reminders',
-          price: '$19.99',
-          image: getProductImageFromService('Large Print Daily Planner Seniors'),
+          title: 'Medication Reminder System with Alarms',
+          price: '$89.99',
+          image: '',
           rating: 4.6,
-          reviewCount: 523
+          reviewCount: 567,
+          contexts: ['medication_management', 'scheduling_issues']
+        },
+        {
+          title: 'Memory Stimulation Activity Cards',
+          price: '$24.99',
+          image: '',
+          rating: 4.4,
+          reviewCount: 789,
+          contexts: ['therapeutic_engagement', 'cognitive_decline']
         }
       ]
     },
     {
-      keywords: ['safety', 'wander', 'fall', 'alarm', 'secure', 'protection', 'wandering at night', 'falls frequently', 'getting lost'],
+      category: 'safety_wandering',
+      triggers: [
+        { phrase: 'wandering at night', weight: 10, context: 'nocturnal_wandering' },
+        { phrase: 'falls frequently', weight: 9, context: 'fall_prevention' },
+        { phrase: 'getting lost', weight: 8, context: 'spatial_disorientation' },
+        { phrase: 'leaves the house', weight: 9, context: 'elopement_risk' },
+        { phrase: 'unsafe behavior', weight: 7, context: 'behavioral_safety' },
+        { phrase: 'door alarms', weight: 6, context: 'monitoring_equipment' },
+        { phrase: 'security concerns', weight: 7, context: 'general_safety' }
+      ],
       products: [
         {
           title: 'Door Alarm for Wandering Prevention',
           price: '$24.99',
           originalPrice: '$29.99',
-          image: getProductImageFromService('Door Alarm Wandering Dementia'),
+          image: '',
           rating: 4.4,
-          reviewCount: 567
+          reviewCount: 567,
+          contexts: ['nocturnal_wandering', 'elopement_risk', 'monitoring_equipment']
         },
         {
           title: 'Motion Sensor Night Light - Fall Prevention',
           price: '$19.99',
-          image: getProductImageFromService('Motion Sensor Night Light Seniors'),
+          image: '',
           rating: 4.2,
-          reviewCount: 1123
+          reviewCount: 1123,
+          contexts: ['fall_prevention', 'nocturnal_wandering']
         },
         {
           title: 'GPS Tracking Watch for Seniors',
           price: '$89.99',
-          image: getProductImageFromService('GPS Watch Seniors Safety'),
+          image: '',
           rating: 4.3,
-          reviewCount: 789
-        },
-        {
-          title: 'Bed Rails for Fall Prevention',
-          price: '$39.99',
-          image: getProductImageFromService('Bed Rails Fall Prevention Seniors'),
-          rating: 4.1,
-          reviewCount: 656
+          reviewCount: 789,
+          contexts: ['spatial_disorientation', 'elopement_risk']
         }
       ]
     },
     {
-      keywords: ['sleep', 'insomnia', 'restless', 'night', 'bedroom', 'rest', 'restless behavior', 'sundowning'],
-      products: [
-        {
-          title: 'Weighted Blanket for Better Sleep',
-          price: '$49.99',
-          image: getProductImageFromService('Weighted Blanket Sleep Anxiety'),
-          rating: 4.4,
-          reviewCount: 1567
-        },
-        {
-          title: 'LED Sunrise Alarm Clock - Sleep Aid',
-          price: '$34.99',
-          image: getProductImageFromService('Sunrise Alarm Clock Sleep Aid'),
-          rating: 4.2,
-          reviewCount: 788
-        },
-        {
-          title: 'White Noise Machine for Better Sleep',
-          price: '$29.99',
-          image: getProductImageFromService('White Noise Machine Sleep'),
-          rating: 4.5,
-          reviewCount: 1234
-        }
-      ]
-    },
-    {
-      keywords: ['medication', 'pills', 'medicine', 'dose', 'reminder', 'forgets medication'],
-      products: [
-        {
-          title: '7-Day Pill Organizer with Alarms',
-          price: '$24.99',
-          image: getProductImageFromService('Pill Organizer Alarm Weekly'),
-          rating: 4.5,
-          reviewCount: 923
-        },
-        {
-          title: 'Automatic Pill Dispenser with Alerts',
-          price: '$89.99',
-          originalPrice: '$109.99',
-          image: getProductImageFromService('Automatic Pill Dispenser Seniors'),
-          rating: 4.3,
-          reviewCount: 445
-        },
-        {
-          title: 'Daily Medication Reminder Watch',
-          price: '$45.99',
-          image: getProductImageFromService('Medication Reminder Watch Seniors'),
-          rating: 4.2,
-          reviewCount: 678
-        }
-      ]
-    },
-    {
-      keywords: ['bathing', 'shower', 'hygiene', 'washing', 'bathroom', 'toilet accidents', 'incontinence'],
-      products: [
-        {
-          title: 'Shower Chair with Back Support',
-          price: '$69.99',
-          image: getProductImageFromService('Shower Chair Back Support Seniors'),
-          rating: 4.4,
-          reviewCount: 789
-        },
-        {
-          title: 'Non-Slip Bath Mat with Suction Cups',
-          price: '$19.99',
-          image: getProductImageFromService('Non Slip Bath Mat Suction'),
-          rating: 4.1,
-          reviewCount: 656
-        },
-        {
-          title: 'Adult Incontinence Protection Underwear',
-          price: '$24.99',
-          image: getProductImageFromService('Adult Incontinence Underwear'),
-          rating: 4.3,
-          reviewCount: 1234
-        },
-        {
-          title: 'Waterproof Mattress Protector',
-          price: '$29.99',
-          image: getProductImageFromService('Waterproof Mattress Protector'),
-          rating: 4.5,
-          reviewCount: 892
-        }
-      ]
-    },
-    {
-      keywords: ['dressing', 'clothing', 'dress', 'clothes', 'buttons', 'zipper', 'dressing problems'],
-      products: [
-        {
-          title: 'Adaptive Clothing with Magnetic Closures',
-          price: '$39.99',
-          image: getProductImageFromService('Adaptive Clothing Magnetic Seniors'),
-          rating: 4.5,
-          reviewCount: 567
-        },
-        {
-          title: 'Easy-On Shoes with Velcro Straps',
-          price: '$34.99',
-          image: getProductImageFromService('Easy On Shoes Velcro Seniors'),
-          rating: 4.3,
-          reviewCount: 445
-        },
-        {
-          title: 'Button Hook and Zipper Pull Aid',
-          price: '$12.99',
-          image: getProductImageFromService('Button Hook Zipper Aid'),
-          rating: 4.2,
-          reviewCount: 334
-        }
-      ]
-    },
-    {
-      keywords: ['behavior', 'agitation', 'anger', 'aggressive', 'calm', 'soothing', 'agitation and anger'],
+      category: 'behavioral_management',
+      triggers: [
+        { phrase: 'agitation and anger', weight: 10, context: 'emotional_regulation' },
+        { phrase: 'aggressive behavior', weight: 9, context: 'behavioral_intervention' },
+        { phrase: 'sundowning', weight: 10, context: 'circadian_disruption' },
+        { phrase: 'restless behavior', weight: 8, context: 'anxiety_management' },
+        { phrase: 'mood swings', weight: 7, context: 'emotional_regulation' },
+        { phrase: 'calming strategies', weight: 6, context: 'therapeutic_intervention' },
+        { phrase: 'anxiety', weight: 7, context: 'anxiety_management' },
+        { phrase: 'gets angry', weight: 8, context: 'emotional_regulation' }
+      ],
       products: [
         {
           title: 'Weighted Lap Pad for Calming',
           price: '$24.99',
-          image: getProductImageFromService('Weighted Lap Pad Calming Dementia'),
+          image: '',
           rating: 4.4,
-          reviewCount: 678
+          reviewCount: 678,
+          contexts: ['anxiety_management', 'emotional_regulation', 'therapeutic_intervention']
         },
         {
           title: 'Sensory Fidget Blanket for Anxiety',
           price: '$32.99',
-          image: getProductImageFromService('Fidget Blanket Sensory Dementia'),
+          image: '',
           rating: 4.6,
-          reviewCount: 789
+          reviewCount: 789,
+          contexts: ['anxiety_management', 'behavioral_intervention']
+        },
+        {
+          title: 'LED Sunrise Alarm Clock - Sleep Aid',
+          price: '$34.99',
+          image: '',
+          rating: 4.2,
+          reviewCount: 788,
+          contexts: ['circadian_disruption']
         },
         {
           title: 'Aromatherapy Diffuser with Lavender',
           price: '$29.99',
           originalPrice: '$34.99',
-          image: getProductImageFromService('Aromatherapy Diffuser Lavender'),
+          image: '',
           rating: 4.3,
-          reviewCount: 456
-        }
-      ]
-    },
-    {
-      keywords: ['communication', 'speaking', 'talk', 'voice', 'speech', 'difficulty speaking'],
-      products: [
-        {
-          title: 'Voice Amplifier for Clear Communication',
-          price: '$39.99',
-          image: getProductImageFromService('Voice Amplifier Communication Aid'),
-          rating: 4.2,
-          reviewCount: 445
-        },
-        {
-          title: 'Communication Board with Pictures',
-          price: '$19.99',
-          image: getProductImageFromService('Communication Board Pictures Seniors'),
-          rating: 4.5,
-          reviewCount: 334
-        },
-        {
-          title: 'Large Button Speaker Phone',
-          price: '$49.99',
-          image: getProductImageFromService('Large Button Speaker Phone'),
-          rating: 4.3,
-          reviewCount: 567
-        }
-      ]
-    },
-    {
-      keywords: ['caregiver', 'support', 'burnout', 'stress', 'respite', 'caregiver burnout', 'respite care'],
-      products: [
-        {
-          title: 'Caregiver Support Guide Book',
-          price: '$16.99',
-          image: getProductImageFromService('Caregiver Support Guide Book'),
-          rating: 4.7,
-          reviewCount: 892
-        },
-        {
-          title: 'Stress Relief Essential Oil Kit',
-          price: '$24.99',
-          image: getProductImageFromService('Stress Relief Essential Oil Kit'),
-          rating: 4.4,
-          reviewCount: 567
-        },
-        {
-          title: 'Baby Monitor for Elderly Care',
-          price: '$79.99',
-          image: getProductImageFromService('Baby Monitor Elderly Care'),
-          rating: 4.2,
-          reviewCount: 678
-        }
-      ]
-    },
-    {
-      keywords: ['activities', 'bored', 'entertainment', 'games', 'puzzles', 'social isolation'],
-      products: [
-        {
-          title: 'Large Print Word Search Books',
-          price: '$12.99',
-          image: getProductImageFromService('Large Print Word Search Seniors'),
-          rating: 4.7,
-          reviewCount: 445
-        },
-        {
-          title: 'Fidget Activity Board for Seniors',
-          price: '$32.99',
-          originalPrice: '$39.99',
-          image: getProductImageFromService('Fidget Activity Board Dementia'),
-          rating: 4.3,
-          reviewCount: 678
-        },
-        {
-          title: 'Memory Stimulation Card Games',
-          price: '$18.99',
-          image: getProductImageFromService('Memory Card Games Seniors'),
-          rating: 4.5,
-          reviewCount: 523
+          reviewCount: 456,
+          contexts: ['emotional_regulation', 'anxiety_management']
         }
       ]
     }
   ];
+
+  // Intelligent matching with context scoring
+  let bestMatch = { category: '', score: 0, context: '', products: [] as any[] };
   
-  // Find the best matching product category
-  let selectedProducts: any[] = [];
-  
-  for (const mapping of productMapping) {
-    const hasMatch = mapping.keywords.some(keyword => queryLower.includes(keyword));
-    if (hasMatch) {
-      selectedProducts = mapping.products;
-      console.log(`🎯 Matched "${query}" to category with keywords: ${mapping.keywords.join(', ')}`);
-      break;
+  // Score each category based on query matches
+  for (const mapping of intelligentMapping) {
+    let categoryScore = 0;
+    let detectedContext = '';
+    
+    // Check for phrase matches with weighted scoring
+    for (const trigger of mapping.triggers) {
+      if (queryLower.includes(trigger.phrase)) {
+        categoryScore += trigger.weight;
+        if (trigger.weight > (bestMatch.score * 0.8)) {
+          detectedContext = trigger.context;
+        }
+        console.log(`🎯 Found "${trigger.phrase}" in query, +${trigger.weight} points (context: ${trigger.context})`);
+      }
+    }
+    
+    // Also check for individual keywords for partial matches
+    const keywords = mapping.triggers.map(t => t.phrase.split(' ')).flat();
+    for (const keyword of keywords) {
+      if (queryLower.includes(keyword) && keyword.length > 2) {
+        categoryScore += 1; // Small bonus for keyword matches
+      }
+    }
+    
+    if (categoryScore > bestMatch.score) {
+      bestMatch = {
+        category: mapping.category,
+        score: categoryScore,
+        context: detectedContext,
+        products: mapping.products
+      };
     }
   }
   
-  // If no specific match, use general dementia care products
-  if (selectedProducts.length === 0) {
+  let selectedProducts: any[] = [];
+  
+  if (bestMatch.score > 0) {
+    // Filter products by context relevance if we detected a specific context
+    if (bestMatch.context) {
+      selectedProducts = bestMatch.products.filter(product => 
+        product.contexts && product.contexts.includes(bestMatch.context)
+      );
+      
+      // If no context-specific products, fall back to all products in category
+      if (selectedProducts.length === 0) {
+        selectedProducts = bestMatch.products;
+      }
+      
+      console.log(`🎯 Matched "${query}" to ${bestMatch.category} (score: ${bestMatch.score}, context: ${bestMatch.context})`);
+    } else {
+      selectedProducts = bestMatch.products;
+      console.log(`🎯 Matched "${query}" to ${bestMatch.category} (score: ${bestMatch.score})`);
+    }
+  } else {
+    // Fallback for completely unmatched queries
     selectedProducts = [
       {
         title: 'Adaptive Clothing with Magnetic Closures',
         price: '$39.99',
-        image: getProductImageFromService('Adaptive Clothing Magnetic Seniors'),
+        image: '',
         rating: 4.5,
-        reviewCount: 234
+        reviewCount: 234,
+        contexts: ['daily_living']
       },
       {
         title: 'Easy Grip Utensil Set for Daily Living',
         price: '$21.99',
-        image: getProductImageFromService('Easy Grip Utensils Daily Living'),
+        image: '',
         rating: 4.2,
-        reviewCount: 567
+        reviewCount: 567,
+        contexts: ['daily_living']
       }
     ];
     console.log(`🎯 No specific match for "${query}", using general dementia care products`);
   }
-  
+
   // Convert templates to full product objects
   return selectedProducts.slice(0, maxResults).map((template, index) => ({
     asin: `LIVE${timestamp}${index}`,
@@ -526,32 +389,9 @@ function generateQueryBasedProducts(query: string, maxResults: number): any[] {
     rating: template.rating,
     reviewCount: template.reviewCount,
     url: '',
-    prime: Math.random() > 0.3, // 70% chance of Prime
-    discount: template.originalPrice ? calculateDiscount(template.originalPrice, template.price) : undefined
-  }));
-}
-
-// Helper function to calculate discount percentage
-function calculateDiscount(originalPrice: string, currentPrice: string): string {
-  const original = parseFloat(originalPrice.replace(/[^0-9.]/g, ''));
-  const current = parseFloat(currentPrice.replace(/[^0-9.]/g, ''));
-  
-  if (original <= current) return '';
-  
-  const discount = Math.round(((original - current) / original) * 100);
-  return `${discount}%`;
-}
-
-// Helper function to format Amazon SPP response (for future use)
-function formatSPPResponse(items: any[]): any[] {
-  return items.map(item => ({
-    asin: item.ASIN,
-    title: item.ItemInfo.Title.DisplayValue,
-    price: item.Offers?.Listings?.[0]?.Price?.DisplayAmount || 'N/A',
-    image: item.Images?.Primary?.Large?.URL || '',
-    rating: item.CustomerReviews?.StarRating?.Value || 0,
-    reviewCount: item.CustomerReviews?.Count || 0,
-    url: item.DetailPageURL,
-    prime: item.DeliveryInfo?.IsPrimeEligible || false
+    prime: Math.random() > 0.5,
+    discount: template.originalPrice ? 
+      Math.round(((parseFloat(template.originalPrice.replace('$', '')) - parseFloat(template.price.replace('$', ''))) / 
+                  parseFloat(template.originalPrice.replace('$', ''))) * 100) + '%' : undefined
   }));
 }
