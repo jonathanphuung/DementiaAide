@@ -25,15 +25,21 @@ export async function POST(request: NextRequest) {
         hasRefreshToken: !!process.env.AMAZON_SPP_REFRESH_TOKEN
       });
       
+      console.log('🔄 SPP credentials missing, using query-based product generation');
+      
+      // Generate context-aware products even without SPP credentials
+      const queryBasedProducts = generateQueryBasedProducts(query, maxResults);
+      
       return new Response(
-        JSON.stringify({ 
-          error: 'Amazon SPP API not fully configured',
-          fallback: true,
-          message: 'Using fallback product data. All SPP credentials needed for live product search.',
+        JSON.stringify({
+          products: queryBasedProducts,
+          source: 'query-based-fallback',
+          message: `Context-aware products for "${query}" (SPP unavailable)`,
           debug: {
             hasClientId: !!process.env.AMAZON_SPP_CLIENT_ID,
             hasSecretKey: !!process.env.AMAZON_SPP_SECRET_KEY,
-            hasRefreshToken: !!process.env.AMAZON_SPP_REFRESH_TOKEN
+            hasRefreshToken: !!process.env.AMAZON_SPP_REFRESH_TOKEN,
+            productCount: queryBasedProducts.length
           }
         }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }

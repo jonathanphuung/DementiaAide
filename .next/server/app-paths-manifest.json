@@ -1,8 +1,3 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/search/page": "app/search/page.js",
-  "/image-test/page": "app/image-test/page.js",
-  "/api/amazon/search/route": "app/api/amazon/search/route.js",
-  "/api/ai/analyze/route": "app/api/ai/analyze/route.js"
+  "/api/amazon/search/route": "app/api/amazon/search/route.js"
 }
