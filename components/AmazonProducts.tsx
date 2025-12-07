@@ -18,15 +18,6 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
     const searchTerms = product.title.split(' ').slice(0, 4).join(' '); // Use first 4 words
     const searchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(searchTerms)}&tag=${process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG || 'dementiaaide-20'}&ref=sr_pg_1`;
     
-    // Track affiliate click for analytics (optional)
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'click', {
-        event_category: 'affiliate',
-        event_label: product.asin,
-        value: parseFloat(product.price.replace(/[^0-9.]/g, '') || '0')
-      });
-    }
-    
     // Open Amazon search in new tab - this will always work
     window.open(searchUrl, '_blank', 'noopener,noreferrer');
   };
