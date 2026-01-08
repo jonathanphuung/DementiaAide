@@ -6,32 +6,32 @@ import { Button } from './ui/button';
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Animated background elements */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-blue-50">
+      {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.2, 0.3, 0.2],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
+          className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] bg-blue-100 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2],
+            opacity: [0.15, 0.25, 0.15],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-gradient-to-tr from-purple-400/20 to-pink-400/20 rounded-full blur-3xl"
+          className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-blue-200 rounded-full blur-3xl"
         />
       </div>
 
@@ -56,7 +56,7 @@ export function Hero() {
               className="text-5xl md:text-6xl lg:text-7xl text-foreground leading-tight"
             >
               Let us lighten the{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-blue-600 font-bold">
                 caregiving load
               </span>
             </motion.h1>
@@ -79,7 +79,7 @@ export function Hero() {
             >
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all group"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all group"
                 onClick={() => window.location.href = '/shop'}
               >
                 Shop Products
@@ -134,7 +134,6 @@ export function Hero() {
                   alt="Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
               </motion.div>
 
               <motion.div
@@ -185,8 +184,8 @@ export function Hero() {
               className="absolute bottom-4 -left-2 bg-white rounded-2xl shadow-lg p-4 backdrop-blur-sm z-10"
             >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
-                  <span className="text-2xl">✓</span>
+                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                  <span className="text-2xl text-white">✓</span>
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Trusted by</div>

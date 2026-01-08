@@ -30,7 +30,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     >
       <Card className="h-full overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-200">
         {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="relative aspect-square overflow-hidden bg-gray-100">
           <ImageWithFallback
             src={product.image}
             alt={product.name}
@@ -171,7 +171,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
 
           {/* Add to Cart Button */}
           <Button
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+            className="w-full bg-blue-600 hover:bg-blue-700"
             disabled={!product.inStock}
             onClick={() => onViewDetails?.(product)}
           >

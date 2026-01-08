@@ -45,7 +45,7 @@ export function Navigation() {
             transition={{ delay: 0.1 }}
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
               <Heart className="w-5 h-5 text-white fill-white" />
             </div>
             <span className="text-xl text-foreground tracking-tight">
@@ -82,7 +82,7 @@ export function Navigation() {
               Free Resources
             </Button>
             <Button 
-              className="text-sm bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
+              className="text-sm bg-blue-600 hover:bg-blue-700"
               onClick={() => window.location.href = '/shop'}
             >
               Shop Now
@@ -129,7 +129,7 @@ export function Navigation() {
               <Button variant="outline" className="w-full">
                 Sign In
               </Button>
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700">
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">
                 Get Started
               </Button>
             </div>

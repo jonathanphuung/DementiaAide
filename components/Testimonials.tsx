@@ -32,32 +32,32 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.1, 0.15, 0.1],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute top-1/4 -left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"
+          className="absolute top-1/4 -left-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
             scale: [1.1, 1, 1.1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.1, 0.15, 0.1],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl"
+          className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-blue-100 rounded-full blur-3xl"
         />
       </div>
 
@@ -82,7 +82,7 @@ export function Testimonials() {
             className="text-4xl md:text-5xl text-foreground mb-4"
           >
             Loved by{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-blue-600 font-bold">
               thousands
             </span>
           </motion.h2>
@@ -111,7 +111,7 @@ export function Testimonials() {
             >
               <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl shadow-black/5 border border-white/20 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
                 {/* Quote icon */}
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                   <Quote className="w-6 h-6 text-white" />
                 </div>
 
@@ -147,8 +147,8 @@ export function Testimonials() {
                   </div>
                 </div>
 
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                {/* Blue overlay on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             </motion.div>
           ))}

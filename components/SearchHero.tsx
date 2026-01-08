@@ -19,20 +19,20 @@ export function SearchHero() {
   };
 
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-blue-50 to-white px-4">
+    <section className="relative min-h-[80vh] flex items-center justify-center bg-white px-4">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
-            opacity: [0.1, 0.2, 0.1],
+            opacity: [0.1, 0.15, 0.1],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50 rounded-full blur-3xl"
         />
       </div>
 
@@ -45,7 +45,7 @@ export function SearchHero() {
         >
           <h1 className="text-4xl md:text-6xl font-bold text-foreground">
             Your Comprehensive Guide to{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-blue-600 font-bold">
               Dementia Care
             </span>
           </h1>
@@ -71,7 +71,7 @@ export function SearchHero() {
           />
           <Button 
             type="submit"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700"
             size="icon"
           >
             <Search className="w-6 h-6" />

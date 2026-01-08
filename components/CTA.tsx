@@ -13,35 +13,35 @@ export function CTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 rounded-3xl overflow-hidden"
+          className="relative bg-blue-600 rounded-3xl overflow-hidden"
         >
-          {/* Animated background elements */}
+          {/* Decorative background elements */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
               animate={{
                 scale: [1, 1.2, 1],
                 rotate: [0, 90, 0],
-                opacity: [0.1, 0.2, 0.1],
+                opacity: [0.05, 0.1, 0.05],
               }}
               transition={{
                 duration: 20,
                 repeat: Infinity,
                 ease: 'linear',
               }}
-              className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-full"
+              className="absolute -top-1/2 -right-1/2 w-full h-full bg-white/5 rounded-full"
             />
             <motion.div
               animate={{
                 scale: [1.2, 1, 1.2],
                 rotate: [90, 0, 90],
-                opacity: [0.1, 0.2, 0.1],
+                opacity: [0.05, 0.1, 0.05],
               }}
               transition={{
                 duration: 15,
                 repeat: Infinity,
                 ease: 'linear',
               }}
-              className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-purple-500/10 to-transparent rounded-full"
+              className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-blue-700/20 rounded-full"
             />
           </div>
 
