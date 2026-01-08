@@ -69,10 +69,12 @@ AMAZON_ASSOCIATE_TAG=your_tag
 
 **Working:**
 - AI advice system (keyword-based, offline)
-- Curated video library (40+ videos, no API needed)
 - Search functionality  
 - Product catalog
 - Amazon product recommendations (optional)
+
+**In Progress:**
+- Video library (temporarily disabled - needs YouTube playlist)
 
 **To Do:**
 - Resources page
@@ -80,6 +82,51 @@ AMAZON_ASSOCIATE_TAG=your_tag
 - About page
 - User accounts
 - Better analytics
+
+## TODO: YouTube Video Library
+
+**Current Status:** Video feature is temporarily disabled because we need real, verified video IDs.
+
+**Plan:** Create curated YouTube playlist with quality dementia care videos
+
+**Steps to implement:**
+
+1. **Create YouTube Playlist**
+   - Go to YouTube and create a new playlist
+   - Name it something like "DementiaAide - Caregiver Resources"
+   - Make it Public or Unlisted
+
+2. **Add Quality Videos**
+   - Search for dementia care videos from trusted sources:
+     - Teepa Snow (dementia care expert)
+     - Alzheimer's Association
+     - Alzheimer's Society UK
+     - National Institute on Aging
+     - Dementia UK
+   - Categories needed:
+     - General dementia care (5+ videos)
+     - Wandering and safety (5+ videos)
+     - Bathing and personal care (5+ videos)
+     - Eating and nutrition (5+ videos)
+     - Managing aggression (5+ videos)
+     - Sundowning and sleep (5+ videos)
+     - Communication tips (5+ videos)
+     - Incontinence management (5+ videos)
+     - Caregiver self-care (5+ videos)
+
+3. **Extract Video IDs**
+   - Option A (Manual): Open each video, copy the ID from URL (after `v=`)
+   - Option B (API): Copy the playlist ID and use YouTube Data API to fetch all videos
+
+4. **Update the Code**
+   - Edit `lib/youtube.ts`
+   - Replace the video library with your curated list
+   - Update video titles and descriptions
+   - Test that all videos load correctly
+
+5. **Alternative Approach**
+   - Could also embed the entire playlist instead of individual videos
+   - Or add a "Watch on YouTube" button that links to your playlist
 
 ## Contributing
 
