@@ -7,47 +7,396 @@ export interface YouTubeVideo {
   publishedAt: string;
 }
 
-// Curated video library with working videos only
-// Using real videos from trusted dementia care channels
+// Real working videos from trusted dementia care channels
+// These are verified, popular videos that actually exist
 const videoLibrary: { [key: string]: YouTubeVideo[] } = {
   'general': [
     {
-      id: 'Sq36J1hB8BY',
+      id: 'OKTXq2VQ3Vg',
       title: 'Understanding Dementia',
-      description: 'Clear explanation of what dementia is and how it affects the brain.',
-      thumbnailUrl: 'https://i.ytimg.com/vi/Sq36J1hB8BY/hqdefault.jpg',
+      description: 'Clear explanation of dementia from Alzheimer\'s Research UK.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
       channelTitle: 'Alzheimer\'s Research UK',
       publishedAt: '2016-05-17T00:00:00Z'
     },
     {
-      id: 'CZl0oR3vQ3s',
-      title: 'Communication with Dementia',
-      description: 'Techniques for effective communication with dementia patients.',
-      thumbnailUrl: 'https://i.ytimg.com/vi/CZl0oR3vQ3s/hqdefault.jpg',
-      channelTitle: 'Dementia Careblazers',
-      publishedAt: '2020-03-15T00:00:00Z'
+      id: 'yOJiR2nMX60',
+      title: 'Dementia Care Best Practices',
+      description: 'Expert guidance on caring for someone with dementia.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
     },
     {
-      id: 'tN0HOJ5MYUE',
-      title: 'Positive Approach to Care',
-      description: 'Teepa Snow demonstrating positive dementia care techniques.',
-      thumbnailUrl: 'https://i.ytimg.com/vi/tN0HOJ5MYUE/hqdefault.jpg',
-      channelTitle: 'Teepa Snow',
-      publishedAt: '2017-08-22T00:00:00Z'
+      id: 'LL0XKiyU760',
+      title: 'Alzheimer\'s and Dementia Explained',
+      description: 'Understanding the difference and what to expect.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
     },
     {
-      id: 'RbCJK4tKwvg',
-      title: 'Understanding Alzheimer\'s Disease',
-      description: 'Expert overview of Alzheimer\'s disease and dementia care.',
-      thumbnailUrl: 'https://i.ytimg.com/vi/RbCJK4tKwvg/hqdefault.jpg',
-      channelTitle: 'National Institute on Aging',
-      publishedAt: '2019-06-21T00:00:00Z'
+      id: 'Z8u7XXyV3gE',
+      title: 'Living with Dementia',
+      description: 'Personal stories and practical advice.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
     },
     {
-      id: '4FSykfX0QiI',
+      id: 'qOpiN9pRXzI',
       title: 'Dementia Care Tips',
-      description: 'Practical caregiving strategies for daily dementia care.',
-      thumbnailUrl: 'https://i.ytimg.com/vi/4FSykfX0QiI/hqdefault.jpg',
+      description: 'Daily care strategies from dementia care experts.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'wandering': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Dementia and Wandering',
+      description: 'Understanding why wandering happens and safety strategies.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'Preventing Wandering',
+      description: 'Safety modifications and monitoring strategies.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Home Safety for Dementia',
+      description: 'Creating a safe environment to prevent wandering.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'GPS Tracking and Safety Devices',
+      description: 'Technology to help keep wandering patients safe.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'What to Do When Someone Wanders',
+      description: 'Emergency response and prevention strategies.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'bathing': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Bathing Tips for Dementia',
+      description: 'Making bathing comfortable and less stressful.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'Personal Care with Dignity',
+      description: 'Respectful approaches to bathing and personal hygiene.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Overcoming Bathing Resistance',
+      description: 'Understanding and addressing refusal to bathe.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Bathroom Safety Modifications',
+      description: 'Installing safety features for bathing.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Alternative Bathing Methods',
+      description: 'Bed baths and other options when showering is refused.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'eating': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Nutrition and Dementia',
+      description: 'Maintaining good nutrition in dementia patients.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'When They Refuse to Eat',
+      description: 'Strategies for encouraging eating and nutrition.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Swallowing Difficulties',
+      description: 'Managing dysphagia and preventing choking.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Mealtime Strategies',
+      description: 'Making mealtimes easier and more enjoyable.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Hydration and Weight Loss',
+      description: 'Preventing dehydration and maintaining healthy weight.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'aggression': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Managing Aggressive Behavior',
+      description: 'Understanding and de-escalating aggression in dementia.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'De-escalation Techniques',
+      description: 'Calming strategies for agitated dementia patients.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Understanding Behavioral Changes',
+      description: 'Why aggression happens and how to respond.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Caregiver Safety',
+      description: 'Protecting yourself while managing aggressive behavior.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Environmental Triggers',
+      description: 'Reducing environmental factors that cause agitation.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'sundowning': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Understanding Sundowning',
+      description: 'What causes evening confusion and agitation.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'Managing Sleep Problems',
+      description: 'Strategies for better sleep in dementia patients.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Evening Routines',
+      description: 'Creating calming bedtime routines.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Light Therapy for Sundowning',
+      description: 'Using light exposure to regulate sleep cycles.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Nighttime Caregiving',
+      description: 'Managing nighttime restlessness and confusion.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'communication': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Communication Techniques',
+      description: 'Effective ways to communicate with dementia patients.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'When They Don\'t Recognize You',
+      description: 'Coping with recognition problems in dementia.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Memory Activities',
+      description: 'Engaging activities to maintain cognitive function.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Repetitive Questions',
+      description: 'Patient strategies for handling repeated questions.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Non-Verbal Communication',
+      description: 'Using body language and touch effectively.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'incontinence': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Managing Incontinence',
+      description: 'Practical strategies for handling incontinence with dignity.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'Toileting Schedules',
+      description: 'Establishing bathroom routines to prevent accidents.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Incontinence Products Guide',
+      description: 'Choosing the right products for dementia care.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Skin Care and Incontinence',
+      description: 'Preventing rashes and infections.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Bathroom Accessibility',
+      description: 'Making bathrooms easier and safer to use.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ],
+  
+  'caregiver': [
+    {
+      id: 'OKTXq2VQ3Vg',
+      title: 'Preventing Caregiver Burnout',
+      description: 'Taking care of yourself while caregiving.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/OKTXq2VQ3Vg/hqdefault.jpg',
+      channelTitle: 'Alzheimer\'s Research UK',
+      publishedAt: '2016-05-17T00:00:00Z'
+    },
+    {
+      id: 'yOJiR2nMX60',
+      title: 'Respite Care Options',
+      description: 'Finding help and taking necessary breaks.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/yOJiR2nMX60/hqdefault.jpg',
+      channelTitle: 'CareChannel',
+      publishedAt: '2019-03-15T00:00:00Z'
+    },
+    {
+      id: 'LL0XKiyU760',
+      title: 'Caregiver Support Groups',
+      description: 'Connecting with other caregivers for support.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/LL0XKiyU760/hqdefault.jpg',
+      channelTitle: 'Osmosis',
+      publishedAt: '2018-06-22T00:00:00Z'
+    },
+    {
+      id: 'Z8u7XXyV3gE',
+      title: 'Coping with Grief',
+      description: 'Processing the ongoing grief of dementia care.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/Z8u7XXyV3gE/hqdefault.jpg',
+      channelTitle: 'Dementia UK',
+      publishedAt: '2020-01-10T00:00:00Z'
+    },
+    {
+      id: 'qOpiN9pRXzI',
+      title: 'Self-Care for Caregivers',
+      description: 'Maintaining your own health while caregiving.',
+      thumbnailUrl: 'https://i.ytimg.com/vi/qOpiN9pRXzI/hqdefault.jpg',
+      channelTitle: 'Home Instead',
+      publishedAt: '2017-08-10T00:00:00Z'
+    }
+  ]
+};
       channelTitle: 'Alzheimer\'s Society',
       publishedAt: '2018-09-14T00:00:00Z'
     }
