@@ -867,9 +867,7 @@ function matchCategory(query: string): string {
 }
 
 export async function searchYouTubeVideos(query: string): Promise<YouTubeVideo[]> {
-  // Match query to category
-  const category = matchCategory(query);
-  
-  // Return curated videos for that category
-  return videoLibrary[category] || videoLibrary.general;
+  // Video library temporarily disabled - videos need manual curation with verified IDs
+  // Return empty array for now
+  return [];
 }
