@@ -9,12 +9,14 @@ A comprehensive digital platform designed to support dementia caregivers through
 ## ✨ Key Features Implemented
 
 ### 🤖 AI-Powered Care Assistant
-- **Emotion-Aware Analysis**: Utilizes HuggingFace's emotion classification model to understand the emotional context of caregiver queries
-- **Personalized Responses**: Provides tailored advice based on detected emotions (joy, sadness, neutral, etc.)
+- **Keyword-Based Analysis**: Intelligent keyword matching to understand caregiver queries
+- **Scenario Detection**: Identifies 13+ specific care scenarios for targeted advice
+- **Personalized Responses**: Provides tailored advice based on detected situations
 - **Care Categories**: Organizes responses into specific areas (Behavior, Safety, Daily Care, Communication, Activities, Health)
 - **Contextual Tips**: Delivers actionable, evidence-based care tips and strategies
 - **Smart Search Suggestions**: Generates relevant search terms based on query analysis
 - **Product Recommendations**: Integrates relevant Amazon product suggestions based on search context
+- **No External API Required**: Works completely offline with built-in knowledge base
 
 ### 🔍 Intelligent Search System
 - **Natural Language Processing**: Processes caregiver questions in natural language
@@ -62,9 +64,8 @@ A comprehensive digital platform designed to support dementia caregivers through
 - **Icons**: Lucide React icon library
 
 ### AI & Data Integration
-- **AI Provider**: HuggingFace Inference API
-- **Models Used**: 
-  - `j-hartmann/emotion-english-distilroberta-base` for emotion detection
+- **AI System**: Built-in keyword-based scenario detection
+- **Knowledge Base**: Comprehensive care advice for 13+ common scenarios
 - **Content Management**: Static product data with TypeScript interfaces
 - **Video Content**: YouTube API integration with multi-key rotation system
 - **API Key Management**: Automatic rotation across 5 YouTube API keys for high availability
@@ -166,9 +167,6 @@ dementiaAide/
 ### Environment Variables
 Create a `.env.local` file with:
 ```env
-# Required
-HUGGINGFACE_API_KEY=your_huggingface_api_key
-
 # YouTube API (comma-separated for multiple keys)
 NEXT_PUBLIC_YOUTUBE_API_KEYS=key1,key2,key3,key4,key5
 
@@ -235,7 +233,7 @@ We welcome contributions from the community! Here's how you can help:
 - **Components**: 27+ reusable UI components
 - **Pages**: 6 main application pages
 - **API Routes**: 4+ backend endpoints
-- **Integrations**: 3 external APIs (HuggingFace, YouTube, Amazon)
+- **Integrations**: 2 external APIs (YouTube, Amazon)
 - **Dependencies**: 40+ carefully selected packages
 - **TypeScript Coverage**: 100% of application code
 
