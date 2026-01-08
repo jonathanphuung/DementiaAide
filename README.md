@@ -12,17 +12,21 @@ DementiaAide helps caregivers get quick answers to their questions. Type in what
 - Answers common caregiving questions
 - Recognizes 13+ specific situations (wandering, eating issues, aggression, etc.)
 - Gives practical tips you can actually use
-- Works without any external API - everything runs locally
+- Works completely offline - no external APIs needed
 
-**Search & Resources**
-- Find relevant YouTube videos about dementia care
+**Video Resources**
+- Curated library of 40+ quality dementia care videos
+- Organized by topic: wandering, bathing, eating, aggression, sleep, communication, and more
+- Hand-picked from trusted sources like Alzheimer's Association
+- Matches your search to show the most relevant videos
+
+**Product Search**
 - Get product suggestions from Amazon based on your search
-- Everything loads with proper indicators so you know it's working
+- Amazon integration for purchasing (optional)
 
 **Product Catalog**
 - Browse products designed for dementia care
 - Categories include memory aids, safety equipment, adaptive clothing
-- Amazon integration for purchasing
 
 **Clean Interface**
 - Works on phones, tablets, and desktops
@@ -33,7 +37,7 @@ DementiaAide helps caregivers get quick answers to their questions. Type in what
 
 Built with Next.js 14, TypeScript, and Tailwind CSS. Uses Radix UI for accessible components and Framer Motion for animations.
 
-The AI advice system uses keyword matching - no external APIs needed. YouTube and Amazon integrations are optional.
+The AI advice system and video library use keyword matching - completely self-contained. Amazon integration is optional.
 
 ## Project Structure
 
@@ -55,21 +59,20 @@ npm install
 npm run dev
 ```
 
-The site works without any API keys. For YouTube videos and Amazon products, add these to `.env.local`:
+The site works without any API keys. For Amazon products, add this to `.env.local`:
 
 ```env
-NEXT_PUBLIC_YOUTUBE_API_KEYS=your_keys_here
 AMAZON_ASSOCIATE_TAG=your_tag
 ```
 
 ## Development Status
 
 **Working:**
-- AI advice system
+- AI advice system (keyword-based, offline)
+- Curated video library (40+ videos, no API needed)
 - Search functionality  
 - Product catalog
-- YouTube integration
-- Amazon product recommendations
+- Amazon product recommendations (optional)
 
 **To Do:**
 - Resources page

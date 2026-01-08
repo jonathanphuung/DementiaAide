@@ -1,7 +1,6 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NEXT_PUBLIC_YOUTUBE_API_KEYS?: string; // Comma-separated list of YouTube API keys
       AMAZON_SPP_ACCESS_KEY?: string;
       AMAZON_SPP_SECRET_KEY?: string;
       AMAZON_SPP_REFRESH_TOKEN?: string;
