@@ -1,8 +1,3 @@
-import { HfInference } from '@huggingface/inference';
-
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY || 'hf_dummy');
-// Note: You can get a free API key from https://huggingface.co/settings/tokens
-
 export interface AICareResponse {
   explanation: string;
   tips: string[];
@@ -11,95 +6,147 @@ export interface AICareResponse {
   category: 'Behavior' | 'Safety' | 'Daily Care' | 'Communication' | 'Activities' | 'Health' | 'General';
 }
 
+// Keyword-based category detection
+function detectCategory(query: string): string {
+  const lowerQuery = query.toLowerCase();
+  
+  // Behavior keywords
+  if (lowerQuery.match(/aggress|angry|agitat|yell|hit|violent|stubborn|resist|refus|wander|pacing|repetitive|confusion|sundown/)) {
+    return 'behavior';
+  }
+  
+  // Safety keywords
+  if (lowerQuery.match(/safe|danger|fall|wander|lock|alarm|emergency|accident|risk|secure|protect|night|lost/)) {
+    return 'safety';
+  }
+  
+  // Daily Care keywords
+  if (lowerQuery.match(/bath|dress|toilet|eat|food|meal|cloth|shower|hygiene|grooming|incontinence/)) {
+    return 'daily';
+  }
+  
+  // Communication keywords
+  if (lowerQuery.match(/talk|speak|communicate|understand|conversation|language|words|express|respond/)) {
+    return 'communication';
+  }
+  
+  // Activities keywords
+  if (lowerQuery.match(/activit|game|music|exercise|hobby|engage|entertain|bored|stimulat|occupy/)) {
+    return 'activities';
+  }
+  
+  // Health keywords
+  if (lowerQuery.match(/health|doctor|medicin|symptom|pain|sick|ill|hospital|treatment|diagnosis/)) {
+    return 'health';
+  }
+  
+  return 'general';
+}
+
 export async function analyzeCareQuery(query: string): Promise<AICareResponse> {
   try {
-    // Using emotion analysis to determine the context and tone
-    const emotionResult = await hf.textClassification({
-      model: 'j-hartmann/emotion-english-distilroberta-base',
-      inputs: query
-    });
-
-    // Map emotions to appropriate responses
-    const emotionMap: { [key: string]: Partial<AICareResponse> } = {
-      joy: {
+    // Detect category from keywords
+    const detectedCategory = detectCategory(query);
+    
+    // Map categories to appropriate responses
+    const categoryMap: { [key: string]: Partial<AICareResponse> } = {
+      activities: {
         category: 'Activities',
-        explanation: 'It\'s wonderful that you\'re seeking positive activities for dementia care. Engaging in enjoyable activities can significantly improve quality of life for both the person with dementia and their caregivers. Activities that bring joy not only help maintain cognitive function but also strengthen emotional bonds and create meaningful moments together.',
+        explanation: 'Engaging activities are crucial in dementia care as they help maintain cognitive function, reduce anxiety, and improve quality of life. The key is to choose activities that match the person\'s current abilities and past interests, making them both enjoyable and achievable.',
         tips: [
-          'Continue engaging in enjoyable activities that connect with past interests and hobbies',
-          'Maintain a consistent routine but be flexible when needed',
-          'Celebrate small victories and positive moments throughout the day',
-          'Use music, art, or gentle exercise to promote engagement',
-          'Create a memory book or photo album to reminisce together',
-          'Schedule activities during the person\'s best time of day',
+          'Choose activities based on past interests and current abilities',
           'Break activities into simple, manageable steps',
-          'Focus on the process rather than the outcome of activities'
+          'Focus on the process and enjoyment, not the outcome',
+          'Use music from their youth to trigger positive memories',
+          'Try art activities like coloring, painting, or crafts',
+          'Engage in gentle exercises like walking or chair yoga',
+          'Look through photo albums and share memories together',
+          'Schedule activities during their most alert times of day',
+          'Be patient and flexible if they lose interest',
+          'Celebrate participation, not perfection'
         ]
       },
-      sadness: {
+      communication: {
         category: 'Communication',
-        explanation: 'It\'s completely normal and valid to feel emotional when dealing with dementia care challenges. The journey of caring for someone with dementia can be emotionally demanding, and it\'s important to acknowledge these feelings while also finding healthy ways to cope and communicate. Remember that seeking support is a sign of strength, not weakness.',
+        explanation: 'Communication changes are a natural part of dementia progression. Adapting your communication style can significantly reduce frustration for both you and your loved one. The goal is to maintain connection and understanding while respecting their dignity and emotional needs.',
         tips: [
-          'Take time for self-care and emotional well-being',
-          'Seek support from family, friends, or support groups',
-          'Practice patience and understanding with yourself and your loved one',
-          'Use clear, simple language when communicating',
-          'Pay attention to non-verbal cues and body language',
-          'Join a caregiver support group to share experiences',
-          'Consider professional counseling or therapy',
-          'Keep a journal to process your emotions',
-          'Take regular breaks to prevent emotional exhaustion',
-          'Maintain connections with your support network'
+          'Speak slowly, clearly, and in simple sentences',
+          'Make eye contact and use a calm, reassuring tone',
+          'Give them time to process and respond',
+          'Ask one question at a time, avoiding complex choices',
+          'Use gestures and visual cues to support understanding',
+          'Listen actively and validate their feelings',
+          'Avoid arguing or correcting minor mistakes',
+          'Pay attention to non-verbal communication and body language',
+          'Minimize background noise and distractions',
+          'Stay patient and don\'t take things personally'
         ]
       },
-      anger: {
+      behavior: {
         category: 'Behavior',
-        explanation: 'Challenging behaviors are common in dementia care, and it\'s natural to feel frustrated at times. Understanding that these behaviors are part of the condition, not intentional actions, can help in developing effective management strategies. The key is to focus on the underlying needs or triggers while maintaining a calm, supportive environment.',
+        explanation: 'Challenging behaviors in dementia are often a way of communicating unmet needs or discomfort. Rather than focusing on stopping the behavior, try to understand what might be causing it. With patience and observation, you can often identify triggers and find effective strategies.',
         tips: [
-          'Try to identify specific triggers for difficult behaviors',
-          'Stay calm and patient, even in challenging moments',
-          'Consider environmental factors like noise, lighting, or time of day',
-          'Keep a behavior log to track patterns and triggers',
-          'Use redirection instead of confrontation',
-          'Ensure basic needs are met (hunger, thirst, comfort)',
-          'Maintain a consistent daily routine',
-          'Create a calming environment',
-          'Use positive reinforcement for good behaviors',
-          'Consult with healthcare providers about behavior management strategies'
+          'Stay calm and avoid reacting emotionally to difficult behaviors',
+          'Look for patterns - keep a log of when behaviors occur',
+          'Check for physical causes: pain, hunger, thirst, or bathroom needs',
+          'Reduce environmental triggers like noise, clutter, or overstimulation',
+          'Use distraction and redirection rather than confrontation',
+          'Maintain a consistent daily routine for predictability',
+          'Ensure adequate rest and avoid overtiredness',
+          'Simplify tasks to reduce frustration',
+          'Validate their feelings even if the concern seems irrational',
+          'Consult with healthcare providers about persistent behaviors'
         ]
       },
-      fear: {
+      safety: {
         category: 'Safety',
-        explanation: 'Your concern for safety is crucial in providing good dementia care. Creating a secure environment while maintaining dignity and independence requires careful balance. Safety planning is an ongoing process that should adapt as needs change, and it\'s important to stay proactive rather than reactive in addressing safety concerns.',
+        explanation: 'Creating a safe environment is essential in dementia care, but it\'s equally important to balance safety with maintaining independence and dignity. A thoughtful approach to safety planning can prevent accidents while allowing your loved one to maintain as much autonomy as possible.',
         tips: [
-          'Create a safe, clearly organized environment',
-          'Establish regular check-ins and monitoring systems',
-          'Have emergency contacts and plans readily available',
-          'Install safety devices like grab bars and night lights',
-          'Remove or secure potentially dangerous items',
-          'Use door alarms or monitoring systems if wandering is a concern',
-          'Keep important medications secure and organized',
-          'Create a detailed emergency plan',
-          'Regular safety assessments of the living space',
-          'Consider medical alert systems or GPS devices'
+          'Remove tripping hazards like loose rugs and clutter',
+          'Install grab bars in bathrooms and adequate lighting throughout',
+          'Use door alarms or monitoring systems if wandering occurs',
+          'Keep medications, chemicals, and sharp objects secured',
+          'Label cabinets and rooms with pictures or words',
+          'Consider a medical alert system or GPS tracker',
+          'Keep emergency numbers visible and easily accessible',
+          'Ensure smoke detectors and carbon monoxide alarms work',
+          'Remove or disable stove knobs if cooking is unsafe',
+          'Create a safe, enclosed outdoor space if possible'
         ]
       },
-      surprise: {
+      daily: {
         category: 'Daily Care',
-        explanation: 'Unexpected situations are common in dementia care, and being prepared while maintaining flexibility is key. Each day may bring new challenges, but viewing these as opportunities to learn and adapt can help build resilience. Having structured routines while being ready to adjust them helps maintain a balance between consistency and adaptability.',
+        explanation: 'Daily care routines provide structure and familiarity, which can be very comforting for someone with dementia. The key is to maintain consistency while being flexible and allowing them to participate as much as possible, preserving their dignity and sense of independence.',
         tips: [
-          'Maintain flexible routines that can adapt to changing needs',
-          'Have backup plans ready for common situations',
-          'Document new developments and successful strategies',
-          'Keep a daily log of activities and observations',
-          'Prepare for different scenarios in advance',
-          'Build a network of backup caregivers',
-          'Keep essential supplies well-stocked',
-          'Learn to recognize early signs of changes in condition',
-          'Stay connected with healthcare providers',
-          'Practice stress-management techniques for unexpected situations'
+          'Establish and stick to a consistent daily routine',
+          'Allow plenty of time for each task - avoid rushing',
+          'Let them do as much as they can independently',
+          'Break tasks into simple, manageable steps',
+          'Prepare clothes and items ahead of time',
+          'Use visual cues and simple verbal instructions',
+          'Make bathing more comfortable with warm room, music, and reassurance',
+          'Choose clothing that\'s easy to put on and comfortable',
+          'Keep the environment calm and minimize distractions',
+          'Be patient and offer encouragement throughout'
         ]
       },
-      neutral: {
+      health: {
+        category: 'Health',
+        explanation: 'Managing health needs in dementia care requires close attention and coordination with healthcare providers. Regular monitoring, medication management, and preventive care are essential, along with recognizing when changes need medical attention.',
+        tips: [
+          'Keep a detailed medication schedule and organize pills carefully',
+          'Attend all medical appointments and take notes',
+          'Monitor for changes in behavior, appetite, or physical condition',
+          'Maintain a list of all medications and medical conditions',
+          'Watch for signs of pain, discomfort, or illness',
+          'Ensure regular dental, vision, and hearing check-ups',
+          'Keep emergency contact information readily available',
+          'Communicate any concerns to healthcare providers promptly',
+          'Follow prescribed treatments consistently',
+          'Maintain good nutrition and hydration'
+        ]
+      },
+      general: {
         category: 'General',
         explanation: 'Understanding dementia care is an ongoing journey that combines practical knowledge with compassionate support. While each person\'s experience with dementia is unique, having a strong foundation of care principles and resources helps provide consistent, quality care. Regular learning and adaptation to changing needs ensures the best possible support for both the person with dementia and their caregivers.',
         tips: [
@@ -117,26 +164,13 @@ export async function analyzeCareQuery(query: string): Promise<AICareResponse> {
       }
     };
 
-    const emotion = emotionResult[0].label.toLowerCase();
-    const baseResponse = emotionMap[emotion] || emotionMap.neutral;
+    const baseResponse = categoryMap[detectedCategory] || categoryMap.general;
 
-    // Get emotion confidence scores
-    const emotionScores = emotionResult.reduce((acc, item) => {
-      acc[item.label.toLowerCase()] = item.score;
-      return acc;
-    }, {} as Record<string, number>);
-
-    // Get secondary emotion for more nuanced responses
-    const secondaryEmotion = emotionResult[1]?.label.toLowerCase();
-
-    // Combine primary and secondary emotion responses
-    const secondaryResponse = emotionMap[secondaryEmotion] || emotionMap.neutral;
-
-    // Create detailed search suggestions based on emotion context
+    // Create search suggestions based on detected category and query
     const searchSuggestions = [
+      `${query}`,
       `${baseResponse.category?.toLowerCase()} strategies in dementia care`,
-      `managing ${emotion} in dementia care`,
-      `${secondaryEmotion} coping techniques dementia`,
+      `managing dementia ${detectedCategory}`,
       'evidence-based dementia care approaches',
       'professional dementia care resources'
     ].filter(Boolean);
@@ -156,16 +190,16 @@ export async function analyzeCareQuery(query: string): Promise<AICareResponse> {
     return {
       explanation: baseResponse.explanation || 'Understanding dementia care helps provide better support.',
       tips: baseResponse.tips || ['Learn about the condition', 'Establish routines', 'Seek support'],
-      searchSuggestions: searchSuggestions.slice(0, 5), // Take top 5 suggestions
-      relatedTopics: relatedTopics.slice(0, 6), // Take top 6 related topics
+      searchSuggestions: searchSuggestions.slice(0, 5),
+      relatedTopics: relatedTopics.slice(0, 6),
       category: baseResponse.category as any || 'General'
     };
   } catch (error) {
     console.error('Error analyzing care query:', error);
     return {
-      explanation: "I apologize, but I'm having trouble processing your query at the moment. Please try again.",
-      tips: ["Consider rephrasing your question", "Try breaking down complex questions into simpler ones"],
-      searchSuggestions: ["dementia care basics"],
+      explanation: "I'm here to help with your dementia care questions. Please describe the situation you're facing, and I'll provide relevant advice and resources.",
+      tips: ["Be specific about the situation", "Mention any recent changes", "Note the time of day when issues occur"],
+      searchSuggestions: ["dementia care basics", "caregiver support"],
       relatedTopics: ["dementia care", "caregiver support", "dementia symptoms"],
       category: "General"
     };
@@ -174,26 +208,19 @@ export async function analyzeCareQuery(query: string): Promise<AICareResponse> {
 
 export async function categorizeContent(content: string): Promise<string[]> {
   try {
-    // Using free emotion detection model
-    const result = await hf.textClassification({
-      model: 'j-hartmann/emotion-english-distilroberta-base',
-      inputs: content
-    });
-
-    // Map emotions to dementia care categories
-    const emotionToCategory: { [key: string]: string } = {
-      joy: 'Activities',
-      sadness: 'Communication',
-      anger: 'Behavior',
-      fear: 'Safety',
-      surprise: 'Daily Care',
-      disgust: 'Health',
-      neutral: 'General'
+    const category = detectCategory(content);
+    
+    const categoryNames: { [key: string]: string } = {
+      behavior: 'Behavior',
+      safety: 'Safety',
+      daily: 'Daily Care',
+      communication: 'Communication',
+      activities: 'Activities',
+      health: 'Health',
+      general: 'General'
     };
 
-    // Get the category based on the detected emotion
-    const category = emotionToCategory[result[0].label.toLowerCase()] || 'General';
-    return [category, 'Dementia Care'];
+    return [categoryNames[category] || 'General', 'Dementia Care'];
   } catch (error) {
     console.error('Error categorizing content:', error);
     return ['Dementia Care'];
@@ -202,46 +229,24 @@ export async function categorizeContent(content: string): Promise<string[]> {
 
 export async function enhanceSearchQuery(query: string): Promise<string> {
   try {
-    // Using emotion detection to enhance the query with relevant terms
-    const result = await hf.textClassification({
-      model: 'j-hartmann/emotion-english-distilroberta-base',
-      inputs: query
-    });
-
-    const emotion = result[0].label.toLowerCase();
-    const emotionToKeywords: { [key: string]: string[] } = {
-      joy: ['positive', 'activities', 'engagement'],
-      sadness: ['support', 'coping', 'care'],
-      anger: ['managing', 'behavior', 'strategies'],
-      fear: ['safety', 'prevention', 'security'],
-      surprise: ['adapting', 'changes', 'flexibility'],
-      disgust: ['hygiene', 'health', 'care'],
-      neutral: ['general', 'basic', 'guide']
+    const category = detectCategory(query);
+    
+    const categoryKeywords: { [key: string]: string[] } = {
+      activities: ['engagement', 'activities', 'stimulation'],
+      communication: ['talking', 'understanding', 'connection'],
+      behavior: ['managing', 'coping', 'strategies'],
+      safety: ['prevention', 'security', 'protection'],
+      daily: ['routine', 'care', 'assistance'],
+      health: ['medical', 'treatment', 'wellness'],
+      general: ['support', 'guide', 'help']
     };
 
-    const keywords = emotionToKeywords[emotion] || emotionToKeywords.neutral;
+    const keywords = categoryKeywords[category] || categoryKeywords.general;
     const enhancedQuery = `${query} ${keywords.join(' ')} dementia care`;
 
     return enhancedQuery;
   } catch (error) {
     console.error('Error enhancing search query:', error);
     return query;
-  }
-}
-
-// Temporary test function - remove after testing
-export async function testHuggingFace() {
-  try {
-    console.log('Testing Hugging Face API...');
-    // Using a completely free model
-    const result = await hf.textClassification({
-      model: 'j-hartmann/emotion-english-distilroberta-base',
-      inputs: 'Hello, how are you?'
-    });
-    console.log('Success!', result);
-    return result;
-  } catch (error) {
-    console.error('Hugging Face API Test Error:', error);
-    throw error;
   }
 }
