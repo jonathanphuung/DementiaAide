@@ -6,12 +6,12 @@
 
 :root {
   --font-size: 16px;
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: #0a0a0a;
   --card: #ffffff;
   --card-foreground: #0a0a0a;
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
   --primary: #2563eb;
   --primary-foreground: #ffffff;
   --secondary: #f1f5f9;
@@ -28,21 +28,8 @@
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --ring: #94a3b8;
   --radius: 1rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
@@ -130,98 +117,6 @@
 
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-/* Force override all text colors to prevent hydration issues */
-* {
-  color: inherit;
-}
-
-body, body * {
-  color: hsl(222.2 84% 4.9%) !important;
-}
-
-/* Specific overrides */
-.text-foreground,
-.text-foreground *,
-h1, h2, h3, h4, h5, h6,
-p, span, div, a, button {
-  color: hsl(222.2 84% 4.9%) !important;
-}
-
-.text-muted-foreground,
-.text-muted-foreground * {
-  color: hsl(215.4 16.3% 46.9%) !important;
-}
-
-.text-blue-600,
-.text-blue-600 * {
-  color: hsl(221.2 83.2% 53.3%) !important;
-}
-
-.text-blue-700,
-.text-blue-700 * {
-  color: hsl(221.2 83.2% 45%) !important;
-}
-
-.text-white,
-.text-white * {
-  color: white !important;
-}
-
-/* Gradient text exceptions */
-.text-transparent,
-.bg-clip-text {
-  color: transparent !important;
-}
-
-/* Background colors */
-body {
-  background-color: hsl(0 0% 98%) !important;
-}
-
-@layer utilities {
-  .text-foreground {
-    color: hsl(222.2 84% 4.9%) !important;
-  }
-  
-  .text-muted-foreground {
-    color: hsl(215.4 16.3% 46.9%) !important;
-  }
-}
-
-/* Chrome-specific fixes for color persistence */
-@supports (-webkit-appearance: none) {
-  /* This targets WebKit browsers (Chrome, Safari, Edge) */
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-  
-  /* Force Chrome to respect our colors */
-  body {
-    color: hsl(222.2 84% 4.9%) !important;
-    background-color: hsl(0 0% 98%) !important;
-    will-change: auto;
-  }
-  
-  /* Ensure all text elements have color in Chrome */
-  h1, h2, h3, h4, h5, h6, p, span, div, a, button, label {
-    color: inherit !important;
-    will-change: auto;
-  }
-  
-  /* Chrome GPU acceleration to prevent color flickering */
-  body, body * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    /* Force Chrome to use GPU layers for better color rendering */
-    will-change: transform;
-    contain: layout style paint;
   }
 }
 
