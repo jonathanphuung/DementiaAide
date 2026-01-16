@@ -44,13 +44,13 @@ export function SearchHero() {
           className="text-center space-y-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold text-foreground">
-            Your Comprehensive Guide to{' '}
+            Your AI-Powered Guide to{' '}
             <span className="text-blue-600 font-bold">
               Dementia Care
             </span>
           </h1>
           <p className="text-xl text-muted-foreground">
-            Get instant access to expert advice, resources, and products to help with dementia care
+            Get instant AI advice, curated educational videos, and personalized product recommendations for Alzheimer's and dementia caregiving challenges.
           </p>
         </motion.div>
 
