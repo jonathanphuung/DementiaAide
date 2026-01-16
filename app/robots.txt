@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Allow specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot  
+Allow: /
+
+# Disallow search result pages to prevent duplicate content
+Disallow: /search?*
+
+# Disallow api routes
+Disallow: /api/
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /resources
+Allow: /caregiver-support
+Allow: /shop
+
+# Sitemap location
+Sitemap: https://dementia-aide.vercel.app/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
