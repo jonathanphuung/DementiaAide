@@ -1,0 +1,14 @@
+{
+  "exportDate": "2026-01-30T21:42:18.905Z",
+  "store": "dementiaaide.myshopify.com",
+  "counts": {
+    "products": 0,
+    "orders": 0,
+    "customers": 0
+  },
+  "files": {
+    "products": "/Users/jonathanphung/Code/dementiaAide/migration/products-2026-01-30T21-42-18-896Z.json",
+    "orders": "/Users/jonathanphung/Code/dementiaAide/migration/orders-2026-01-30T21-42-18-896Z.json",
+    "customers": "/Users/jonathanphung/Code/dementiaAide/migration/customers-2026-01-30T21-42-18-896Z.json"
+  }
+}

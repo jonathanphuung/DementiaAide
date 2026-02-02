@@ -1,0 +1,13 @@
+{
+  "importDate": "2026-02-02T22:13:25.895Z",
+  "counts": {
+    "products": 11,
+    "customers": 11,
+    "orders": 1
+  },
+  "files": {
+    "products": "migration/processed/products.json",
+    "customers": "migration/processed/customers.json",
+    "orders": "migration/processed/orders.json"
+  }
+}

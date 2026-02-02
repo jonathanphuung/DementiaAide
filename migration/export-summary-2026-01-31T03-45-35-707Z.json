@@ -1,0 +1,14 @@
+{
+  "exportDate": "2026-01-31T03:45:35.712Z",
+  "store": "caregiversteam.myshopify.com",
+  "counts": {
+    "products": 0,
+    "orders": 0,
+    "customers": 0
+  },
+  "files": {
+    "products": "/Users/jonathanphung/Code/dementiaAide/migration/products-2026-01-31T03-45-35-707Z.json",
+    "orders": "/Users/jonathanphung/Code/dementiaAide/migration/orders-2026-01-31T03-45-35-707Z.json",
+    "customers": "/Users/jonathanphung/Code/dementiaAide/migration/customers-2026-01-31T03-45-35-707Z.json"
+  }
+}
