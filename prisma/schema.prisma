@@ -1,0 +1,271 @@
+// Database schema for e-commerce functionality
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  firstName         String?
+  lastName          String?
+  phone             String?
+  acceptsMarketing  Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  orders            Order[]
+  addresses         Address[]
+  cartItems         CartItem[]
+  
+  // Shopify migration fields
+  shopifyId         String?   @unique
+  totalSpent        Float     @default(0)
+  ordersCount       Int       @default(0)
+  
+  @@map("users")
+}
+
+model Address {
+  id          String  @id @default(cuid())
+  userId      String
+  firstName   String
+  lastName    String
+  company     String?
+  address1    String
+  address2    String?
+  city        String
+  province    String
+  country     String
+  zip         String
+  phone       String?
+  isDefault   Boolean @default(false)
+  
+  // Relations
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Shopify migration
+  shopifyId   String? @unique
+  
+  @@map("addresses")
+}
+
+model Product {
+  id              String      @id @default(cuid())
+  title           String
+  description     String?
+  handle          String      @unique
+  vendor          String?
+  productType     String?
+  tags            String[]
+  status          ProductStatus @default(ACTIVE)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  // SEO
+  seoTitle        String?
+  seoDescription  String?
+  
+  // Relations
+  variants        ProductVariant[]
+  images          ProductImage[]
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  
+  // Shopify migration
+  shopifyId       String?     @unique
+  
+  @@map("products")
+}
+
+model ProductVariant {
+  id                  String    @id @default(cuid())
+  productId           String
+  title               String
+  price               Float
+  compareAtPrice      Float?
+  sku                 String?
+  inventoryQuantity   Int       @default(0)
+  weight              Float?
+  weightUnit          String?
+  inventoryManagement InventoryManagement @default(MANUAL)
+  inventoryPolicy     InventoryPolicy @default(DENY)
+  availableForSale    Boolean   @default(true)
+  
+  // Relations
+  product             Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems          OrderItem[]
+  cartItems           CartItem[]
+  
+  // Shopify migration
+  shopifyId           String?   @unique
+  
+  @@map("product_variants")
+}
+
+model ProductImage {
+  id          String  @id @default(cuid())
+  productId   String
+  url         String
+  altText     String?
+  position    Int     @default(0)
+  
+  // Relations
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  // Shopify migration
+  shopifyId   String? @unique
+  
+  @@map("product_images")
+}
+
+model Order {
+  id                String        @id @default(cuid())
+  orderNumber       String        @unique
+  userId            String?
+  email             String
+  phone             String?
+  status            OrderStatus   @default(PENDING)
+  financialStatus   FinancialStatus @default(PENDING)
+  fulfillmentStatus FulfillmentStatus @default(UNFULFILLED)
+  
+  // Pricing
+  subtotal          Float
+  totalTax          Float
+  totalPrice        Float
+  currency          String        @default("USD")
+  
+  // Timestamps
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  cancelledAt       DateTime?
+  cancelReason      String?
+  
+  // Relations
+  user              User?         @relation(fields: [userId], references: [id])
+  items             OrderItem[]
+  shippingAddress   OrderAddress? @relation("ShippingAddress")
+  billingAddress    OrderAddress? @relation("BillingAddress")
+  
+  // Shopify migration
+  shopifyId         String?       @unique
+  shopifyName       String?
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id              String         @id @default(cuid())
+  orderId         String
+  productId       String
+  variantId       String
+  title           String
+  quantity        Int
+  price           Float
+  totalPrice      Float
+  
+  // Relations
+  order           Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product         Product        @relation(fields: [productId], references: [id])
+  variant         ProductVariant @relation(fields: [variantId], references: [id])
+  
+  // Shopify migration
+  shopifyId       String?        @unique
+  
+  @@map("order_items")
+}
+
+model OrderAddress {
+  id          String  @id @default(cuid())
+  shippingOrderId     String? @unique
+  billingOrderId      String? @unique
+  type        AddressType
+  firstName   String
+  lastName    String
+  company     String?
+  address1    String
+  address2    String?
+  city        String
+  province    String
+  country     String
+  zip         String
+  phone       String?
+  
+  // Relations
+  shippingOrder       Order?   @relation("ShippingAddress", fields: [shippingOrderId], references: [id], onDelete: Cascade)
+  billingOrder        Order?   @relation("BillingAddress", fields: [billingOrderId], references: [id], onDelete: Cascade)
+  
+  @@map("order_addresses")
+}
+
+model CartItem {
+  id          String         @id @default(cuid())
+  userId      String
+  productId   String
+  variantId   String
+  quantity    Int
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  
+  // Relations
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product     Product        @relation(fields: [productId], references: [id])
+  variant     ProductVariant @relation(fields: [variantId], references: [id])
+  
+  @@unique([userId, variantId])
+  @@map("cart_items")
+}
+
+// Enums
+enum ProductStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+enum InventoryManagement {
+  MANUAL
+  AUTOMATIC
+}
+
+enum InventoryPolicy {
+  DENY
+  CONTINUE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum FinancialStatus {
+  PENDING
+  AUTHORIZED
+  PAID
+  PARTIALLY_PAID
+  REFUNDED
+  PARTIALLY_REFUNDED
+  VOIDED
+}
+
+enum FulfillmentStatus {
+  UNFULFILLED
+  PARTIAL
+  FULFILLED
+  RESTOCKED
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+}
