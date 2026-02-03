@@ -15,36 +15,6 @@ export function CTA() {
           transition={{ duration: 0.6 }}
           className="relative bg-blue-600 rounded-3xl overflow-hidden"
         >
-          {/* Decorative background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 90, 0],
-                opacity: [0.05, 0.1, 0.05],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-              className="absolute -top-1/2 -right-1/2 w-full h-full bg-white/5 rounded-full"
-            />
-            <motion.div
-              animate={{
-                scale: [1.2, 1, 1.2],
-                rotate: [90, 0, 90],
-                opacity: [0.05, 0.1, 0.05],
-              }}
-              transition={{
-                duration: 15,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-              className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-blue-700/20 rounded-full"
-            />
-          </div>
-
           <div className="relative px-8 py-16 md:px-16 md:py-20">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               {/* Icon */}
@@ -53,7 +23,7 @@ export function CTA() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="inline-flex items-center justify-center w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl"
+                className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl">
               >
                 <Sparkles className="w-8 h-8 text-white" />
               </motion.div>
@@ -77,7 +47,7 @@ export function CTA() {
                 transition={{ delay: 0.4 }}
                 className="text-lg text-blue-100 max-w-2xl mx-auto"
               >
-                Get our Bear Hug jumpsuit and access free resources to support both you and your loved one. Join thousands of families making caregiving more manageable.
+                Get our adaptive care jumpsuit and access free resources to support both you and your loved one. Join thousands of families making caregiving more manageable.
               </motion.p>
 
               {/* Buttons */}
@@ -99,7 +69,7 @@ export function CTA() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-6 rounded-xl backdrop-blur-sm"
+                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-6 rounded-xl">
                   onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Browse Free Resources

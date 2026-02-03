@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
@@ -20,29 +19,10 @@ export function SearchHero() {
 
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center bg-white px-4">
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50 rounded-full blur-3xl"
-        />
-      </div>
 
       <div className="max-w-4xl w-full space-y-8 relative">
         {/* Hero Text */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
+        <div className="text-center space-y-4">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground">
             Your AI-Powered Guide to{' '}
             <span className="text-blue-600 font-bold">
@@ -52,13 +32,10 @@ export function SearchHero() {
           <p className="text-xl text-muted-foreground">
             Get instant AI advice, curated educational videos, and personalized product recommendations for Alzheimer's and dementia caregiving challenges.
           </p>
-        </motion.div>
+        </div>
 
         {/* Search Form */}
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+        <form
           onSubmit={handleSearch}
           className="relative max-w-2xl mx-auto"
         >
@@ -76,13 +53,10 @@ export function SearchHero() {
           >
             <Search className="w-6 h-6" />
           </Button>
-        </motion.form>
+        </form>
 
         {/* Example Searches */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+        <div
           className="text-center"
         >
           <p className="text-sm text-muted-foreground mb-4">Popular searches:</p>
@@ -107,7 +81,7 @@ export function SearchHero() {
               </Button>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

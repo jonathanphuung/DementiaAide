@@ -7,76 +7,30 @@ import { Button } from './ui/button';
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-blue-50">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.3, 0.2],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] bg-blue-100 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.15, 0.25, 0.15],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute -bottom-1/2 -left-1/4 w-[800px] h-[800px] bg-blue-200 rounded-full blur-3xl"
-        />
-      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            <div>
               <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full mb-6">
                 Resources & Products for Dementia Care
               </span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl text-foreground leading-tight"
-            >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl text-foreground leading-tight">
               Let us lighten the{' '}
               <span className="text-blue-600 font-bold">
                 caregiving load
               </span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg text-muted-foreground max-w-xl"
-            >
+            <p className="text-lg text-muted-foreground max-w-xl">
               Discover our specialized full-body jumpsuit for easier care, plus expert resources
               to support both caregivers and those living with dementia.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-600/30 transition-all group"
@@ -88,7 +42,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 px-8 py-6 rounded-xl hover:bg-white/50 backdrop-blur-sm group"
+                className="border-2 px-8 py-6 rounded-xl hover:bg-white/50 group">
                 onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -97,12 +51,7 @@ export function Hero() {
             </motion.div>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="grid grid-cols-3 gap-8 pt-8"
-            >
+            <div className="grid grid-cols-3 gap-8 pt-8">
               {[
                 { value: '10K+', label: 'Families Helped' },
                 { value: '98%', label: 'Satisfaction Rate' },
@@ -113,53 +62,36 @@ export function Hero() {
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Content - Image Grid */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="relative overflow-visible"
-          >
+          <div className="relative overflow-visible">
             <div className="grid grid-cols-2 gap-4">
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="relative h-64 rounded-2xl overflow-hidden shadow-2xl"
-              >
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1758686254056-6cd980b9aaee?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGRlcmx5JTIwY2FyZSUyMGhhcHB5fGVufDF8fHx8MTc2MDAwMTU4NXww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Care"
                   className="w-full h-full object-cover"
                 />
-              </motion.div>
+              </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="relative h-64 rounded-2xl overflow-hidden shadow-2xl mt-8"
-              >
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-2xl mt-8">
                 <img
                   src="https://images.unsplash.com/photo-1526225294770-079fcbe68745?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJlZ2l2ZXIlMjBzdXBwb3J0fGVufDF8fHx8MTc2MDEyNDE1OXww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Support"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
-              </motion.div>
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
 
-              <motion.div
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="relative h-64 rounded-2xl overflow-hidden shadow-2xl -mt-4"
-              >
+              <div className="relative h-64 rounded-2xl overflow-hidden shadow-2xl -mt-4">
                 <img
                   src="https://images.unsplash.com/photo-1758691461516-7e716e0ca135?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzZW5pb3IlMjBoZWFsdGhjYXJlJTIwcHJvZmVzc2lvbmFsfGVufDF8fHx8MTc2MDEyNzA1NXww&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Professional Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-black/20" />
               </motion.div>
 
               <motion.div
@@ -172,17 +104,12 @@ export function Hero() {
                   alt="Happy Care"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" />
-              </motion.div>
+                <div className="absolute inset-0 bg-black/20" />
+              </div>
             </div>
 
             {/* Floating badge - positioned at bottom-left of image grid */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, type: 'spring' }}
-              className="absolute bottom-4 -left-2 bg-white rounded-2xl shadow-lg p-4 backdrop-blur-sm z-10"
-            >
+            <div className="absolute bottom-4 -left-2 bg-white rounded-2xl shadow-lg p-4 z-10">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
                   <span className="text-2xl text-white">✓</span>
@@ -192,8 +119,8 @@ export function Hero() {
                   <div className="text-foreground">10,000+ Families</div>
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

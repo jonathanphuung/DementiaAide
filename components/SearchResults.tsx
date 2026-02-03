@@ -71,7 +71,7 @@ export function SearchResults() {
   return (
     <div className="min-h-screen">
       {/* Search Section */}
-      <div className="pt-32 pb-16 bg-gradient-to-b from-blue-50/50">
+      <div className="pt-32 pb-16 bg-blue-50/50">
         <div className="max-w-2xl mx-auto px-4 w-full">
           <div className="relative">
             <Input
@@ -82,7 +82,7 @@ export function SearchResults() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Button 
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-blue-600 to-blue-700"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700"
               size="icon"
             >
               <Search className="w-5 h-5 text-white" />

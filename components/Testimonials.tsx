@@ -8,7 +8,7 @@ const testimonials = [
     name: 'Sarah Mitchell',
     role: 'Daughter & Primary Caregiver',
     content:
-      'I am so happy I found this company. The Bear Hug onesie is what I need for my mother. The quality of the fabric and the design has been excellent.',
+      'I am so happy I found this company. The adaptive jumpsuit is what I need for my mother. The quality of the fabric and the design has been excellent.',
     rating: 5,
     image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
   },
@@ -33,33 +33,6 @@ const testimonials = [
 export function Testimonials() {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute top-1/4 -left-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-blue-100 rounded-full blur-3xl"
-        />
-      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -69,7 +42,7 @@ export function Testimonials() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <span className="inline-block px-4 py-2 bg-white/80 backdrop-blur-sm text-blue-700 rounded-full mb-4">
+            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full mb-4">
               Testimonials
             </span>
           </motion.div>
@@ -109,7 +82,7 @@ export function Testimonials() {
               whileHover={{ y: -8, scale: 1.02 }}
               className="group"
             >
-              <div className="relative h-full bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl shadow-black/5 border border-white/20 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
+              <div className="relative h-full bg-white rounded-2xl p-8 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300">
                 {/* Quote icon */}
                 <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                   <Quote className="w-6 h-6 text-white" />

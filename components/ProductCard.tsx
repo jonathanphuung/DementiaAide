@@ -24,8 +24,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -8 }}
+      viewport={{ once: true, margin: "100px" }}
       className="group h-full"
     >
       <Card className="h-full overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-blue-200">
@@ -34,7 +33,8 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
           <ImageWithFallback
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
           />
 
           {/* Badges */}
@@ -65,7 +65,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
               }}
               className={`w-10 h-10 rounded-full ${
                 isLiked ? 'bg-red-500' : 'bg-white/90'
-              } backdrop-blur-sm flex items-center justify-center shadow-lg hover:scale-110 transition-all`}
+              } flex items-center justify-center shadow-lg hover:scale-110 transition-all`}
             >
               <Heart
                 className={`w-5 h-5 ${

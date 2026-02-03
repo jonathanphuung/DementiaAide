@@ -12,28 +12,28 @@ const resourceCategories = [
     title: 'Care Guides',
     description: 'Comprehensive guides for daily dementia care',
     count: '50+ Articles',
-    gradient: 'from-blue-500 to-cyan-500',
+    color: 'bg-blue-500',
   },
   {
     icon: Video,
     title: 'Video Tutorials',
     description: 'Step-by-step visual demonstrations',
     count: '30+ Videos',
-    gradient: 'from-purple-500 to-pink-500',
+    color: 'bg-purple-500',
   },
   {
     icon: FileText,
     title: 'Printable Tools',
     description: 'Checklists, charts, and care planners',
     count: '25+ Downloads',
-    gradient: 'from-green-500 to-emerald-500',
+    color: 'bg-green-500',
   },
   {
     icon: Users,
     title: 'Community Support',
     description: 'Connect with other caregivers',
     count: '10K+ Members',
-    gradient: 'from-orange-500 to-red-500',
+    color: 'bg-orange-500',
   },
 ];
 
@@ -83,7 +83,7 @@ export function ResourcesSection() {
             className="text-4xl md:text-5xl text-foreground mb-4"
           >
             Expert{' '}
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <span className="text-purple-600">
               Caregiver Resources
             </span>
           </motion.h2>
@@ -111,10 +111,8 @@ export function ResourcesSection() {
               whileHover={{ y: -8 }}
             >
               <Card className="h-full p-6 cursor-pointer group hover:shadow-2xl transition-all border-2 border-transparent hover:border-purple-200">
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${category.gradient} p-0.5 mb-4`}>
-                  <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                    <category.icon className={`w-6 h-6 bg-gradient-to-br ${category.gradient} bg-clip-text text-transparent`} />
-                  </div>
+                <div className={`w-14 h-14 rounded-xl ${category.color} flex items-center justify-center mb-4`}>
+                  <category.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg text-foreground mb-2 group-hover:text-purple-600 transition-colors">
                   {category.title}
@@ -146,7 +144,7 @@ export function ResourcesSection() {
                 className="group cursor-pointer"
               >
                 <Card className="overflow-hidden hover:shadow-2xl transition-all">
-                  <div className="aspect-video overflow-hidden bg-gradient-to-br from-purple-100 to-pink-100">
+                  <div className="aspect-video overflow-hidden bg-purple-100">
                     <ImageWithFallback
                       src={resource.image}
                       alt={resource.title}
@@ -180,18 +178,18 @@ export function ResourcesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 md:p-12 mt-16"
+          className="bg-purple-50 rounded-3xl p-8 md:p-12 mt-16"
         >
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full">
                 <Heart className="w-4 h-4 text-purple-600" />
                 <span className="text-sm text-purple-700">Caregiver Wellness</span>
               </div>
               
               <h3 className="text-3xl md:text-4xl text-foreground">
                 Taking care of yourself is{' '}
-                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <span className="text-purple-600">
                   just as important
                 </span>
               </h3>
@@ -215,7 +213,7 @@ export function ResourcesSection() {
                 ))}
               </div>
 
-              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-8 py-6 rounded-xl">
+              <Button className="bg-purple-600 hover:bg-purple-700 px-8 py-6 rounded-xl">
                 <Download className="mr-2 w-5 h-5" />
                 Download Self-Care Guide
               </Button>

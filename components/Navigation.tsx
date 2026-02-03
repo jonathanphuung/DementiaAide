@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Menu, X, Heart } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -26,23 +25,18 @@ export function Navigation() {
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+    <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/80 backdrop-blur-lg shadow-lg shadow-black/5'
+          ? 'bg-white shadow-lg'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <motion.a
+          <a
             href="/"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -51,31 +45,25 @@ export function Navigation() {
             <span className="text-xl text-foreground tracking-tight">
               Dementia<span className="text-blue-600">Aide</span>
             </span>
-          </motion.a>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => (
-                <motion.a
+                <a
                 key={item.label}
                 href={item.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + index * 0.05 }}
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors relative group"
                 onClick={() => {}}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
-              </motion.a>
+              </a>
             ))}
           </div>
 
           {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+          <div
             className="hidden md:flex items-center gap-3"
           >
             <Button variant="ghost" className="text-sm" onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}>
@@ -87,7 +75,7 @@ export function Navigation() {
             >
               Shop Now
             </Button>
-          </motion.div>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -105,11 +93,8 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-white/95 backdrop-blur-lg border-t border-border"
+        <div
+          className="md:hidden bg-white border-t border-border"
         >
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => (
@@ -134,8 +119,8 @@ export function Navigation() {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </nav>
   );
 }
