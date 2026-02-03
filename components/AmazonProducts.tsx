@@ -34,7 +34,7 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
             onClick={handleProductClick}>
         <CardContent className="p-0 h-full flex flex-col">
           {/* Product Header */}
-          <div className="relative bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-t-lg border-b border-orange-200">
+          <div className="relative bg-orange-50 p-6 rounded-t-lg border-b border-orange-200">
             <div className="flex items-center justify-center h-16">
               <ShoppingCart className="w-12 h-12 text-orange-600" />
             </div>
@@ -43,7 +43,7 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
             
             {/* External link indicator */}
             <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="bg-black/20 backdrop-blur-sm rounded-full p-1">
+              <div className="bg-black/20 rounded-full p-1">
                 <ExternalLink className="w-4 h-4 text-white" />
               </div>
             </div>

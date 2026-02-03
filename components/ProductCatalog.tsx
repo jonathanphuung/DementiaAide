@@ -1,18 +1,10 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Filter, SlidersHorizontal } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import { products, Product } from '@/lib/products';
 import { ProductCard } from './ProductCard';
-import { Button } from './ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select';
 import { Badge } from './ui/badge';
 import { Checkbox } from './ui/checkbox';
 import { Label } from './ui/label';
@@ -25,9 +17,8 @@ export function ProductCatalog() {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [showOnSaleOnly, setShowOnSaleOnly] = useState(false);
   const [showInStockOnly, setShowInStockOnly] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Filter and sort products
+  // Filter and sort products with useCallback for stable reference
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = [...products];
 
@@ -65,10 +56,10 @@ export function ProductCatalog() {
     return filtered;
   }, [categoryFilter, showOnSaleOnly, showInStockOnly, sortBy]);
 
-  const categories: CategoryFilter[] = ['all', 'Adaptive Wear', 'Awareness', 'Accessories', 'Clothing'];
+  const categories: CategoryFilter[] = ['all', 'Adaptive Wear', 'Awareness'];
 
   return (
-    <section id="shop" className="py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50/30">
+    <section id="shop" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -91,7 +82,7 @@ export function ProductCatalog() {
             className="text-4xl md:text-5xl text-foreground mb-4"
           >
             Shop{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-blue-600">
               Dementia Care
             </span>{' '}
             Products
@@ -168,20 +159,18 @@ export function ProductCatalog() {
             {/* Right Side - Sort */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-5 h-5 text-muted-foreground" />
                 <span className="text-sm">Sort by:</span>
               </div>
-              <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
-                <SelectTrigger className="w-[200px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name-asc">Alphabetically, A-Z</SelectItem>
-                  <SelectItem value="name-desc">Alphabetically, Z-A</SelectItem>
-                  <SelectItem value="price-asc">Price, Low to High</SelectItem>
-                  <SelectItem value="price-desc">Price, High to Low</SelectItem>
-                </SelectContent>
-              </Select>
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                className="px-4 py-2 border border-gray-200 rounded-lg bg-white text-sm"
+              >
+                <option value="name-asc">Alphabetically, A-Z</option>
+                <option value="name-desc">Alphabetically, Z-A</option>
+                <option value="price-asc">Price, Low to High</option>
+                <option value="price-desc">Price, High to Low</option>
+              </select>
               <span className="text-sm text-muted-foreground">
                 {filteredAndSortedProducts.length} products
               </span>
@@ -196,7 +185,6 @@ export function ProductCatalog() {
               <ProductCard
                 key={product.id}
                 product={product}
-                onViewDetails={setSelectedProduct}
               />
             ))}
           </div>

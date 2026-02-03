@@ -8,45 +8,49 @@ const features = [
     icon: Heart,
     title: 'Quality Products',
     description: 'Specially designed jumpsuit that makes caregiving easier while maintaining dignity.',
-    gradient: 'from-pink-500 to-rose-500',
+    color: 'bg-pink-500',
+    iconColor: 'text-pink-500',
   },
   {
     icon: ShieldCheck,
     title: 'Safety & Comfort',
     description: 'Medical-grade materials that prioritize both safety and all-day comfort.',
-    gradient: 'from-blue-500 to-cyan-500',
+    color: 'bg-blue-500',
+    iconColor: 'text-blue-500',
   },
   {
     icon: Book,
     title: 'Expert Resources',
     description: 'Free educational content covering all aspects of dementia care.',
-    gradient: 'from-green-500 to-emerald-500',
+    color: 'bg-green-500',
+    iconColor: 'text-green-500',
   },
   {
     icon: Users,
     title: 'Caregiver Community',
     description: 'Connect with thousands of caregivers sharing similar experiences.',
-    gradient: 'from-purple-500 to-indigo-500',
+    color: 'bg-purple-500',
+    iconColor: 'text-purple-500',
   },
   {
     icon: Sparkles,
     title: 'Self-Care Support',
     description: 'Resources dedicated to helping caregivers manage stress and prevent burnout.',
-    gradient: 'from-violet-500 to-purple-500',
+    color: 'bg-violet-500',
+    iconColor: 'text-violet-500',
   },
   {
     icon: Clock,
     title: 'Always Available',
     description: '24/7 access to resources, guides, and community support whenever you need it.',
-    gradient: 'from-orange-500 to-amber-500',
+    color: 'bg-orange-500',
+    iconColor: 'text-orange-500',
   },
 ];
 
 export function Features() {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/50 to-white" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -69,7 +73,7 @@ export function Features() {
             className="text-4xl md:text-5xl text-foreground mb-4"
           >
             Everything you need for{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-blue-600">
               quality care
             </span>
           </motion.h2>
@@ -100,12 +104,8 @@ export function Features() {
               <div className="relative h-full bg-white rounded-2xl p-8 shadow-lg shadow-black/5 border border-gray-100 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
                 {/* Icon */}
                 <div className="mb-6">
-                  <div
-                    className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.gradient} p-0.5 shadow-lg`}
-                  >
-                    <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                      <feature.icon className={`w-6 h-6 bg-gradient-to-br ${feature.gradient} bg-clip-text text-transparent`} strokeWidth={2} />
-                    </div>
+                  <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center shadow-lg`}>
+                    <feature.icon className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
                 </div>
 
@@ -116,9 +116,6 @@ export function Features() {
                 <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
-
-                {/* Hover effect */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               </div>
             </motion.div>
           ))}
