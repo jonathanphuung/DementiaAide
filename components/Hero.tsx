@@ -42,13 +42,13 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 px-8 py-6 rounded-xl hover:bg-white/50 group">
+                className="border-2 px-8 py-6 rounded-xl hover:bg-white/50 group"
                 onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <Play className="mr-2 w-5 h-5 group-hover:scale-110 transition-transform" />
                 Browse Resources
               </Button>
-            </motion.div>
+            </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 pt-8">
@@ -92,7 +92,7 @@ export function Hero() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-              </motion.div>
+                </div>
 
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 2 }}
@@ -105,7 +105,7 @@ export function Hero() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-              </div>
+              </motion.div>
             </div>
 
             {/* Floating badge - positioned at bottom-left of image grid */}
