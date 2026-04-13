@@ -8,6 +8,7 @@ import { Card } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Product } from '@/lib/products';
 import { useState } from 'react';
+import { useCart } from './ShoppingCart';
 
 interface ProductCardProps {
   product: Product;
@@ -16,9 +17,34 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onViewDetails }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string | null>(product.sizes?.[0] ?? null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(product.colors?.[0] ?? null);
+  const { addToCart, setIsOpen } = useCart();
   const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+  const sizeRequired = Boolean(product.sizes && product.sizes.length > 0);
+  const canAddToCart = product.inStock && (!sizeRequired || Boolean(selectedSize));
+
+  const handleAddToCart = () => {
+    if (!canAddToCart) return;
+
+    const variantParts = [selectedSize, selectedColor].filter(Boolean);
+    const variantLabel = variantParts.length > 0 ? variantParts.join(' / ') : 'Default';
+    const variantId = `${product.id}-${variantParts.length > 0 ? variantParts.join('-').toLowerCase() : 'default'}`;
+
+    addToCart({
+      id: variantId,
+      productId: product.id,
+      variantId,
+      title: product.name,
+      variant: variantLabel,
+      price: product.price,
+      image: product.image,
+      sku: `${product.id.toUpperCase()}-${variantParts.join('-').toUpperCase() || 'DEFAULT'}`,
+    });
+    setIsOpen(true);
+  };
 
   return (
     <motion.div
@@ -142,10 +168,14 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             <div className="flex items-center gap-2">
               <span className="text-xs text-muted-foreground">Colors:</span>
               <div className="flex gap-1">
-                {product.colors.slice(0, 3).map((color, index) => (
-                  <div
+                {product.colors.slice(0, 4).map((color, index) => (
+                  <button
+                    type="button"
                     key={index}
-                    className="w-5 h-5 rounded-full border-2 border-gray-300"
+                    onClick={() => setSelectedColor(color)}
+                    className={`w-5 h-5 rounded-full border-2 transition-all ${
+                      selectedColor === color ? 'border-blue-600 scale-110' : 'border-gray-300'
+                    }`}
                     style={{
                       backgroundColor:
                         color.toLowerCase() === 'white'
@@ -169,13 +199,34 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
             </div>
           )}
 
+          {/* Sizes */}
+          {product.sizes && product.sizes.length > 0 && (
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs text-muted-foreground">Size:</span>
+              {product.sizes.map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => setSelectedSize(size)}
+                  className={`px-2 py-1 text-xs rounded-md border transition-all ${
+                    selectedSize === size
+                      ? 'border-blue-600 bg-blue-50 text-blue-700'
+                      : 'border-gray-200 hover:border-blue-400'
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Add to Cart Button */}
           <Button
             className="w-full bg-blue-600 hover:bg-blue-700"
-            disabled={!product.inStock}
-            onClick={() => onViewDetails?.(product)}
+            disabled={!canAddToCart}
+            onClick={handleAddToCart}
           >
-            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+            {!product.inStock ? 'Out of Stock' : sizeRequired && !selectedSize ? 'Select Size' : 'Add to Cart'}
           </Button>
         </div>
       </Card>
