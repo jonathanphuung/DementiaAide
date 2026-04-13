@@ -23,7 +23,7 @@ export function CTA() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl">
+                className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-2xl"
               >
                 <Sparkles className="w-8 h-8 text-white" />
               </motion.div>
@@ -69,7 +69,7 @@ export function CTA() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-6 rounded-xl">
+                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-6 rounded-xl"
                   onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Browse Free Resources

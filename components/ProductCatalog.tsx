@@ -8,6 +8,7 @@ import { ProductCard } from './ProductCard';
 import { Badge } from './ui/badge';
 import { Checkbox } from './ui/checkbox';
 import { Label } from './ui/label';
+import { Button } from './ui/button';
 
 type SortOption = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc' | 'newest';
 type CategoryFilter = 'all' | 'Clothing' | 'Accessories' | 'Adaptive Wear' | 'Awareness';
