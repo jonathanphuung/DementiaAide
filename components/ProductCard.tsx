@@ -25,6 +25,11 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     : 0;
   const sizeRequired = Boolean(product.sizes && product.sizes.length > 0);
   const canAddToCart = product.inStock && (!sizeRequired || Boolean(selectedSize));
+  const variantKey = [selectedSize, selectedColor].filter(Boolean).join('|');
+  const shopifyVariantId =
+    (variantKey && product.shopifyVariantIds?.[variantKey]) ||
+    (selectedSize && product.shopifyVariantIds?.[selectedSize]) ||
+    product.shopifyVariantIds?.default;
 
   const handleAddToCart = () => {
     if (!canAddToCart) return;
@@ -42,6 +47,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
       price: product.price,
       image: product.image,
       sku: `${product.id.toUpperCase()}-${variantParts.join('-').toUpperCase() || 'DEFAULT'}`,
+      shopifyVariantId,
     });
     setIsOpen(true);
   };

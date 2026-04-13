@@ -22,9 +22,6 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: true,
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
   headers: async () => [
     {
       source: '/(.*)',

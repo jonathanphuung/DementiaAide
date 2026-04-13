@@ -65,6 +65,28 @@ The site works without any API keys. For Amazon products, add this to `.env.loca
 AMAZON_ASSOCIATE_TAG=your_tag
 ```
 
+## Deploying To Vercel
+
+This project is already configured as a Next.js app for Vercel. For production and preview deployments, set `NEXT_PUBLIC_SITE_URL` in Vercel to the canonical domain you want search metadata and sitemap URLs to use.
+
+Recommended Vercel environment variables:
+
+```env
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=your_tag
+GOOGLE_VERIFICATION=your_google_verification_token
+GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
+AMAZON_SPP_CLIENT_ID=...
+AMAZON_SPP_SECRET_KEY=...
+AMAZON_SPP_REFRESH_TOKEN=...
+AMAZON_MARKETPLACE_ID=...
+SHOPIFY_STORE_URL=...
+SHOPIFY_STOREFRONT_ACCESS_TOKEN=...
+STRIPE_SECRET_KEY=...
+```
+
+If you only want the public site deployed, the app still builds without the commerce or analytics env vars.
+
 ## Development Status
 
 **Working:**

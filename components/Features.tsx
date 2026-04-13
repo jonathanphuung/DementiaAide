@@ -8,49 +8,57 @@ const features = [
     icon: Heart,
     title: 'Quality Products',
     description: 'Specially designed jumpsuit that makes caregiving easier while maintaining dignity.',
-    color: 'bg-pink-500',
-    iconColor: 'text-pink-500',
+    iconBg: 'bg-pink-100',
+    iconColor: 'text-pink-600',
+    hoverTint: 'bg-pink-600',
   },
   {
     icon: ShieldCheck,
     title: 'Safety & Comfort',
     description: 'Medical-grade materials that prioritize both safety and all-day comfort.',
-    color: 'bg-blue-500',
-    iconColor: 'text-blue-500',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
+    hoverTint: 'bg-blue-600',
   },
   {
     icon: Book,
     title: 'Expert Resources',
     description: 'Free educational content covering all aspects of dementia care.',
-    color: 'bg-green-500',
-    iconColor: 'text-green-500',
+    iconBg: 'bg-green-100',
+    iconColor: 'text-green-600',
+    hoverTint: 'bg-green-600',
   },
   {
     icon: Users,
     title: 'Caregiver Community',
     description: 'Connect with thousands of caregivers sharing similar experiences.',
-    color: 'bg-purple-500',
-    iconColor: 'text-purple-500',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
+    hoverTint: 'bg-purple-600',
   },
   {
     icon: Sparkles,
     title: 'Self-Care Support',
     description: 'Resources dedicated to helping caregivers manage stress and prevent burnout.',
-    color: 'bg-violet-500',
-    iconColor: 'text-violet-500',
+    iconBg: 'bg-violet-100',
+    iconColor: 'text-violet-600',
+    hoverTint: 'bg-violet-600',
   },
   {
     icon: Clock,
     title: 'Always Available',
     description: '24/7 access to resources, guides, and community support whenever you need it.',
-    color: 'bg-orange-500',
-    iconColor: 'text-orange-500',
+    iconBg: 'bg-orange-100',
+    iconColor: 'text-orange-600',
+    hoverTint: 'bg-orange-600',
   },
 ];
 
 export function Features() {
   return (
     <section className="py-24 bg-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gray-50/50" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
@@ -104,8 +112,10 @@ export function Features() {
               <div className="relative h-full bg-white rounded-2xl p-8 shadow-lg shadow-black/5 border border-gray-100 hover:shadow-2xl hover:shadow-black/10 transition-all duration-300">
                 {/* Icon */}
                 <div className="mb-6">
-                  <div className={`w-14 h-14 rounded-xl ${feature.color} flex items-center justify-center shadow-lg`}>
-                    <feature.icon className="w-6 h-6 text-white" strokeWidth={2} />
+                  <div
+                    className={`w-14 h-14 rounded-xl ${feature.iconBg} flex items-center justify-center shadow-lg`}
+                  >
+                    <feature.icon className={`w-6 h-6 ${feature.iconColor}`} strokeWidth={2} />
                   </div>
                 </div>
 
@@ -116,6 +126,9 @@ export function Features() {
                 <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
+
+                {/* Hover effect */}
+                <div className={`absolute inset-0 rounded-2xl ${feature.hoverTint} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               </div>
             </motion.div>
           ))}

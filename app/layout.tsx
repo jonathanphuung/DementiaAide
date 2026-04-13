@@ -3,10 +3,11 @@ import { Inter } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { AppProviders } from '@/components/AppProviders'
+import { getSiteUrl } from '@/lib/site-url'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://dementia-aide.vercel.app'
+const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
   title: {

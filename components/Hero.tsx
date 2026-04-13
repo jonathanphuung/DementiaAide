@@ -92,7 +92,7 @@ export function Hero() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20" />
-                </div>
+              </div>
 
               <motion.div
                 whileHover={{ scale: 1.05, rotate: 2 }}

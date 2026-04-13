@@ -8,17 +8,101 @@ const stripe = process.env.STRIPE_SECRET_KEY
     })
   : null;
 
+type CheckoutItem = {
+  title: string;
+  price: number;
+  quantity: number;
+  images?: string[];
+  description?: string;
+  shopifyVariantId?: string;
+};
+
+async function createShopifyCheckoutUrl(items: CheckoutItem[]): Promise<string> {
+  const storeDomain = process.env.SHOPIFY_STORE_URL;
+  const storefrontToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+  if (!storeDomain || !storefrontToken) {
+    throw new Error('Shop Pay is not configured. Missing SHOPIFY_STORE_URL or SHOPIFY_STOREFRONT_ACCESS_TOKEN.');
+  }
+
+  const invalidItems = items.filter((item) => !item.shopifyVariantId);
+  if (invalidItems.length > 0) {
+    throw new Error('Some cart items are not connected to Shopify variants yet. Please map product variants before using Shop Pay.');
+  }
+
+  const endpoint = `https://${storeDomain}/api/2026-01/graphql.json`;
+  const mutation = `
+    mutation cartCreate($input: CartInput!) {
+      cartCreate(input: $input) {
+        cart {
+          id
+          checkoutUrl
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    input: {
+      lines: items.map((item) => ({
+        quantity: item.quantity,
+        merchandiseId: item.shopifyVariantId,
+      })),
+    },
+  };
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': storefrontToken,
+    },
+    body: JSON.stringify({ query: mutation, variables }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Shopify checkout request failed with status ${response.status}.`);
+  }
+
+  const payload = await response.json();
+  const userErrors = payload?.data?.cartCreate?.userErrors ?? [];
+  if (userErrors.length > 0) {
+    throw new Error(userErrors[0]?.message || 'Failed to create Shopify cart.');
+  }
+
+  const checkoutUrl = payload?.data?.cartCreate?.cart?.checkoutUrl;
+  if (!checkoutUrl) {
+    throw new Error('Shopify did not return a checkout URL.');
+  }
+
+  return checkoutUrl;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    // Check if Stripe is properly configured
+    const { items, shippingAddress, billingAddress, paymentMethod } = await request.json();
+    const selectedPaymentMethod = paymentMethod || 'stripe';
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return NextResponse.json({ error: 'No checkout items provided' }, { status: 400 });
+    }
+
+    if (selectedPaymentMethod === 'shop_pay') {
+      const checkoutUrl = await createShopifyCheckoutUrl(items);
+      return NextResponse.json({ provider: 'shopify', url: checkoutUrl });
+    }
+
+    // Stripe fallback/default path
     if (!stripe) {
       return NextResponse.json(
-        { error: 'Payment processing is not configured' }, 
+        { error: 'Stripe is not configured. Configure STRIPE_SECRET_KEY or choose Shop Pay.' },
         { status: 503 }
       );
     }
-
-    const { items, shippingAddress, billingAddress } = await request.json();
 
     // Calculate total amount
     const totalAmount = items.reduce((sum: number, item: any) => 
@@ -29,7 +113,6 @@ export async function POST(request: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: [
         'card',
-        'paypal', 
       ],
       line_items: items.map((item: any) => ({
         price_data: {
@@ -45,7 +128,7 @@ export async function POST(request: NextRequest) {
       })),
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout`,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'AU'], // Add countries as needed
       },
@@ -98,10 +181,10 @@ export async function POST(request: NextRequest) {
       ],
     });
 
-    return NextResponse.json({ sessionId: session.id, url: session.url });
+    return NextResponse.json({ provider: 'stripe', sessionId: session.id, url: session.url });
 
   } catch (error: any) {
-    console.error('Stripe checkout error:', error);
+    console.error('Checkout error:', error);
     return NextResponse.json(
       { error: 'Failed to create checkout session' },
       { status: 500 }
