@@ -58,7 +58,7 @@ export default function ColorFix() {
           color: rgb(255, 255, 255) !important;
         }
         
-        /* Keep gradient text transparent */
+        /* Preserve clip/transparent text utilities */
         .text-transparent, .bg-clip-text {
           color: transparent !important;
         }
@@ -74,7 +74,7 @@ export default function ColorFix() {
         const allElements = document.querySelectorAll('*');
         allElements.forEach((el) => {
           if (el instanceof HTMLElement) {
-            // Skip elements that should be transparent (gradients)
+            // Skip elements that should stay transparent (clip-text, etc.)
             const hasTransparentClass = el.classList.contains('text-transparent') || 
                                       el.classList.contains('bg-clip-text');
             

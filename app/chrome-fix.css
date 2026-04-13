@@ -36,7 +36,7 @@
     color: rgb(255, 255, 255) !important;
   }
   
-  /* Preserve gradient text */
+  /* Preserve clip/transparent text utilities */
   .text-transparent,
   .bg-clip-text {
     color: transparent !important;

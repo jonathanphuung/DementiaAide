@@ -44,6 +44,13 @@ export function ProductShowcase() {
   const sizes = ['S', 'M', 'L', 'XL', '2XL'];
   const [selectedSize, setSelectedSize] = useState('M');
   const { addToCart, setIsOpen } = useCart();
+  const shopifyVariantMap: Record<string, string | undefined> = {
+    S: process.env.NEXT_PUBLIC_SHOPIFY_BEAR_HUG_VARIANT_S,
+    M: process.env.NEXT_PUBLIC_SHOPIFY_BEAR_HUG_VARIANT_M,
+    L: process.env.NEXT_PUBLIC_SHOPIFY_BEAR_HUG_VARIANT_L,
+    XL: process.env.NEXT_PUBLIC_SHOPIFY_BEAR_HUG_VARIANT_XL,
+    '2XL': process.env.NEXT_PUBLIC_SHOPIFY_BEAR_HUG_VARIANT_2XL,
+  };
 
   const handleAddToCart = () => {
     const variantId = `bear-hug-jumpsuit-${selectedSize.toLowerCase()}`;
@@ -56,6 +63,7 @@ export function ProductShowcase() {
       price: 89.99,
       image: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwY2xvdGhpbmclMjBqdW1wc3VpdHxlbnwxfHx8fDE3NjAxMjkwNDR8MA&ixlib=rb-4.1.0&q=80&w=1080',
       sku: `BEAR-HUG-${selectedSize}`,
+      shopifyVariantId: shopifyVariantMap[selectedSize],
     });
     setIsOpen(true);
   };

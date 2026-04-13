@@ -12,6 +12,7 @@ export interface Product {
   reviews?: number;
   colors?: string[];
   sizes?: string[];
+  shopifyVariantIds?: Record<string, string>;
 }
 
 export const products: Product[] = [

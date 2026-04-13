@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { SearchHero } from '@/components/SearchHero';
+import { getSiteUrl } from '@/lib/site-url'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://dementia-aide.vercel.app'
+const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
   title: 'DementiaAide - AI-Powered Dementia Care Resources & Expert Guidance',

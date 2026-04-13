@@ -19,6 +19,7 @@ interface CartItem {
   quantity: number;
   image: string;
   sku?: string;
+  shopifyVariantId?: string;
 }
 
 export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
@@ -99,34 +100,8 @@ function CartDrawer() {
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);
-    
-    try {
-      // Create Stripe checkout session
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: cart.map(item => ({
-            title: item.title,
-            price: item.price,
-            quantity: item.quantity,
-            images: [item.image]
-          }))
-        })
-      });
-
-      const { url } = await response.json();
-      
-      if (url) {
-        window.location.href = url;
-      }
-    } catch (error) {
-      console.error('Checkout error:', error);
-    } finally {
-      setIsCheckingOut(false);
-    }
+    setIsOpen(false);
+    window.location.href = '/checkout';
   };
 
   return (

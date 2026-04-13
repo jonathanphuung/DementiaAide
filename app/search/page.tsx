@@ -3,8 +3,9 @@ import { Suspense } from 'react';
 import { SearchResults } from '@/components/SearchResults';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
+import { getSiteUrl } from '@/lib/site-url'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://dementia-aide.vercel.app'
+const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
   title: 'Search Results - AI Dementia Care Advice & Video Library',

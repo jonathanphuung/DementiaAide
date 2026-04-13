@@ -12,28 +12,32 @@ const resourceCategories = [
     title: 'Care Guides',
     description: 'Comprehensive guides for daily dementia care',
     count: '50+ Articles',
-    color: 'bg-blue-500',
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-600',
   },
   {
     icon: Video,
     title: 'Video Tutorials',
     description: 'Step-by-step visual demonstrations',
     count: '30+ Videos',
-    color: 'bg-purple-500',
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-600',
   },
   {
     icon: FileText,
     title: 'Printable Tools',
     description: 'Checklists, charts, and care planners',
     count: '25+ Downloads',
-    color: 'bg-green-500',
+    iconBg: 'bg-green-100',
+    iconColor: 'text-green-600',
   },
   {
     icon: Users,
     title: 'Community Support',
     description: 'Connect with other caregivers',
     count: '10K+ Members',
-    color: 'bg-orange-500',
+    iconBg: 'bg-orange-100',
+    iconColor: 'text-orange-600',
   },
 ];
 
@@ -111,8 +115,8 @@ export function ResourcesSection() {
               whileHover={{ y: -8 }}
             >
               <Card className="h-full p-6 cursor-pointer group hover:shadow-2xl transition-all border-2 border-transparent hover:border-purple-200">
-                <div className={`w-14 h-14 rounded-xl ${category.color} flex items-center justify-center mb-4`}>
-                  <category.icon className="w-6 h-6 text-white" />
+                <div className={`w-14 h-14 rounded-xl ${category.iconBg} flex items-center justify-center mb-4`}>
+                  <category.icon className={`w-6 h-6 ${category.iconColor}`} />
                 </div>
                 <h3 className="text-lg text-foreground mb-2 group-hover:text-purple-600 transition-colors">
                   {category.title}
@@ -144,7 +148,7 @@ export function ResourcesSection() {
                 className="group cursor-pointer"
               >
                 <Card className="overflow-hidden hover:shadow-2xl transition-all">
-                  <div className="aspect-video overflow-hidden bg-purple-100">
+                  <div className="aspect-video overflow-hidden bg-purple-50">
                     <ImageWithFallback
                       src={resource.image}
                       alt={resource.title}

@@ -28,31 +28,10 @@ export function CheckoutPage() {
     },
     {
       id: 'shop_pay',
-      name: 'Shop Pay',
-      description: 'Fast, secure checkout',
+      name: 'Shop Pay (Shopify Checkout)',
+      description: 'Fast checkout through your Shopify store',
       icon: '🛒',
       color: 'bg-purple-500'
-    },
-    {
-      id: 'amazon_pay',
-      name: 'Amazon Pay',
-      description: 'Use your Amazon account',
-      icon: '📦',
-      color: 'bg-orange-400'
-    },
-    {
-      id: 'paypal',
-      name: 'PayPal',
-      description: 'Pay with PayPal balance or card',
-      icon: '💰',
-      color: 'bg-blue-600'
-    },
-    {
-      id: 'google_pay',
-      name: 'Google Pay',
-      description: 'Quick and secure',
-      icon: '🔍',
-      color: 'bg-red-500'
     }
   ];
 
@@ -72,7 +51,8 @@ export function CheckoutPage() {
             price: item.price,
             quantity: item.quantity,
             images: [item.image],
-            description: item.variant
+            description: item.variant,
+            shopifyVariantId: item.shopifyVariantId
           })),
           paymentMethod,
           totals: {
