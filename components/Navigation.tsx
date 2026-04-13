@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, Heart } from 'lucide-react';
+import { Menu, X, Heart, ShoppingCart } from 'lucide-react';
 import { Button } from './ui/button';
+import { useCart } from './ShoppingCart';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { totalItems, setIsOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,6 +70,15 @@ export function Navigation() {
           >
             <Button variant="ghost" className="text-sm" onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}>
               Free Resources
+            </Button>
+            <Button variant="outline" className="text-sm relative" onClick={() => setIsOpen(true)}>
+              <ShoppingCart className="w-4 h-4 mr-2" />
+              Cart
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
             </Button>
             <Button 
               className="text-sm bg-blue-600 hover:bg-blue-700"

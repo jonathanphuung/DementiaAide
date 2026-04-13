@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Shield, Sparkles, Heart, Zap, Star } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useCart } from './ShoppingCart';
 
 const productFeatures = [
   'Easy-access back zipper for dignified changing',
@@ -39,6 +41,25 @@ const benefits = [
 ];
 
 export function ProductShowcase() {
+  const sizes = ['S', 'M', 'L', 'XL', '2XL'];
+  const [selectedSize, setSelectedSize] = useState('M');
+  const { addToCart, setIsOpen } = useCart();
+
+  const handleAddToCart = () => {
+    const variantId = `bear-hug-jumpsuit-${selectedSize.toLowerCase()}`;
+    addToCart({
+      id: variantId,
+      productId: 'bear-hug-jumpsuit',
+      variantId,
+      title: 'The Bear Hug Care Jumpsuit',
+      variant: `Size ${selectedSize}`,
+      price: 89.99,
+      image: 'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwY2xvdGhpbmclMjBqdW1wc3VpdHxlbnwxfHx8fDE3NjAxMjkwNDR8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      sku: `BEAR-HUG-${selectedSize}`,
+    });
+    setIsOpen(true);
+  };
+
   return (
     <section className="py-24 bg-blue-50/30 relative overflow-hidden">
 
@@ -173,10 +194,16 @@ export function ProductShowcase() {
             <div className="space-y-3">
               <label className="text-foreground">Select Size</label>
               <div className="flex gap-2">
-                {['S', 'M', 'L', 'XL', '2XL'].map((size) => (
+                {sizes.map((size) => (
                   <button
                     key={size}
-                    className="px-6 py-3 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition-all"
+                    type="button"
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-6 py-3 border-2 rounded-lg transition-all ${
+                      selectedSize === size
+                        ? 'border-blue-600 bg-blue-50 text-blue-700'
+                        : 'border-gray-200 hover:border-blue-600 hover:bg-blue-50'
+                    }`}
                   >
                     {size}
                   </button>
@@ -189,8 +216,9 @@ export function ProductShowcase() {
               <Button
                 size="lg"
                 className="flex-1 bg-blue-600 hover:bg-blue-700 px-8 py-6 rounded-xl shadow-lg"
+                onClick={handleAddToCart}
               >
-                Add to Cart
+                Add Size {selectedSize} to Cart
               </Button>
               <Button
                 size="lg"
