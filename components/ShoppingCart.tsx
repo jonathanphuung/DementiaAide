@@ -4,10 +4,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Plus, Minus, X, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 interface CartItem {
   id: string;
@@ -20,57 +16,177 @@ interface CartItem {
   image: string;
   sku?: string;
   shopifyVariantId?: string;
+  shopifyLineId?: string;
 }
 
 export function ShoppingCartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [shopifyCartId, setShopifyCartId] = useState<string | null>(null);
+  const [shopifyCheckoutUrl, setShopifyCheckoutUrl] = useState<string | null>(null);
 
-  // Load cart from localStorage
-  useEffect(() => {
-    const savedCart = localStorage.getItem('dementia-aide-cart');
-    if (savedCart) {
-      setCart(JSON.parse(savedCart));
-    }
-  }, []);
+  const CART_ID_STORAGE_KEY = 'dementia-aide-shopify-cart-id';
 
-  // Save cart to localStorage
-  useEffect(() => {
-    localStorage.setItem('dementia-aide-cart', JSON.stringify(cart));
-  }, [cart]);
-
-  const addToCart = (product: Omit<CartItem, 'quantity'>, quantity = 1) => {
-    setCart(prev => {
-      const existing = prev.find(item => item.variantId === product.variantId);
-      if (existing) {
-        return prev.map(item =>
-          item.variantId === product.variantId
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity }];
-    });
-  };
-
-  const updateQuantity = (variantId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(variantId);
+  const setCartFromShopify = (shopifyCart: any | null) => {
+    if (!shopifyCart) {
+      setCart([]);
+      setShopifyCheckoutUrl(null);
       return;
     }
-    setCart(prev =>
-      prev.map(item =>
-        item.variantId === variantId ? { ...item, quantity } : item
-      )
-    );
+
+    setShopifyCheckoutUrl(shopifyCart.checkoutUrl ?? null);
+
+    const lines = shopifyCart?.lines?.edges?.map((e: any) => e?.node).filter(Boolean) ?? [];
+    const mapped: CartItem[] = lines
+      .map((line: any) => {
+        const merchandise = line?.merchandise;
+        if (!merchandise || merchandise.__typename !== 'ProductVariant') return null;
+
+        const unitPrice = Number.parseFloat(line?.cost?.amountPerQuantity?.amount ?? '0');
+        const productTitle = merchandise?.product?.title ?? 'Product';
+        const variantTitle = merchandise?.title && merchandise.title !== 'Default Title' ? merchandise.title : 'Default';
+        const imageUrl = merchandise?.image?.url ?? '';
+
+        return {
+          id: line.id,
+          productId: merchandise?.product?.id ?? merchandise.id,
+          variantId: merchandise.id,
+          title: productTitle,
+          variant: variantTitle,
+          price: Number.isFinite(unitPrice) ? unitPrice : 0,
+          quantity: line.quantity ?? 0,
+          image: imageUrl,
+          sku: merchandise?.sku ?? undefined,
+          shopifyVariantId: merchandise.id,
+          shopifyLineId: line.id,
+        } satisfies CartItem;
+      })
+      .filter(Boolean) as CartItem[];
+
+    setCart(mapped);
   };
 
-  const removeFromCart = (variantId: string) => {
-    setCart(prev => prev.filter(item => item.variantId !== variantId));
+  const ensureShopifyCartId = async () => {
+    if (shopifyCartId) return shopifyCartId;
+
+    const res = await fetch('/api/cart', { method: 'POST' });
+    const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      throw new Error(payload?.error || 'Failed to create cart.');
+    }
+
+    const newCartId = payload?.cart?.id as string | undefined;
+    if (!newCartId) throw new Error('Shopify did not return a cart id.');
+
+    setShopifyCartId(newCartId);
+    localStorage.setItem(CART_ID_STORAGE_KEY, newCartId);
+    setCartFromShopify(payload?.cart ?? null);
+    return newCartId;
   };
 
-  const clearCart = () => {
-    setCart([]);
+  // Load Shopify cart id from localStorage, then hydrate from Shopify
+  useEffect(() => {
+    const savedCartId = localStorage.getItem(CART_ID_STORAGE_KEY);
+    if (!savedCartId) return;
+
+    setShopifyCartId(savedCartId);
+    (async () => {
+      const res = await fetch(`/api/cart?cartId=${encodeURIComponent(savedCartId)}`, { method: 'GET' });
+      const payload = await res.json();
+      if (res.ok && payload?.cart) {
+        setCartFromShopify(payload.cart);
+      } else if (res.ok && payload?.cart === null) {
+        localStorage.removeItem(CART_ID_STORAGE_KEY);
+        setShopifyCartId(null);
+        setCartFromShopify(null);
+      }
+    })();
+  }, []);
+
+  const addToCart = async (product: Omit<CartItem, 'quantity'>, quantity = 1) => {
+    const merchandiseId = product.shopifyVariantId;
+    if (!merchandiseId) {
+      console.warn('Cart item missing shopifyVariantId; cannot add to Shopify cart.', product);
+      alert('This product is not connected to Shopify yet.');
+      return;
+    }
+
+    const cartId = await ensureShopifyCartId();
+
+    const res = await fetch('/api/cart/lines', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'add', cartId, merchandiseId, quantity }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      throw new Error(payload?.error || 'Failed to add item to cart.');
+    }
+
+    setCartFromShopify(payload?.cart ?? null);
+  };
+
+  const updateQuantity = async (variantId: string, quantity: number) => {
+    const item = cart.find((i) => i.variantId === variantId);
+    if (!item?.shopifyLineId) return;
+
+    if (quantity <= 0) {
+      await removeFromCart(variantId);
+      return;
+    }
+
+    if (!shopifyCartId) return;
+
+    const res = await fetch('/api/cart/lines', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'update', cartId: shopifyCartId, lineId: item.shopifyLineId, quantity }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      throw new Error(payload?.error || 'Failed to update cart item.');
+    }
+    setCartFromShopify(payload?.cart ?? null);
+  };
+
+  const removeFromCart = async (variantId: string) => {
+    const item = cart.find((i) => i.variantId === variantId);
+    if (!item?.shopifyLineId || !shopifyCartId) return;
+
+    const res = await fetch('/api/cart/lines', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', cartId: shopifyCartId, lineIds: [item.shopifyLineId] }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      throw new Error(payload?.error || 'Failed to remove cart item.');
+    }
+    setCartFromShopify(payload?.cart ?? null);
+  };
+
+  const clearCart = async () => {
+    if (!shopifyCartId || cart.length === 0) {
+      setCart([]);
+      return;
+    }
+
+    const lineIds = cart.map((i) => i.shopifyLineId).filter(Boolean) as string[];
+    if (lineIds.length === 0) {
+      setCart([]);
+      return;
+    }
+
+    const res = await fetch('/api/cart/lines', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', cartId: shopifyCartId, lineIds }),
+    });
+    const payload = await res.json();
+    if (!res.ok || payload?.error) {
+      throw new Error(payload?.error || 'Failed to clear cart.');
+    }
+    setCartFromShopify(payload?.cart ?? null);
   };
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -86,7 +202,8 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
       totalItems,
       totalPrice,
       isOpen,
-      setIsOpen
+      setIsOpen,
+      checkoutUrl: shopifyCheckoutUrl
     }}>
       {children}
       <CartDrawer />
@@ -95,12 +212,16 @@ export function ShoppingCartProvider({ children }: { children: React.ReactNode }
 }
 
 function CartDrawer() {
-  const { cart, updateQuantity, removeFromCart, totalPrice, isOpen, setIsOpen } = useCart();
+  const { cart, updateQuantity, removeFromCart, totalPrice, isOpen, setIsOpen, checkoutUrl } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);
     setIsOpen(false);
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+      return;
+    }
     window.location.href = '/checkout';
   };
 
@@ -227,14 +348,15 @@ import { createContext, useContext } from 'react';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Omit<CartItem, 'quantity'>, quantity?: number) => void;
-  updateQuantity: (variantId: string, quantity: number) => void;
-  removeFromCart: (variantId: string) => void;
-  clearCart: () => void;
+  addToCart: (product: Omit<CartItem, 'quantity'>, quantity?: number) => Promise<void>;
+  updateQuantity: (variantId: string, quantity: number) => Promise<void>;
+  removeFromCart: (variantId: string) => Promise<void>;
+  clearCart: () => Promise<void>;
   totalItems: number;
   totalPrice: number;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  checkoutUrl: string | null;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);

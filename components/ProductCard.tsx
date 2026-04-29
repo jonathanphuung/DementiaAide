@@ -7,7 +7,7 @@ import { Badge } from './ui/badge';
 import { Card } from './ui/card';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Product } from '@/lib/products';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from './ShoppingCart';
 
 interface ProductCardProps {
@@ -31,12 +31,63 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
     (selectedSize && product.shopifyVariantIds?.[selectedSize]) ||
     product.shopifyVariantIds?.default;
 
-  const handleAddToCart = () => {
+  const colorToHex = (color: string) => {
+    const key = color.trim().toLowerCase();
+    if (key === 'white') return '#ffffff';
+    if (key === 'black') return '#000000';
+    if (key === 'navy') return '#001f3f';
+    if (key === 'navy blue') return '#0a2342';
+    if (key === 'gray' || key === 'grey') return '#6c757d';
+    if (key === 'purple') return '#6f42c1';
+    if (key === 'royal plum') return '#6b2a6f';
+    if (key === 'pink') return '#e83e8c';
+    if (key === 'burgundy' || key === 'burgundy red') return '#800020';
+    if (key === 'red') return '#dc2626';
+    return '#d1d5db';
+  };
+
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleAddToCart = async () => {
     if (!canAddToCart) return;
 
     const variantParts = [selectedSize, selectedColor].filter(Boolean);
     const variantLabel = variantParts.length > 0 ? variantParts.join(' / ') : 'Default';
     const variantId = `${product.id}-${variantParts.length > 0 ? variantParts.join('-').toLowerCase() : 'default'}`;
+
+    let resolvedShopifyVariantId = shopifyVariantId;
+    if (!resolvedShopifyVariantId) {
+      try {
+        const selectedOptions = [
+          ...(selectedSize ? [{ name: 'Size', value: selectedSize }] : []),
+          ...(selectedColor ? [{ name: 'Color', value: selectedColor }] : []),
+        ];
+        const res = await fetch('/api/shopify/variant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            handle: product.handle || product.id,
+            title: product.name,
+            selectedOptions,
+          }),
+        });
+        const payload = await res.json();
+        if (!res.ok || payload?.error) {
+          throw new Error(payload?.error || 'Failed to resolve Shopify variant.');
+        }
+        resolvedShopifyVariantId = payload.variantId;
+      } catch (e) {
+        console.error('Variant lookup failed:', e);
+      }
+    }
+
+    if (!resolvedShopifyVariantId) {
+      alert('This item is not connected to Shopify yet. Add its Shopify handle/variant IDs so we can map it.');
+      return;
+    }
 
     addToCart({
       id: variantId,
@@ -47,7 +98,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
       price: product.price,
       image: product.image,
       sku: `${product.id.toUpperCase()}-${variantParts.join('-').toUpperCase() || 'DEFAULT'}`,
-      shopifyVariantId,
+      shopifyVariantId: resolvedShopifyVariantId,
     });
     setIsOpen(true);
   };
@@ -183,20 +234,7 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
                       selectedColor === color ? 'border-blue-600 scale-110' : 'border-gray-300'
                     }`}
                     style={{
-                      backgroundColor:
-                        color.toLowerCase() === 'white'
-                          ? '#ffffff'
-                          : color.toLowerCase() === 'black'
-                          ? '#000000'
-                          : color.toLowerCase() === 'navy'
-                          ? '#001f3f'
-                          : color.toLowerCase() === 'gray'
-                          ? '#6c757d'
-                          : color.toLowerCase() === 'purple'
-                          ? '#6f42c1'
-                          : color.toLowerCase() === 'pink'
-                          ? '#e83e8c'
-                          : '#ccc',
+                      backgroundColor: isMounted ? colorToHex(color) : '#ccc',
                     }}
                     title={color}
                   />

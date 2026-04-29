@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "shopify:check": "node scripts/shopify-check.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

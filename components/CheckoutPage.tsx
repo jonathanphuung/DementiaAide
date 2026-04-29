@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/components/ShoppingCart';
 
 export function CheckoutPage() {
-  const { cart, totalPrice, clearCart } = useCart();
+  const { cart, totalPrice, clearCart, checkoutUrl } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState('stripe');
 
@@ -39,6 +39,11 @@ export function CheckoutPage() {
     setIsProcessing(true);
     
     try {
+      if (paymentMethod === 'shop_pay' && checkoutUrl) {
+        window.location.href = checkoutUrl;
+        return;
+      }
+
       // Create checkout session with specific payment method
       const response = await fetch('/api/checkout', {
         method: 'POST',

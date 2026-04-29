@@ -18,19 +18,24 @@ type CheckoutItem = {
 };
 
 async function createShopifyCheckoutUrl(items: CheckoutItem[]): Promise<string> {
-  const storeDomain = process.env.SHOPIFY_STORE_URL;
+  const storeDomainRaw = process.env.SHOPIFY_STORE_URL;
   const storefrontToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
-  if (!storeDomain || !storefrontToken) {
+  if (!storeDomainRaw || !storefrontToken) {
     throw new Error('Shop Pay is not configured. Missing SHOPIFY_STORE_URL or SHOPIFY_STOREFRONT_ACCESS_TOKEN.');
   }
+  const storeDomain = storeDomainRaw
+    .replace('https://', '')
+    .replace('http://', '')
+    .replace(/\/$/, '');
 
   const invalidItems = items.filter((item) => !item.shopifyVariantId);
   if (invalidItems.length > 0) {
     throw new Error('Some cart items are not connected to Shopify variants yet. Please map product variants before using Shop Pay.');
   }
 
-  const endpoint = `https://${storeDomain}/api/2026-01/graphql.json`;
+  const apiVersion = process.env.SHOPIFY_STOREFRONT_API_VERSION || '2025-10';
+  const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
   const mutation = `
     mutation cartCreate($input: CartInput!) {
       cartCreate(input: $input) {

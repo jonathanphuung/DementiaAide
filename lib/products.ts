@@ -1,5 +1,6 @@
 export interface Product {
   id: string;
+  handle?: string;
   name: string;
   description: string;
   price: number;
@@ -18,6 +19,7 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 'anti-strip-jumpsuit',
+    handle: 'anti-strip-back-zip-jumpsuit',
     name: 'Anti-Strip Back-zip Jumpsuit',
     description: 'Adaptive Alzheimer\'s and Dementia Clothing - Designed specifically for dementia care with back-zip access for dignified changing and tamper-resistant design for safety',
     price: 69.99,
@@ -28,8 +30,20 @@ export const products: Product[] = [
     inStock: true,
     rating: 4.5,
     reviews: 18,
-    colors: ['Navy Blue'],
-    sizes: ['S', 'M', 'L', 'XL', '2XL']
+    colors: ['Navy Blue', 'Royal Plum', 'Burgundy Red'],
+    sizes: ['X-Small', 'Small', 'Medium', 'Large'],
+    shopifyVariantIds: {
+      'X-Small|Navy Blue': 'gid://shopify/ProductVariant/39758918025285',
+      'Small|Navy Blue': 'gid://shopify/ProductVariant/12990104043589',
+      'Medium|Navy Blue': 'gid://shopify/ProductVariant/12990161715269',
+      'Large|Navy Blue': 'gid://shopify/ProductVariant/12990161780805',
+      'Small|Royal Plum': 'gid://shopify/ProductVariant/53937293623571',
+      'Medium|Royal Plum': 'gid://shopify/ProductVariant/53937293132051',
+      'Large|Royal Plum': 'gid://shopify/ProductVariant/53937286086931',
+      'Small|Burgundy Red': 'gid://shopify/ProductVariant/12990161682501',
+      'Medium|Burgundy Red': 'gid://shopify/ProductVariant/12990161748037',
+      'Large|Burgundy Red': 'gid://shopify/ProductVariant/12990161813573',
+    },
   },
   {
     id: 'baseball-hat-find-cure',
