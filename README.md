@@ -92,14 +92,18 @@ If you only want the public site deployed, the app still builds without the comm
 **Working:**
 - AI advice system (keyword-based, offline)
 - Search functionality  
+- Resources library sourced from Ana's public DementiaAide blog posts
 - Product catalog
-- Amazon product recommendations (optional)
 
 **In Progress:**
-- Video library (temporarily disabled - needs YouTube playlist)
+- Resources page expansion and topic mapping
+- Search speed and relevance improvements
 
 **To Do:**
-- Resources page
+- YouTube feature is on hold until the founder provides an approved playlist. Do not use the YouTube API/key; manually tag approved playlist videos to current topics when ready.
+- Shop feature is on hold because it is not the main focus right now.
+- Keep search fast by using local/static topic data where possible.
+- Revamp the site direction to feel warmer, more home-y, and more personal.
 - Caregiver support page
 - About page
 - User accounts
@@ -107,48 +111,29 @@ If you only want the public site deployed, the app still builds without the comm
 
 ## TODO: YouTube Video Library
 
-**Current Status:** Video feature is temporarily disabled because we need real, verified video IDs.
+**Current Status:** Video feature is on hold. We are waiting for the founder to create and approve a YouTube playlist. We do not want to use the YouTube API because it adds cost and configuration.
 
-**Plan:** Create curated YouTube playlist with quality dementia care videos
+**Plan:** When the playlist is ready, manually add the approved videos to the app and tag each video to the current care topics so they can appear in search results.
 
 **Steps to implement:**
 
-1. **Create YouTube Playlist**
-   - Go to YouTube and create a new playlist
-   - Name it something like "DementiaAide - Caregiver Resources"
-   - Make it Public or Unlisted
+1. **Founder creates approved playlist**
+   - Playlist can be public or unlisted
+   - Only founder-approved videos should be shown in the app
 
-2. **Add Quality Videos**
-   - Search for dementia care videos from trusted sources:
-     - Teepa Snow (dementia care expert)
-     - Alzheimer's Association
-     - Alzheimer's Society UK
-     - National Institute on Aging
-     - Dementia UK
-   - Categories needed:
-     - General dementia care (5+ videos)
-     - Wandering and safety (5+ videos)
-     - Bathing and personal care (5+ videos)
-     - Eating and nutrition (5+ videos)
-     - Managing aggression (5+ videos)
-     - Sundowning and sleep (5+ videos)
-     - Communication tips (5+ videos)
-     - Incontinence management (5+ videos)
-     - Caregiver self-care (5+ videos)
+2. **Extract Video IDs Manually**
+   - Open each approved video
+   - Copy the ID from the URL after `v=`
+   - No YouTube API key
 
-3. **Extract Video IDs**
-   - Option A (Manual): Open each video, copy the ID from URL (after `v=`)
-   - Option B (API): Copy the playlist ID and use YouTube Data API to fetch all videos
-
-4. **Update the Code**
+3. **Update the Code**
    - Edit `lib/youtube.ts`
-   - Replace the video library with your curated list
-   - Update video titles and descriptions
-   - Test that all videos load correctly
+   - Replace the disabled video list with approved playlist entries
+   - Tag each video to current topics like wandering, eating, bathing, aggression, sundowning, sleep, communication, incontinence, caregiver support, and activities
+   - Test that the videos match search results correctly
 
-5. **Alternative Approach**
-   - Could also embed the entire playlist instead of individual videos
-   - Or add a "Watch on YouTube" button that links to your playlist
+4. **Alternative Approach**
+   - Embed or link the whole approved playlist if individual tagging is not ready yet
 
 ## Contributing
 
