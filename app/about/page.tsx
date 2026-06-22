@@ -56,9 +56,9 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white">
       <Navigation />
       <main>
-        <section className="bg-[#f8fbff] pt-32">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
-            <div className="max-w-3xl">
+        <section className="bg-[#f8fbff] pt-8">
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 pb-14 sm:px-6 lg:flex-row lg:justify-between lg:gap-16 lg:px-8">
+            <div className="max-w-3xl lg:flex-1">
               <Badge className="mb-5 border-rose-100 bg-white px-3 py-1 text-rose-700 shadow-sm hover:bg-white">
                 About DementiaAide
               </Badge>
@@ -81,7 +81,10 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-lg border border-blue-100 bg-white shadow-xl">
+            <div
+              className="mx-auto overflow-hidden rounded-lg border border-blue-100 bg-white shadow-xl lg:mx-0 lg:shrink-0"
+              style={{ width: '380px', maxWidth: '100%' }}
+            >
               <div className="bg-blue-50">
                 <Image
                   src="/about-ana-dad.jpg"
@@ -90,8 +93,9 @@ export default function AboutPage() {
                   height={480}
                   priority
                   unoptimized
-                  className="h-auto w-full object-cover"
-                  sizes="(min-width: 1024px) 340px, 100vw"
+                  className="object-cover"
+                  style={{ width: '100%', height: '300px', objectPosition: 'center center' }}
+                  sizes="(min-width: 1024px) 380px, min(100vw, 380px)"
                 />
               </div>
               <div className="p-6">
@@ -104,18 +108,28 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section id="ana-story" className="bg-white py-16">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-8">
-            <div className="space-y-4">
-              <div className="overflow-hidden rounded-lg bg-gray-100 shadow-sm">
+        <section id="ana-story" className="bg-white py-14">
+          <div
+            className="mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-6 lg:flex-row lg:items-center lg:px-8"
+            style={{ columnGap: '64px', rowGap: '40px' }}
+          >
+            <div
+              className="w-full max-w-[340px] shrink-0 space-y-4 lg:max-w-none"
+              style={{ width: '340px', maxWidth: '100%' }}
+            >
+              <div
+                className="overflow-hidden rounded-lg bg-gray-100 shadow-sm"
+                style={{ width: '340px', maxWidth: '100%' }}
+              >
                 <Image
                   src="/about-jorge.jpg"
                   alt="Jorge Garcia smiling with a teddy bear"
                   width={360}
                   height={480}
                   unoptimized
-                  className="h-auto w-full object-cover"
-                  sizes="(min-width: 1024px) 300px, 100vw"
+                  className="object-cover"
+                  style={{ width: '100%', height: '430px', objectPosition: 'center center' }}
+                  sizes="(min-width: 1024px) 340px, min(100vw, 340px)"
                 />
               </div>
               <p className="text-sm leading-6 text-gray-500">
@@ -123,7 +137,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="flex flex-col justify-center">
+            <div className="flex max-w-3xl flex-1 flex-col justify-center lg:pl-4">
               <Badge className="mb-5 w-fit border-blue-100 bg-blue-50 px-3 py-1 text-blue-700 hover:bg-blue-50">
                 The Story Behind DementiaAide
               </Badge>
@@ -145,7 +159,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="bg-[#f8fbff] py-16">
+        <section className="bg-[#f8fbff] py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 max-w-2xl">
               <Badge className="mb-4 border-emerald-100 bg-emerald-50 px-3 py-1 text-emerald-700 hover:bg-emerald-50">
@@ -175,8 +189,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="bg-white py-16">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_420px] lg:px-8">
+        <section className="bg-white py-14">
+          <div className="mx-auto grid max-w-7xl items-start gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_440px] lg:px-8">
             <div className="rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
               <Sparkles className="mb-5 h-8 w-8 text-rose-600" />
               <h2 className="text-3xl font-bold tracking-normal text-gray-950">From our family to yours</h2>
@@ -185,15 +199,19 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="overflow-hidden rounded-lg bg-gray-100 shadow-sm">
+            <div
+              className="mx-auto overflow-hidden rounded-lg bg-gray-100 shadow-sm lg:mx-0"
+              style={{ width: '440px', maxWidth: '100%' }}
+            >
               <Image
                 src="/about-family.jpg"
                 alt="Ana's family gathered together"
                 width={480}
                 height={320}
                 unoptimized
-                className="h-auto w-full object-contain"
-                sizes="(min-width: 1024px) 420px, 100vw"
+                className="object-contain"
+                style={{ width: '100%', height: 'auto' }}
+                sizes="(min-width: 1024px) 440px, min(100vw, 440px)"
               />
             </div>
           </div>
