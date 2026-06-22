@@ -6,7 +6,7 @@ import { Footer } from '@/components/Footer';
 import { ResourceLibrary } from '@/components/ResourceLibrary';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { featuredResources, getResourceUrl, resourceStats } from '@/lib/resources';
+import { featuredResources, getResourceUrl } from '@/lib/resources';
 import { getSiteUrl } from '@/lib/site-url';
 
 const siteUrl = getSiteUrl();
@@ -45,8 +45,8 @@ export default function ResourcesPage() {
       <main>
         <section className="relative overflow-hidden bg-[#f7fbff] pt-32">
           <div className="absolute inset-x-0 bottom-0 h-24 bg-white" />
-          <div className="relative mx-auto grid max-w-7xl gap-12 px-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_500px] lg:px-8">
-            <div className="max-w-3xl">
+          <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-10 px-4 pb-16 sm:px-6 md:flex-row md:justify-between lg:gap-16 lg:px-8">
+            <div className="max-w-3xl md:flex-1">
               <Badge className="mb-5 border-blue-100 bg-white px-3 py-1 text-blue-700 shadow-sm hover:bg-white">
                 DementiaAide Resources
               </Badge>
@@ -72,7 +72,10 @@ export default function ResourcesPage() {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-[500px] overflow-hidden rounded-lg border border-blue-100 bg-white shadow-xl lg:mx-0">
+            <div
+              className="mx-auto overflow-hidden rounded-lg border border-blue-100 bg-white shadow-xl md:ml-auto md:mr-0 md:shrink-0"
+              style={{ width: '400px', maxWidth: '100%' }}
+            >
               <div className="bg-blue-50">
                 <Image
                   src="/ana-headshot.png"
@@ -81,8 +84,9 @@ export default function ResourcesPage() {
                   height={510}
                   priority
                   unoptimized
-                  className="mx-auto h-auto max-h-[500px] w-auto object-contain"
-                  sizes="(min-width: 1024px) 500px, min(100vw, 500px)"
+                  className="object-cover"
+                  style={{ width: '100%', height: '440px', objectPosition: 'center top' }}
+                  sizes="(min-width: 1024px) 400px, min(100vw, 400px)"
                 />
               </div>
               <div className="p-6">
@@ -98,19 +102,6 @@ export default function ResourcesPage() {
               <p className="text-sm leading-6 text-gray-600">
                 The resource library is built around Ana's writing and lived caregiving perspective, then grouped so families can find help without sorting through a wall of links.
               </p>
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                {resourceStats.map((stat) => {
-                  const Icon = stat.icon;
-
-                  return (
-                    <div key={stat.label} className="rounded-lg border border-gray-100 bg-gray-50 p-3">
-                      <Icon className="mb-3 h-5 w-5 text-blue-700" />
-                      <p className="text-xl font-bold text-gray-950">{stat.value}</p>
-                      <p className="mt-1 text-xs leading-4 text-gray-500">{stat.label}</p>
-                    </div>
-                  );
-                })}
-              </div>
               </div>
             </div>
           </div>
