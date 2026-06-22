@@ -116,17 +116,6 @@ interface AmazonProductsProps {
 }
 
 export function AmazonProducts({ products, loading, query }: AmazonProductsProps) {
-  console.log('🛍️  AmazonProducts component received:', {
-    productCount: products.length,
-    query,
-    loading,
-    firstProduct: products[0] ? {
-      asin: products[0].asin,
-      title: products[0].title,
-      price: products[0].price
-    } : null
-  });
-
   if (loading) {
     return (
       <section className="space-y-6">

@@ -197,22 +197,22 @@ async function fetchFromAmazonSPP(query: string): Promise<AmazonProduct[]> {
     const data = await response.json();
     console.log('📦 API Response data:', JSON.stringify(data, null, 2));
     
-    // Check if we got actual products or fallback message
-    if (data.fallback) {
-      console.log('⚠️  SPP API returned fallback response, reason:', data.message || 'Unknown');
-      console.log('📋 Debug info:', data.debug || 'No debug info');
-      console.log('🔄 Using predefined products instead');
-      return getFallbackProducts(query);
-    }
-    
     if (data.products && data.products.length > 0) {
-      console.log(`✅ SPP API successfully returned ${data.products.length} live products`);
+      console.log(`✅ Product API returned ${data.products.length} products`);
       console.log('📦 First product preview:', {
         asin: data.products[0]?.asin,
         title: data.products[0]?.title,
         price: data.products[0]?.price
       });
       return data.products;
+    }
+
+    // Only use local fallback if the API did not provide query-specific products.
+    if (data.fallback) {
+      console.log('⚠️  Product API returned fallback response without products, reason:', data.message || 'Unknown');
+      console.log('📋 Debug info:', data.debug || 'No debug info');
+      console.log('🔄 Using predefined products instead');
+      return getFallbackProducts(query);
     }
     
     console.log('⚠️  No products returned from SPP API, using fallback');

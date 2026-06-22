@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
         status: 200, 
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'private, max-age=3600' // Cache for 1 hour
+          'Cache-Control': 'no-store'
         }
       }
     );

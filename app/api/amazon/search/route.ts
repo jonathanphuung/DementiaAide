@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
             productCount: queryBasedProducts.length
           }
         }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
+        { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } }
       );
     }
 
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
             status: 200, 
             headers: {
               'Content-Type': 'application/json',
-              'Cache-Control': 'private, max-age=1800' // 30 minutes cache
+              'Cache-Control': 'no-store'
             }
           }
         );
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
         status: 200, 
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'private, max-age=3600'
+          'Cache-Control': 'no-store'
         }
       }
     );
