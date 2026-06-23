@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Share2, Bookmark, Lightbulb, Loader2 } from 'lucide-react';
+import { Search, Share2, Lightbulb, Loader2, ExternalLink } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
@@ -201,9 +201,6 @@ export function SearchResults() {
                 <Button variant="ghost" size="icon">
                   <Share2 className="w-5 h-5" />
                 </Button>
-                <Button variant="ghost" size="icon">
-                  <Bookmark className="w-5 h-5" />
-                </Button>
               </div>
             </div>
             {aiLoading ? (
@@ -221,6 +218,25 @@ export function SearchResults() {
               </div>
             ) : aiResponse ? (
               <div className="space-y-6">
+                {aiResponse.urgentNotice && (
+                  <div className="rounded-xl border border-red-200 bg-red-50 p-5">
+                    <h3 className="mb-2 text-lg font-semibold text-red-900">
+                      {aiResponse.urgentNotice.title}
+                    </h3>
+                    <p className="mb-3 text-sm leading-6 text-red-900">
+                      {aiResponse.urgentNotice.message}
+                    </p>
+                    <ul className="space-y-2">
+                      {aiResponse.urgentNotice.actions.map((action, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm text-red-900">
+                          <span className="font-semibold">•</span>
+                          <span>{action}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Main Explanation */}
                 <div className="prose max-w-none">
                   <p className="text-gray-700">{aiResponse.explanation}</p>
@@ -233,14 +249,70 @@ export function SearchResults() {
                     Helpful Tips
                   </h3>
                   <ul className="space-y-2">
-                    {aiResponse.tips.map((tip, index) => (
-                      <li key={index} className="flex items-start gap-2">
+                    {aiResponse.tips.slice(3).map((tip) => (
+                      <li key={tip} className="flex items-start gap-2">
                         <span className="text-blue-600 font-medium">•</span>
                         <span className="text-gray-700">{tip}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+
+                {aiResponse.matchedResources.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold">Ana&apos;s Related Guides</h3>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      {aiResponse.matchedResources.map((resource) => (
+                        <a
+                          key={resource.url}
+                          href={resource.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group rounded-lg border border-blue-100 bg-blue-50/60 p-4 transition hover:border-blue-200 hover:bg-blue-50"
+                        >
+                          <div className="mb-2 flex items-start justify-between gap-3">
+                            <div>
+                              <p className="text-xs font-medium text-blue-700">{resource.category}</p>
+                              <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
+                                {resource.title}
+                              </h4>
+                            </div>
+                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                          </div>
+                          <p className="text-sm leading-6 text-gray-600">{resource.summary}</p>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {aiResponse.trustedSources?.length > 0 && (
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold">Trusted Care References</h3>
+                    <div className="grid gap-3 md:grid-cols-3">
+                      {aiResponse.trustedSources.map((source) => (
+                        <a
+                          key={source.url}
+                          href={source.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group rounded-lg border border-gray-200 bg-gray-50 p-4 transition hover:border-blue-200 hover:bg-blue-50/60"
+                        >
+                          <div className="mb-2 flex items-start justify-between gap-3">
+                            <div>
+                              <p className="text-xs font-medium text-gray-500">{source.publisher}</p>
+                              <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
+                                {source.title}
+                              </h4>
+                            </div>
+                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                          </div>
+                          <p className="text-sm leading-6 text-gray-600">{source.summary}</p>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Related Topics */}
                 <div className="space-y-3">
@@ -259,6 +331,10 @@ export function SearchResults() {
                     ))}
                   </div>
                 </div>
+
+                <p className="rounded-lg bg-gray-50 p-3 text-xs leading-5 text-gray-500">
+                  {aiResponse.disclaimer}
+                </p>
               </div>
             ) : (
               <div className="text-center text-gray-500">

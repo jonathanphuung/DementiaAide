@@ -1,16 +1,11 @@
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 Amazon SPP API endpoint called');
-  
   try {
     const body = await request.json();
     const { query, category = 'HealthPersonalCare', maxResults = 6 } = body;
-    
-    console.log('📝 Request params:', { query, category, maxResults });
 
     if (!query) {
-      console.log('❌ No query provided');
       return new Response(
         JSON.stringify({ error: 'Query is required' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
@@ -19,14 +14,6 @@ export async function POST(request: NextRequest) {
 
     // Check if Amazon SPP credentials are configured
     if (!process.env.AMAZON_SPP_CLIENT_ID || !process.env.AMAZON_SPP_SECRET_KEY || !process.env.AMAZON_SPP_REFRESH_TOKEN) {
-      console.log('Missing SPP credentials:', {
-        hasClientId: !!process.env.AMAZON_SPP_CLIENT_ID,
-        hasSecretKey: !!process.env.AMAZON_SPP_SECRET_KEY,
-        hasRefreshToken: !!process.env.AMAZON_SPP_REFRESH_TOKEN
-      });
-      
-      console.log('🔄 SPP credentials missing, using query-based product generation');
-      
       // Generate context-aware products even without SPP credentials
       const queryBasedProducts = generateQueryBasedProducts(query, maxResults);
       
@@ -47,14 +34,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Simulate SPP API call with query-based product generation
-    console.log('Generating query-based products for:', query);
-    
     try {
       // Generate products based on search query to simulate SPP API
       const queryBasedProducts = generateQueryBasedProducts(query, maxResults);
-      
-      console.log(`Generated ${queryBasedProducts.length} query-based products`);
-      
+
       if (queryBasedProducts.length > 0) {
         return new Response(
           JSON.stringify({
