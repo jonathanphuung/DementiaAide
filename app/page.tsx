@@ -7,8 +7,8 @@ import { getSiteUrl } from '@/lib/site-url'
 const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
-  title: 'DementiaAide - AI-Powered Dementia Care Resources & Expert Guidance',
-  description: 'Get instant AI-powered advice for dementia caregiving challenges. Access curated educational videos, expert tips, and personalized product recommendations for Alzheimer\'s and dementia care. Trusted by thousands of caregivers worldwide.',
+  title: 'DementiaAide - Practical Dementia Care Help for Caregivers',
+  description: 'Get practical dementia care guidance for real caregiver questions, with Ana Garcia\'s related guides and trusted references for Alzheimer\'s and dementia support.',
   keywords: [
     'dementia care AI', 'alzheimer caregiver help', 'dementia advice online',
     'caregiver support platform', 'dementia behavior solutions', 'alzheimer care tips',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     'dementia safety advice', 'alzheimer support tools', 'caregiver education'
   ],
   openGraph: {
-    title: 'DementiaAide - AI-Powered Dementia Care Resources',
-    description: 'Instant AI advice, educational videos, and product recommendations for dementia caregivers. Get expert guidance for challenging caregiving situations.',
+    title: 'DementiaAide - Practical Dementia Care Help',
+    description: 'Practical dementia care guidance, Ana Garcia\'s related guides, and trusted references for real caregiving situations.',
     url: siteUrl,
     images: [
       {
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DementiaAide - AI-Powered Dementia Care Resources',
-    description: 'Get instant AI advice and expert resources for dementia caregiving challenges.',
+    title: 'DementiaAide - Practical Dementia Care Help',
+    description: 'Get practical guidance and trusted resources for dementia caregiving challenges.',
     images: [`${siteUrl}/og-home.png`]
   },
   alternates: {
@@ -52,15 +52,15 @@ export default function HomePage() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebPage",
-              "name": "DementiaAide - AI Dementia Care Platform",
-              "description": "AI-powered platform providing instant advice, educational videos, and product recommendations for dementia caregivers",
+              "name": "DementiaAide - Practical Dementia Care Help",
+              "description": "Practical dementia care guidance, Ana Garcia guides, and trusted references for caregivers",
               "url": siteUrl,
               "mainEntity": {
                 "@type": "WebApplication",
-                "name": "DementiaAide AI Assistant",
+                "name": "DementiaAide Care Assistant",
                 "applicationCategory": "HealthApplication",
                 "operatingSystem": "Web Browser",
-                "description": "AI-powered dementia care assistant providing personalized guidance"
+                "description": "Dementia care assistant providing practical guidance and related resources"
               },
               "breadcrumb": {
                 "@type": "BreadcrumbList",

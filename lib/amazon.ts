@@ -108,23 +108,15 @@ const fallbackProducts: { [key: string]: AmazonProduct[] } = {
 export async function searchAmazonProducts(query: string): Promise<AmazonProduct[]> {
   const cacheKey = query.toLowerCase().trim();
   
-  console.log(`🔍 searchAmazonProducts called with query: "${query}"`);
-  
-  // Temporarily disable cache for debugging
-  // TODO: Re-enable cache after debugging
-  // if (amazonCache[cacheKey]) {
-  //   const cached = amazonCache[cacheKey];
-  //   if (Date.now() - cached.timestamp < AMAZON_CACHE_DURATION) {
-  //     console.log('📋 Returning cached products for:', query);
-  //     return cached.products;
-  //   }
-  // }
+  if (amazonCache[cacheKey]) {
+    const cached = amazonCache[cacheKey];
+    if (Date.now() - cached.timestamp < AMAZON_CACHE_DURATION) {
+      return cached.products;
+    }
+  }
 
   try {
-    // Always try the SPP API first - let the server-side route handle credential checking
-    console.log('🚀 Attempting SPP API call...');
     const products = await fetchFromAmazonSPP(query);
-    console.log(`✅ SPP API returned ${products.length} products for query: ${query}`);
     
     amazonCache[cacheKey] = {
       products,
@@ -132,7 +124,7 @@ export async function searchAmazonProducts(query: string): Promise<AmazonProduct
     };
     return products;
   } catch (error) {
-    console.error('❌ Amazon SPP API failed, using fallback products:', error);
+    console.error('Amazon product search failed, using fallback products:', error);
     return getFallbackProducts(query);
   }
 }
@@ -169,11 +161,7 @@ function getFallbackProducts(query: string): AmazonProduct[] {
  */
 async function fetchFromAmazonSPP(query: string): Promise<AmazonProduct[]> {
   try {
-    console.log(`🔍 Searching Amazon SPP for: "${query}"`);
-    
-    // Call our API endpoint that handles SPP integration
     const apiUrl = '/api/amazon/search';
-    console.log(`📡 Making request to: ${apiUrl}`);
     
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -187,40 +175,23 @@ async function fetchFromAmazonSPP(query: string): Promise<AmazonProduct[]> {
       })
     });
     
-    console.log(`📡 API Response status: ${response.status}`);
-    
     if (!response.ok) {
-      console.error('❌ SPP API response not ok:', response.status, response.statusText);
       throw new Error(`SPP API request failed: ${response.status}`);
     }
     
     const data = await response.json();
-    console.log('📦 API Response data:', JSON.stringify(data, null, 2));
     
     if (data.products && data.products.length > 0) {
-      console.log(`✅ Product API returned ${data.products.length} products`);
-      console.log('📦 First product preview:', {
-        asin: data.products[0]?.asin,
-        title: data.products[0]?.title,
-        price: data.products[0]?.price
-      });
       return data.products;
     }
 
-    // Only use local fallback if the API did not provide query-specific products.
     if (data.fallback) {
-      console.log('⚠️  Product API returned fallback response without products, reason:', data.message || 'Unknown');
-      console.log('📋 Debug info:', data.debug || 'No debug info');
-      console.log('🔄 Using predefined products instead');
       return getFallbackProducts(query);
     }
     
-    console.log('⚠️  No products returned from SPP API, using fallback');
     return getFallbackProducts(query);
     
   } catch (error) {
-    console.error('💥 Error calling SPP API:', error);
-    console.log('🔄 Falling back to predefined products');
     throw error;
   }
   

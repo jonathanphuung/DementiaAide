@@ -1,15 +1,54 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { ArrowRight, BookOpen, HeartHandshake, Search, Shield } from 'lucide-react';
+import { ArrowRight, BookOpen, CalendarCheck, HeartHandshake, Home, Search, Shield, Stethoscope } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { ResourceLibrary } from '@/components/ResourceLibrary';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { featuredResources, getResourceUrl } from '@/lib/resources';
+import { featuredResources, getResourceUrl, resources, type Resource } from '@/lib/resources';
 import { getSiteUrl } from '@/lib/site-url';
 
 const siteUrl = getSiteUrl();
+
+const guidedPaths = [
+  {
+    title: 'Newly Diagnosed',
+    description: 'Start with plain-language basics, what changes after diagnosis, and how to plan the next steps.',
+    icon: Stethoscope,
+    slugs: ['what-is-dementia', 'what-to-expect-after-a-dementia-diagnosis', 'top-signs-of-dementia'],
+  },
+  {
+    title: 'Safety Concerns',
+    description: 'Guides for wandering, falls, driving, kitchen risk, sudden changes, and emergency planning.',
+    icon: Shield,
+    slugs: ['dementia-wandering', 'falls-in-dementia', 'dementia-and-driving'],
+  },
+  {
+    title: 'Daily Care',
+    description: 'Practical support for bathing, toileting, dressing, eating, medication, sleep, and routines.',
+    icon: Home,
+    slugs: ['dementia-and-refusing-to-bathe', 'dementia-bathroom-help-caregiver-guide', 'medication-management-in-dementia'],
+  },
+  {
+    title: 'Behavior Changes',
+    description: 'Help for anger, anxiety, repetition, hallucinations, accusations, withdrawal, and distress.',
+    icon: HeartHandshake,
+    slugs: ['anger-in-dementia', 'dementia-and-anxiety', 'false-accusations'],
+  },
+  {
+    title: 'Caregiver Burnout',
+    description: 'Support for exhaustion, guilt, family conflict, asking for help, and finding respite.',
+    icon: CalendarCheck,
+    slugs: ['caregiver-burnout', 'feeling-overwhelmed-as-a-dementia-caregiver', 'respite-care'],
+  },
+];
+
+function getPathResources(slugs: string[]) {
+  return slugs
+    .map((slug) => resources.find((resource) => resource.slug === slug))
+    .filter((resource): resource is Resource => Boolean(resource));
+}
 
 export const metadata: Metadata = {
   title: 'Dementia Care Resources - Ana Garcia Guides for Caregivers',
@@ -87,21 +126,21 @@ export default function ResourcesPage() {
                   className="object-cover"
                   style={{ width: '100%', height: '440px', objectPosition: 'center top' }}
                   sizes="(min-width: 1024px) 400px, min(100vw, 400px)"
-                />
+              />
               </div>
               <div className="p-6">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-lg bg-rose-50 p-3 text-rose-700">
-                  <HeartHandshake className="h-6 w-6" />
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="rounded-lg bg-rose-50 p-3 text-rose-700">
+                    <HeartHandshake className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500">A note from the heart of the site</p>
+                    <h2 className="text-xl font-semibold text-gray-950">Ana has been there</h2>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500">A note from the heart of the site</p>
-                  <h2 className="text-xl font-semibold text-gray-950">Ana has been there</h2>
-                </div>
-              </div>
-              <p className="text-sm leading-6 text-gray-600">
-                The resource library is built around Ana's writing and lived caregiving perspective, then grouped so families can find help without sorting through a wall of links.
-              </p>
+                <p className="text-sm leading-6 text-gray-600">
+                  The resource library is built around Ana's writing and lived caregiving perspective, then grouped so families can find help without sorting through a wall of links.
+                </p>
               </div>
             </div>
           </div>
@@ -147,6 +186,53 @@ export default function ResourcesPage() {
                   <p className="mt-3 text-sm leading-6 text-gray-600">{resource.summary}</p>
                 </a>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#f7fbff] py-14">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 max-w-3xl">
+              <Badge className="mb-4 border-blue-100 bg-white px-3 py-1 text-blue-700 shadow-sm hover:bg-white">
+                Guided Paths
+              </Badge>
+              <h2 className="text-3xl font-bold tracking-normal text-gray-950">Find the right starting point</h2>
+              <p className="mt-3 text-base leading-7 text-gray-600">
+                These paths group Ana&apos;s writing around common care moments so families do not have to know the perfect search term.
+              </p>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-5">
+              {guidedPaths.map((path) => {
+                const Icon = path.icon;
+                const pathResources = getPathResources(path.slugs);
+
+                return (
+                  <div key={path.title} className="rounded-lg border border-blue-100 bg-white p-5 shadow-sm">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-950">{path.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-gray-600">{path.description}</p>
+                    <div className="mt-5 space-y-2">
+                      {pathResources.map((resource) => (
+                        <a
+                          key={resource.slug}
+                          href={getResourceUrl(resource)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group flex items-start justify-between gap-3 rounded-md border border-gray-100 p-3 text-sm transition hover:border-blue-200 hover:bg-blue-50"
+                        >
+                          <span className="font-medium leading-5 text-gray-800 group-hover:text-blue-800">
+                            {resource.title}
+                          </span>
+                          <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-blue-700" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

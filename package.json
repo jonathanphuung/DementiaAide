@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test:assistant": "node scripts/test-assistant-search.js",
+    "test:assistant:speed": "node scripts/test-assistant-speed.js",
     "start": "next start",
     "lint": "next lint"
   },
