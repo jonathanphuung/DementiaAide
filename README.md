@@ -1,146 +1,34 @@
 # DementiaAide
 
-A web platform to help dementia caregivers find advice, resources, and products.
+DementiaAide is a caregiver support platform for finding practical guidance, trusted resources, and relevant products for common dementia-care situations.
 
-## What it does
+[View the live site](https://dementia-aide.vercel.app/)
 
-DementiaAide helps caregivers get quick answers to their questions. Type in what you're dealing with (like "mom won't eat" or "wandering at night") and get specific advice and product recommendations.
+## How the care assistant works
 
-## Main Features
+A caregiver can describe a situation in everyday language, such as “wandering at night” or “refusing to eat.” The application then:
 
-**Care Advice**
-- Answers common caregiving questions
-- Recognizes 13+ specific situations (wandering, eating issues, aggression, etc.)
-- Gives practical tips you can actually use
-- Works completely offline - no external APIs needed
+1. Normalizes the query and expands common caregiving terms with related keywords.
+2. Classifies the request into a care category and a specific scenario.
+3. Returns structured guidance, practical next steps, and related topics.
+4. Ranks curated resources using the query, category, and scenario match.
+5. Adds a prominent safety notice when the query suggests an urgent medical or safety risk.
 
-**Video Resources**
-- Curated library of 40+ quality dementia care videos
-- Organized by topic: wandering, bathing, eating, aggression, sleep, communication, and more
-- Hand-picked from trusted sources like Alzheimer's Association
-- Matches your search to show the most relevant videos
+The response engine is deterministic and runs from local TypeScript data. It does not send caregiver questions to a generative AI service.
 
-**Product Search**
-- Get product suggestions from Amazon based on your search
-- Amazon integration for purchasing (optional)
+## Engineering highlights
 
-**Product Catalog**
-- Browse products designed for dementia care
-- Categories include memory aids, safety equipment, adaptive clothing
+- Built scenario-specific guidance for wandering, bathing resistance, aggression, sundowning, medication concerns, caregiver burnout, and other common situations.
+- Added weighted resource ranking and synonym expansion so different phrases can resolve to the same care topic.
+- Mapped urgent phrases to action-focused notices and sources from organizations including the CDC, National Institute on Aging, and Alzheimer's Association.
+- Created reusable resource, product, search, cart, and checkout components with responsive and accessible UI patterns.
+- Integrated Shopify's Storefront GraphQL API to create carts from mapped product variants and continue into Shop Pay.
+- Added optional Stripe and shipping service routes for the commerce workflow.
 
-**Clean Interface**
-- Works on phones, tablets, and desktops
-- Fast loading with smooth animations
-- Simple, clear design
+## Stack
 
-## Tech Stack
+Next.js, React, TypeScript, Tailwind CSS, Radix UI, Shopify Storefront API, Stripe, and Vercel.
 
-Built with Next.js 14, TypeScript, and Tailwind CSS. Uses Radix UI for accessible components and Framer Motion for animations.
+## Current focus
 
-The AI advice system and video library use keyword matching - completely self-contained. Amazon integration is optional.
-
-## Project Structure
-
-```
-app/                   # Pages and API routes
-components/            # Reusable UI components
-lib/                   # Core logic (AI, products, integrations)
-types/                 # TypeScript definitions
-```
-
-## Setup
-
-Need Node.js 18+ installed.
-
-```bash
-git clone https://github.com/jonathanphuung/DementiaAide.git
-cd DementiaAide
-npm install
-npm run dev
-```
-
-The site works without any API keys. For Amazon products, add this to `.env.local`:
-
-```env
-AMAZON_ASSOCIATE_TAG=your_tag
-```
-
-## Deploying To Vercel
-
-This project is already configured as a Next.js app for Vercel. For production and preview deployments, set `NEXT_PUBLIC_SITE_URL` in Vercel to the canonical domain you want search metadata and sitemap URLs to use.
-
-Recommended Vercel environment variables:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=your_tag
-GOOGLE_VERIFICATION=your_google_verification_token
-GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
-AMAZON_SPP_CLIENT_ID=...
-AMAZON_SPP_SECRET_KEY=...
-AMAZON_SPP_REFRESH_TOKEN=...
-AMAZON_MARKETPLACE_ID=...
-SHOPIFY_STORE_URL=...
-SHOPIFY_STOREFRONT_ACCESS_TOKEN=...
-STRIPE_SECRET_KEY=...
-```
-
-If you only want the public site deployed, the app still builds without the commerce or analytics env vars.
-
-## Development Status
-
-**Working:**
-- AI advice system (keyword-based, offline)
-- Search functionality  
-- Resources library sourced from Ana's public DementiaAide blog posts
-- Product catalog
-
-**In Progress:**
-- Resources page expansion and topic mapping
-- Search speed and relevance improvements
-
-**To Do:**
-- YouTube feature is on hold until the founder provides an approved playlist. Do not use the YouTube API/key; manually tag approved playlist videos to current topics when ready.
-- Shop feature is on hold because it is not the main focus right now.
-- Keep search fast by using local/static topic data where possible.
-- Revamp the site direction to feel warmer, more home-y, and more personal.
-- Caregiver support page
-- About page
-- User accounts
-- Better analytics
-
-## TODO: YouTube Video Library
-
-**Current Status:** Video feature is on hold. We are waiting for the founder to create and approve a YouTube playlist. We do not want to use the YouTube API because it adds cost and configuration.
-
-**Plan:** When the playlist is ready, manually add the approved videos to the app and tag each video to the current care topics so they can appear in search results.
-
-**Steps to implement:**
-
-1. **Founder creates approved playlist**
-   - Playlist can be public or unlisted
-   - Only founder-approved videos should be shown in the app
-
-2. **Extract Video IDs Manually**
-   - Open each approved video
-   - Copy the ID from the URL after `v=`
-   - No YouTube API key
-
-3. **Update the Code**
-   - Edit `lib/youtube.ts`
-   - Replace the disabled video list with approved playlist entries
-   - Tag each video to current topics like wandering, eating, bathing, aggression, sundowning, sleep, communication, incontinence, caregiver support, and activities
-   - Test that the videos match search results correctly
-
-4. **Alternative Approach**
-   - Embed or link the whole approved playlist if individual tagging is not ready yet
-
-## Contributing
-
-Found a bug? Have an idea? Open an issue on GitHub.
-
-Want to contribute code? Fork the repo and submit a pull request.
-
----
-
-Built to help caregivers. Still a work in progress.
+The caregiver guidance and resource search are the main product experience. Commerce features are secondary, and video resources remain disabled until the content has been reviewed and approved.
