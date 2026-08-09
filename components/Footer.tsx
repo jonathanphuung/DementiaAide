@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Heart, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 export function Footer() {
@@ -22,21 +23,21 @@ export function Footer() {
               Dementia<span className="text-white">Aide</span>
             </span>
           </div>
-          <p className="text-white mb-8 max-w-md">
+          <p className="text-white/70 mb-8 max-w-md">
             Empowering families with compassionate care solutions and expert resources for
             dementia caregiving.
           </p>
-          
+
           {/* Navigation Links */}
           <div className="flex flex-wrap justify-center gap-8 mb-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm text-white hover:text-white/80 transition-colors"
+                className="text-sm text-white/70 hover:text-white transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -56,16 +57,16 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white text-sm">
+          <p className="text-white/50 text-sm">
             © 2025 DementiaAide. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-white hover:text-white/80 transition-colors text-sm">
+            <Link href="#" className="text-white/70 hover:text-white transition-colors text-sm">
               Terms of Service
-            </a>
-            <a href="#" className="text-white hover:text-white/80 transition-colors text-sm">
+            </Link>
+            <Link href="#" className="text-white/70 hover:text-white transition-colors text-sm">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
