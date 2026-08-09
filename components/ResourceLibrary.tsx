@@ -47,30 +47,27 @@ export function ResourceLibrary() {
   }, [query, selectedCategory]);
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-background py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
           <div>
-            <Badge className="mb-4 border-rose-100 bg-rose-50 px-3 py-1 text-rose-700 hover:bg-rose-50">
-              Ana's Resource Library
-            </Badge>
-            <h2 className="text-3xl font-bold tracking-normal text-gray-950 md:text-4xl">
+            <h2 className="font-display text-3xl font-extrabold text-foreground md:text-4xl">
               Find the guide that fits this moment
             </h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
+            <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground">
               Caregiving changes hour by hour. These guides are grouped around the real situations families run into most often.
             </p>
           </div>
 
           <label className="relative block">
             <span className="sr-only">Search resources</span>
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search wandering, eating, guilt..."
-              className="h-12 w-full rounded-lg border border-gray-200 bg-white pl-12 pr-4 text-sm text-gray-950 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+              className="h-12 w-full rounded-md border-2 border-foreground/15 bg-card pl-12 pr-4 text-sm text-foreground shadow-sm outline-none transition-colors focus:border-primary focus:ring-4 focus:ring-ring/30"
             />
           </label>
         </div>
@@ -79,7 +76,7 @@ export function ResourceLibrary() {
           <Button
             type="button"
             variant={selectedCategory === allCategoryLabel ? 'default' : 'outline'}
-            className={`shrink-0 rounded-lg ${selectedCategory === allCategoryLabel ? 'bg-gray-950 text-white hover:bg-gray-800' : 'bg-white'}`}
+            className={`shrink-0 ${selectedCategory !== allCategoryLabel ? 'border-2 border-foreground/20 bg-card' : ''}`}
             onClick={() => setSelectedCategory(allCategoryLabel)}
           >
             All
@@ -95,11 +92,7 @@ export function ResourceLibrary() {
                 key={category}
                 type="button"
                 variant={selectedCategory === category ? 'default' : 'outline'}
-                className={`shrink-0 rounded-lg ${
-                  selectedCategory === category
-                    ? 'bg-gray-950 text-white hover:bg-gray-800'
-                    : 'bg-white text-gray-700'
-                }`}
+                className={`shrink-0 ${selectedCategory !== category ? 'border-2 border-foreground/20 bg-card text-foreground' : ''}`}
                 onClick={() => setSelectedCategory(category)}
               >
                 <Icon className="mr-2 h-4 w-4" />
@@ -111,14 +104,14 @@ export function ResourceLibrary() {
         </div>
 
         <div className="mb-6 flex items-center justify-between gap-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             {filteredResources.length} {filteredResources.length === 1 ? 'guide' : 'guides'}
           </p>
           {query || selectedCategory !== allCategoryLabel ? (
             <Button
               type="button"
               variant="ghost"
-              className="h-9 rounded-lg px-3 text-sm text-gray-600"
+              className="h-9 px-3 text-sm text-muted-foreground"
               onClick={() => {
                 setQuery('');
                 setSelectedCategory(allCategoryLabel);
@@ -138,23 +131,23 @@ export function ResourceLibrary() {
               return (
                 <article
                   key={resource.slug}
-                  className="flex min-h-[260px] flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+                  className="flex min-h-[260px] flex-col rounded-lg border-2 border-foreground/15 bg-card p-5 shadow-sm transition-colors hover:border-primary"
                 >
                   <div className="mb-4 flex items-start justify-between gap-3">
-                    <div className={`inline-flex rounded-lg border p-2 ${meta.accent}`}>
+                    <div className={`inline-flex rounded-md border-2 p-2 ${meta.accent}`}>
                       <Icon className="h-5 w-5" />
                     </div>
-                    <Badge variant="outline" className="rounded-md text-xs text-gray-600">
+                    <Badge variant="outline" className="rounded-md text-xs text-muted-foreground">
                       {resource.category}
                     </Badge>
                   </div>
 
-                  <h3 className="text-lg font-semibold leading-6 text-gray-950">{resource.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-6 text-gray-600">{resource.summary}</p>
+                  <h3 className="text-lg font-semibold leading-6 text-foreground">{resource.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">{resource.summary}</p>
 
                   <div className="mt-5 flex flex-wrap gap-2">
                     {resource.tags.slice(0, 3).map((tag) => (
-                      <span key={tag} className="rounded-md bg-gray-100 px-2 py-1 text-xs text-gray-600">
+                      <span key={tag} className="rounded-md bg-secondary px-2 py-1 text-xs text-foreground/70">
                         {tag}
                       </span>
                     ))}
@@ -164,9 +157,9 @@ export function ResourceLibrary() {
                     href={getResourceUrl(resource)}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900"
+                    className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary hover:opacity-80"
                   >
-                    Read Ana's guide
+                    Read Ana&apos;s guide
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </article>
@@ -174,9 +167,9 @@ export function ResourceLibrary() {
             })}
           </div>
         ) : (
-          <div className="rounded-lg border border-gray-200 bg-gray-50 px-6 py-12 text-center">
-            <p className="text-base font-medium text-gray-950">No matching guides yet.</p>
-            <p className="mt-2 text-sm text-gray-600">Try another care topic or clear the filters.</p>
+          <div className="rounded-lg border-2 border-foreground/15 bg-secondary/30 px-6 py-12 text-center">
+            <p className="text-base font-medium text-foreground">No matching guides yet.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Try another care topic or clear the filters.</p>
           </div>
         )}
       </div>

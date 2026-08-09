@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-08T00:00:00Z",
+  "title": "Design System: DementiaAide",
+  "extensions": {
+    "colorMeta": {
+      "teal-stamp": {
+        "role": "primary",
+        "displayName": "Teal Stamp-Ink",
+        "canonical": "rgb(15 107 99)",
+        "tonalRamp": ["#0A2E2B", "#0D4844", "#0F6B63", "#177F76", "#3F998F", "#7FBBB2", "#BFDDD8", "#E3F0EE"]
+      },
+      "ivory-ground": {
+        "role": "neutral",
+        "displayName": "Ivory Ground",
+        "canonical": "rgb(247 246 241)",
+        "tonalRamp": ["#26261F", "#4D4C40", "#736F5E", "#9B9683", "#C3BEA8", "#E1DECE", "#F7F6F1", "#FDFCFA"]
+      },
+      "card-stock": {
+        "role": "neutral",
+        "displayName": "Card Stock",
+        "canonical": "rgb(253 252 249)",
+        "tonalRamp": ["#27271F", "#4E4D3F", "#767460", "#9E9C82", "#C6C4A7", "#E4E2CE", "#F9F8F3", "#FDFCF9"]
+      },
+      "charcoal-ink": {
+        "role": "neutral",
+        "displayName": "Charcoal Ink",
+        "canonical": "rgb(38 38 36)",
+        "tonalRamp": ["#0F0F0E", "#1B1B1A", "#262624", "#4A4A46", "#6E6E68", "#94948C", "#BEBEB6", "#E6E6E1"]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "rgb(107 106 97)",
+        "tonalRamp": ["#232320", "#3B3A34", "#535248", "#6B6A61", "#8A897E", "#AAA99C", "#CBCABE", "#EDEDE6"]
+      },
+      "keyline-border": {
+        "role": "neutral",
+        "displayName": "Keyline Border",
+        "canonical": "rgb(220 218 208)",
+        "tonalRamp": ["#3B3A31", "#5D5B4D", "#807D6A", "#A4A18A", "#C4C2AF", "#DCDAD0", "#EBEAE3", "#F7F6F2"]
+      },
+      "sage-law": {
+        "role": "secondary",
+        "displayName": "Sage Law",
+        "canonical": "rgb(47 90 61)",
+        "tonalRamp": ["#0F1D14", "#1C3624", "#2F5A3D", "#3D7550", "#5C9573", "#8AB99E", "#BCDAC8", "#E7F0E4"]
+      },
+      "crimson-law": {
+        "role": "secondary",
+        "displayName": "Crimson Law",
+        "canonical": "rgb(176 35 24)",
+        "tonalRamp": ["#3D0C07", "#650F0A", "#8F1811", "#B02318", "#CE4536", "#E17B6E", "#F0AEA4", "#FBE4E1"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Archivo Display", "purpose": "Headlines, section titles, uppercase labels — never body prose." },
+      "body": { "displayName": "Public Sans Body", "purpose": "Explanatory copy, tips, descriptions." }
+    },
+    "shadows": [
+      { "name": "card-resting", "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "purpose": "shadow-sm on the outermost hero and results cards only; not used as a layered scale." }
+    ],
+    "motion": [
+      { "name": "result-reveal", "value": "opacity 0->1, translateY 10px->0, duration 0.35s, cubic-bezier(0.25,1,0.5,1)", "purpose": "The single authored entrance motion for revealing search results; applied once per container, not per element." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "2xl-container", "value": "1400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Solid teal CTA / search submit button.",
+      "html": "<button class=\"ds-btn-primary\">Search</button>",
+      "css": ".ds-btn-primary { background: rgb(15 107 99); color: #fff; padding: 0.5rem 1rem; border: none; border-radius: calc(0.625rem - 2px); font-family: Archivo, sans-serif; font-weight: 500; font-size: 0.875rem; transition: background-color 0.15s, box-shadow 0.15s; } .ds-btn-primary:hover { background: rgb(15 107 99 / 0.9); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(15 107 99 / 0.3); border-color: rgb(15 107 99); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Keyline-bordered secondary action (cart, show/hide tools).",
+      "html": "<button class=\"ds-btn-outline\">Show tools</button>",
+      "css": ".ds-btn-outline { background: rgb(253 252 249); color: rgb(38 38 36); padding: 0.5rem 1rem; border: 2px solid rgb(38 38 36 / 0.2); border-radius: calc(0.625rem - 2px); font-family: Archivo, sans-serif; font-weight: 500; font-size: 0.875rem; transition: background-color 0.15s; } .ds-btn-outline:hover { background: rgb(227 240 238); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 4px rgb(15 107 99 / 0.3); }"
+    },
+    {
+      "name": "Numbered Selector Chip",
+      "kind": "chip",
+      "description": "Signature pattern: catalog-style chip with a teal numbered badge instead of an icon, used for Popular Searches / Care Paths.",
+      "html": "<button class=\"ds-chip\"><span class=\"ds-chip-num\">1</span>wandering at night</button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: rgb(253 252 249); border: 2px solid rgb(38 38 36 / 0.15); border-radius: calc(0.625rem - 2px); padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500; color: rgb(38 38 36); transition: border-color 0.15s, background-color 0.15s; } .ds-chip:hover { border-color: rgb(15 107 99); background: rgb(227 240 238); } .ds-chip-num { display: flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; flex-shrink: 0; border-radius: calc(0.625rem - 4px); background: rgb(15 107 99); color: #fff; font-family: Archivo, sans-serif; font-size: 0.625rem; font-weight: 700; }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard index-card container used for Care Guidance and result sections.",
+      "html": "<section class=\"ds-card\"><h2 class=\"ds-card-title\">Care Guidance</h2><p>Explanation text goes here.</p></section>",
+      "css": ".ds-card { background: rgb(253 252 249); border: 2px solid rgb(38 38 36 / 0.15); border-radius: 0.625rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); padding: 2.5rem; color: rgb(38 38 36); } .ds-card-title { font-family: Archivo, sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 0.5rem; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "description": "Large primary search field with visible keyline and teal focus ring.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"What do you need help with?\" />",
+      "css": ".ds-input { min-width: 0; flex: 1; background: rgb(253 252 249); border: 2px solid rgb(38 38 36 / 0.25); border-radius: calc(0.625rem - 2px); padding: 1rem 1.25rem; font-size: 1.125rem; color: rgb(38 38 36); outline: none; transition: border-color 0.15s, box-shadow 0.15s; } .ds-input::placeholder { color: rgb(107 106 97); } .ds-input:focus-visible { border-color: rgb(15 107 99); box-shadow: 0 0 0 4px rgb(15 107 99 / 0.3); }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "description": "Card-stock top bar with underline-on-hover links.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Home</a><a class=\"ds-nav-link\" href=\"#\">Shop</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 2rem; height: 5rem; background: rgb(253 252 249); border-bottom: 2px solid rgb(38 38 36 / 0.15); padding: 0 1rem; } .ds-nav-link { position: relative; font-size: 0.875rem; font-weight: 500; color: rgb(38 38 36 / 0.7); text-decoration: none; transition: color 0.15s; } .ds-nav-link::after { content: ''; position: absolute; bottom: -0.25rem; left: 0; width: 0; height: 2px; background: rgb(15 107 99); transition: width 0.15s; } .ds-nav-link:hover { color: rgb(38 38 36); } .ds-nav-link:hover::after { width: 100%; }"
+    },
+    {
+      "name": "Urgent Notice Card",
+      "kind": "custom",
+      "description": "Crimson-law card used only for urgent/caution content; ribbon header plus body.",
+      "html": "<div class=\"ds-urgent\"><div class=\"ds-urgent-ribbon\">Urgent</div><div class=\"ds-urgent-body\"><h3>Title</h3><p>Message text.</p></div></div>",
+      "css": ".ds-urgent { border: 2px solid rgb(238 187 180); background: rgb(251 228 225); border-radius: calc(0.625rem - 2px); overflow: hidden; } .ds-urgent-ribbon { background: rgb(176 35 24); color: #fff; font-family: Archivo, sans-serif; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.5rem 1.25rem; } .ds-urgent-body { padding: 1.25rem; color: rgb(38 38 36); } .ds-urgent-body h3 { color: rgb(176 35 24); font-family: Archivo, sans-serif; font-weight: 700; font-size: 1.125rem; margin-bottom: 0.5rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Library Card Catalog",
+    "overview": "DementiaAide's home search reads like a trusted reference-library card catalog, not a chatbot or a SaaS landing page. A stressed, exhausted caregiver types one real situation and gets back something that feels filed and findable: an ivory index-card ground, a charcoal-ink headline, and a single card-framed search field with a stamp-ink teal submit square beneath it. The system exists to lower cognitive load under stress — no gradients, no scattered motion, no chat bubbles — just calm, orderly, high-contrast reference material. This is the confirmed, shipped world after one full re-roll: the round-0 direction (a medication-label amber/brown palette with a navy footer) was explicitly rejected by the user as reading \"too brown\" and \"literally blue.\" The current world corrects both: the ground is ivory (not amber-tinted), the accent is a committed deep teal (not navy or brown), and the footer inverts to neutral charcoal rather than any blue. Two colors carry legal, not decorative, meaning: sage is safe/confirmed/tip, crimson is urgent/caution. They are never swapped and never used for anything else. The single teal accent (~#0F6B63) is reserved for brand and calls to action, kept rare rather than washed across the page.",
+    "keyCharacteristics": [
+      "Ivory card-stock ground with charcoal ink — never navy, never brown",
+      "One committed teal accent for brand/CTA; sage and crimson are semantic law, not palette options",
+      "Visible 2px keyline borders frame every card like an index card",
+      "Small, crisp corner radii (0.625rem base) — never fully rounded, never sharp",
+      "One authored entrance motion (quart ease-out, ~0.35s) on results; no per-element animation scatter",
+      "Archivo for display/labels (bold, often uppercase-tracked), Public Sans for body"
+    ],
+    "rules": [
+      { "name": "The One Stamp Rule", "body": "Teal is the only brand accent in the system. It never shares CTA/link duty with a second accent color, and it is never applied for decoration alone — only to brand marks, primary actions, and active/focus states.", "section": "colors" },
+      { "name": "The Law Colors Rule", "body": "Sage and crimson are semantic, not aesthetic. Sage always and only means safe/confirmed/tip; crimson always and only means urgent/caution. Neither is ever used where its meaning doesn't apply, and they are never interchanged.", "section": "colors" },
+      { "name": "The Stamped Label Rule", "body": "Any all-caps, tracked micro-label (category badges, \"In this answer:\", chip captions) is always set in Archivo bold, never Public Sans — it reads as a catalog stamp, not body prose.", "section": "typography" },
+      { "name": "The Keyline-Over-Shadow Rule", "body": "A card is legible as a card because of its 2px border against the ivory ground, not because of elevation. Shadow (shadow-sm) is a minor accent on the outermost hero/result containers only — never stacked into a multi-level elevation system.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep teal as the only accent used for brand/CTA/focus states; treat it as rare, not a wash.",
+      "Do use sage and crimson exclusively for their semantic meaning (safe/tip vs. urgent/caution) — never as generic decorative color.",
+      "Do frame cards with a visible 2px keyline border rather than relying on shadow for card definition.",
+      "Do use the single authored entrance motion (quart ease-out, duration: 0.35s, ease: [0.25, 1, 0.5, 1], translate-y 10px to 0) for revealing new result content; keep it applied once at the section/container level.",
+      "Do set uppercase micro-labels in Archivo bold with wide tracking (tracking-wide or tracking-[0.15em]), never in body-weight Public Sans.",
+      "Do use large tap targets and a 4px focus ring on every interactive element (search input, buttons, chips) — the accessibility bar is load-bearing, not optional polish."
+    ],
+    "donts": [
+      "Don't introduce a second brand accent color alongside teal, or let sage/crimson bleed into decorative use.",
+      "Don't use navy, blue-leaning, or brown/amber tones anywhere in the palette — both were explicitly rejected in the round-0 re-roll.",
+      "Don't add per-element scattered animation (staggered lists, individual card fade-ins); the system commits to one restrained entrance motion per result reveal, not motion-per-element.",
+      "Don't fully round corners (pill shapes) or leave corners sharp; hold the 0.625rem/-2px/-4px radius step.",
+      "Don't propagate this system to /shop, /resources, /about, /caregiver-support, the /topics/* pages, or components/ProductCatalog.tsx / components/Hero.tsx without first migrating them — those surfaces still run the prior blue/white/Inter system and have not been touched by this build."
+    ]
+  }
+}

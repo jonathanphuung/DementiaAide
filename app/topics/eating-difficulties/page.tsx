@@ -33,10 +33,10 @@ export default function EatingDifficultiesPage() {
         <article>
           <header className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <Utensils className="w-8 h-8 text-green-600" />
-              <span className="text-sm text-green-600 font-medium">Nutrition Topic</span>
+              <Utensils className="w-8 h-8 text-primary" />
+              <span className="text-sm text-primary font-medium">Nutrition Topic</span>
             </div>
-            <h1 className="text-4xl font-bold text-foreground mb-4">
+            <h1 className="font-display text-4xl font-extrabold text-foreground mb-4">
               Managing Eating Difficulties in Dementia: Complete Nutrition Guide
             </h1>
             <p className="text-xl text-muted-foreground">
@@ -45,19 +45,19 @@ export default function EatingDifficultiesPage() {
           </header>
 
           <div className="prose prose-lg max-w-none">
-            <div className="bg-red-50 border-l-4 border-red-400 p-6 mb-8">
+            <div className="bg-crimson-tint border-2 border-crimson-border rounded-lg p-6 mb-8">
               <div className="flex items-center gap-2 mb-2">
-                <AlertCircle className="w-5 h-5 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">Nutrition Alert</h3>
+                <AlertCircle className="w-5 h-5 text-crimson" />
+                <h3 className="text-lg font-semibold text-crimson">Nutrition Alert</h3>
               </div>
-              <p className="text-red-700">
+              <p className="text-foreground">
                 Eating difficulties affect 80% of people with advanced dementia. Early intervention and proper strategies are essential to prevent malnutrition and maintain quality of life.
               </p>
             </div>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Heart className="w-6 h-6 text-red-600" />
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 font-display text-foreground">
+                <Heart className="w-6 h-6 text-primary" />
                 Common Eating Challenges
               </h2>
               <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -85,8 +85,8 @@ export default function EatingDifficultiesPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Clock className="w-6 h-6 text-blue-600" />
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 font-display text-foreground">
+                <Clock className="w-6 h-6 text-primary" />
                 Mealtime Strategies
               </h2>
               
@@ -110,7 +110,7 @@ export default function EatingDifficultiesPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">Adaptive Equipment & Techniques</h2>
+              <h2 className="text-2xl font-bold mb-4 font-display text-foreground">Adaptive Equipment & Techniques</h2>
               
               <h3 className="text-xl font-semibold mb-3">Helpful Utensils and Dishes</h3>
               <ul className="list-disc pl-6 mb-6">
@@ -131,9 +131,9 @@ export default function EatingDifficultiesPage() {
               </ul>
             </section>
 
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
-              <h3 className="text-lg font-semibold text-green-800 mb-3">Nutrition Tips for Success</h3>
-              <div className="text-green-700 space-y-2">
+            <div className="bg-sage-tint border-2 border-sage-border rounded-lg p-6 mb-8">
+              <h3 className="text-lg font-semibold text-sage mb-3">Nutrition Tips for Success</h3>
+              <div className="text-foreground space-y-2">
                 <p>• <strong>High-calorie options:</strong> Add healthy fats, protein powders, or nutritional supplements</p>
                 <p>• <strong>Frequent small meals:</strong> Offer 6-8 small portions throughout the day</p>
                 <p>• <strong>Hydration focus:</strong> Offer fluids regularly; try flavored water, smoothies, or soups</p>
@@ -143,7 +143,7 @@ export default function EatingDifficultiesPage() {
             </div>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">When to Seek Professional Help</h2>
+              <h2 className="text-2xl font-bold mb-4 font-display text-foreground">When to Seek Professional Help</h2>
               <p className="mb-4">
                 Consult healthcare professionals if you notice:
               </p>
@@ -160,9 +160,9 @@ export default function EatingDifficultiesPage() {
               </p>
             </section>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-800 mb-3">Remember</h3>
-              <p className="text-blue-700">
+            <div className="bg-teal-tint border-2 border-teal-border rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-primary mb-3">Remember</h3>
+              <p className="text-foreground">
                 Eating difficulties in dementia are progressive and challenging, but with patience, creativity, and the right strategies, you can help maintain nutrition and make mealtimes more pleasant for everyone involved.
               </p>
             </div>

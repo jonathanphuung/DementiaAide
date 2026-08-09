@@ -2,7 +2,16 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Lightbulb, Loader2, Printer, Search, Share2 } from 'lucide-react';
+import {
+  AlertTriangle,
+  BookOpen,
+  ExternalLink,
+  Loader2,
+  Printer,
+  Search,
+  ShieldCheck,
+  Share2,
+} from 'lucide-react';
 import { AmazonProducts } from './AmazonProducts';
 import { VideoCard } from './VideoCard';
 import { Badge } from './ui/badge';
@@ -218,85 +227,116 @@ export function SearchHero() {
       });
   };
 
+  const stepTips = aiResponse ? aiResponse.tips.slice(0, 3) : [];
+  const moreTips = aiResponse ? aiResponse.tips.slice(3) : [];
+  const contentsIndex = aiResponse
+    ? [
+        stepTips.length > 0 ? `${stepTips.length} step${stepTips.length === 1 ? '' : 's'}` : null,
+        moreTips.length > 0 ? `${moreTips.length} more tip${moreTips.length === 1 ? '' : 's'}` : null,
+        aiResponse.matchedResources.length > 0
+          ? `${aiResponse.matchedResources.length} guide${aiResponse.matchedResources.length === 1 ? '' : 's'}`
+          : null,
+        aiResponse.trustedSources?.length > 0
+          ? `${aiResponse.trustedSources.length} source${aiResponse.trustedSources.length === 1 ? '' : 's'}`
+          : null,
+      ].filter(Boolean)
+    : [];
+
   return (
-    <section className="bg-white">
-      <div className="relative flex min-h-[62vh] items-center justify-center px-4 py-10 sm:py-12">
+    <section className="bg-background">
+      <div className="relative flex min-h-[62vh] items-center justify-center px-4 py-6 sm:py-16">
         <div className="relative w-full max-w-4xl space-y-8">
-          <div className="space-y-4 text-center">
-            <h1 className="text-4xl font-bold leading-tight text-foreground md:text-5xl">
-              Practical dementia care help, <span className="font-bold text-blue-600">right when you need it</span>
-            </h1>
-            <p className="mx-auto max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Ask a real caregiving question and get plain-language next steps, Ana&apos;s related guides, and trusted care references.
-            </p>
-          </div>
-
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              runSearch(draftQuery);
-            }}
-            className="relative mx-auto max-w-2xl"
-          >
-            <input
-              type="text"
-              placeholder="What do you need help with? (e.g., 'loved one wants to drive')"
-              className="flex w-full min-w-0 select-text rounded-2xl border border-input bg-input-background px-5 py-5 pr-16 text-base shadow-lg outline-none transition-[color,box-shadow] placeholder:text-muted-foreground selection:bg-blue-600 selection:text-white focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 sm:px-6 sm:py-6"
-              value={draftQuery}
-              autoComplete="off"
-              onChange={(e) => setDraftQuery(e.target.value)}
-            />
-            <Button
-              type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700"
-              size="icon"
-              disabled={isSearchRunning}
-            >
-              {isSearchRunning ? (
-                <Loader2 className="h-6 w-6 animate-spin" />
-              ) : (
-                <Search className="h-6 w-6" />
-              )}
-            </Button>
-          </form>
-
-          {!activeQuery && (
-            <div className="space-y-6 text-center">
-              <div>
-                <p className="mb-4 text-sm text-muted-foreground">Popular searches:</p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {popularSearches.map((term) => (
-                    <Button
-                      key={term}
-                      variant="outline"
-                      className="rounded-full text-sm"
-                      disabled={isSearchRunning}
-                      onClick={() => runSearch(term)}
-                    >
-                      {term}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mx-auto max-w-3xl rounded-lg border border-blue-100 bg-blue-50/50 p-4">
-                <p className="mb-3 text-sm font-medium text-blue-950">Or start with a care path</p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {caregiverPaths.map((path) => (
-                    <Button
-                      key={path}
-                      variant="outline"
-                      className="rounded-full border-blue-200 bg-white text-sm text-blue-900 hover:bg-blue-50"
-                      disabled={isSearchRunning}
-                      onClick={() => runSearch(path)}
-                    >
-                      {path}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+          <div className="rounded-lg border-2 border-foreground/15 bg-card p-4 shadow-sm sm:p-10">
+            <div className="space-y-2 text-center sm:space-y-4">
+              <h1 className="font-display text-3xl font-extrabold leading-tight text-foreground md:text-5xl">
+                Dementia care help, <span className="text-primary">right when you need it</span>
+              </h1>
+              <p className="mx-auto max-w-2xl text-sm leading-6 text-muted-foreground sm:text-lg sm:leading-7">
+                Ask a real caregiving question and get plain-language next steps, Ana Garcia&apos;s related guides, and trusted care references.
+              </p>
             </div>
-          )}
+
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                runSearch(draftQuery);
+              }}
+              className="relative mx-auto mt-4 flex max-w-2xl items-stretch gap-3 sm:mt-8"
+            >
+              <label htmlFor="care-question" className="sr-only">
+                What do you need help with?
+              </label>
+              <input
+                id="care-question"
+                type="text"
+                placeholder="What do you need help with? (e.g., 'loved one wants to drive')"
+                className="min-w-0 flex-1 select-text rounded-md border-2 border-foreground/25 bg-input-background px-5 py-4 text-base text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-primary focus-visible:ring-4 focus-visible:ring-ring/30 sm:py-5 sm:text-lg"
+                value={draftQuery}
+                autoComplete="off"
+                onChange={(e) => setDraftQuery(e.target.value)}
+              />
+              <Button
+                type="submit"
+                className="h-auto w-16 shrink-0 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 sm:w-20"
+                disabled={isSearchRunning}
+                aria-label="Search"
+              >
+                {isSearchRunning ? (
+                  <Loader2 className="h-6 w-6 animate-spin" aria-hidden="true" />
+                ) : (
+                  <Search className="h-6 w-6" aria-hidden="true" />
+                )}
+              </Button>
+            </form>
+
+            {!activeQuery && (
+              <div className="mt-4 space-y-4 sm:mt-8 sm:space-y-6">
+                <div>
+                  <p className="mb-2 text-center font-display text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground sm:mb-3">
+                    Popular searches
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {popularSearches.map((term, index) => (
+                      <button
+                        key={term}
+                        type="button"
+                        disabled={isSearchRunning}
+                        onClick={() => runSearch(term)}
+                        className="flex items-center gap-2 rounded-md border-2 border-foreground/15 bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:bg-teal-tint disabled:opacity-50"
+                      >
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-primary font-display text-[10px] font-bold tabular-nums text-primary-foreground">
+                          {index + 1}
+                        </span>
+                        {term}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mx-auto max-w-3xl rounded-md border-2 border-foreground/15 bg-secondary/40 p-3 sm:p-4">
+                  <p className="mb-2 text-center font-display text-xs font-bold uppercase tracking-[0.15em] text-foreground sm:mb-3">
+                    Or start with a care path
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {caregiverPaths.map((path, index) => (
+                      <button
+                        key={path}
+                        type="button"
+                        disabled={isSearchRunning}
+                        onClick={() => runSearch(path)}
+                        className="flex items-center gap-2 rounded-md border-2 border-foreground/15 bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:bg-teal-tint disabled:opacity-50"
+                      >
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-primary font-display text-[10px] font-bold tabular-nums text-primary-foreground">
+                          {index + 1}
+                        </span>
+                        {path}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -305,36 +345,39 @@ export function SearchHero() {
           <div className="space-y-12">
             {loading && aiLoading && amazonLoading && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
                 className="py-12 text-center"
               >
-                <div className="mb-4 flex items-center justify-center gap-3 text-blue-600">
-                  <Loader2 className="h-8 w-8 animate-spin" />
-                  <span className="text-xl font-semibold">Searching for helpful information...</span>
+                <div className="mb-4 flex items-center justify-center gap-3 text-primary">
+                  <Loader2 className="h-6 w-6 animate-spin" />
+                  <span className="font-display text-lg font-bold">Searching for helpful information&hellip;</span>
                 </div>
-                <p className="text-gray-600">We&apos;re gathering AI insights, videos, and product recommendations for you</p>
+                <p className="text-muted-foreground">We&apos;re gathering care guidance, videos, and product recommendations for you</p>
               </motion.div>
             )}
 
             <motion.div
               key={activeQuery}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
               className="space-y-12"
             >
-              <section className="rounded-2xl bg-white p-5 shadow-lg sm:p-8">
-                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <section className="overflow-hidden rounded-lg border-2 border-foreground/15 bg-card shadow-sm">
+                <div className="flex flex-col gap-4 border-b-2 border-foreground/10 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-8">
                   <div className="flex flex-wrap items-center gap-3">
-                    <h2 className="text-xl font-semibold sm:text-2xl">Care Guidance</h2>
-                    <Badge variant="outline" className="bg-blue-50">
+                    <h2 className="font-display text-xl font-extrabold text-foreground sm:text-2xl">Care Guidance</h2>
+                    <Badge variant="outline" className="border-primary/30 bg-teal-tint font-display text-xs font-bold uppercase tracking-wide text-primary">
                       {aiResponse?.category || 'General'}
                     </Badge>
                   </div>
                   <div className="flex gap-2">
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="icon"
+                      className="border-2 border-foreground/20"
                       onClick={() => void shareAssistantSummary()}
                       disabled={!aiResponse}
                       aria-label="Share assistant summary"
@@ -342,8 +385,9 @@ export function SearchHero() {
                       <Share2 className="h-5 w-5" />
                     </Button>
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="icon"
+                      className="border-2 border-foreground/20"
                       onClick={printAssistantSummary}
                       disabled={!aiResponse}
                       aria-label="Print assistant summary"
@@ -355,68 +399,91 @@ export function SearchHero() {
 
                 {aiLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <div className="flex items-center gap-3 text-blue-600">
+                    <div className="flex items-center gap-3 text-primary">
                       <Loader2 className="h-6 w-6 animate-spin" />
-                      <span className="text-lg font-medium">Finding practical next steps...</span>
+                      <span className="text-lg font-medium">Finding practical next steps&hellip;</span>
                     </div>
                   </div>
                 ) : aiResponse ? (
-                  <div className="space-y-6">
+                  <div className="space-y-8 p-5 sm:p-8">
+                    {contentsIndex.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-md bg-secondary/50 px-4 py-3 font-display text-xs font-bold uppercase tracking-wide tabular-nums text-foreground">
+                        <span className="text-muted-foreground">In this answer:</span>
+                        {contentsIndex.map((item, index) => (
+                          <span key={item} className="flex items-center gap-2">
+                            {index > 0 && <span aria-hidden="true" className="text-muted-foreground">&middot;</span>}
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
                     {aiResponse.urgentNotice && (
-                      <div className="rounded-xl border border-red-200 bg-red-50 p-5">
-                        <h3 className="mb-2 text-lg font-semibold text-red-900">
-                          {aiResponse.urgentNotice.title}
-                        </h3>
-                        <p className="mb-3 text-sm leading-6 text-red-900">
-                          {aiResponse.urgentNotice.message}
-                        </p>
+                      <div className="overflow-hidden rounded-md border-2 border-crimson-border bg-crimson-tint">
+                        <div className="flex items-center gap-2 bg-crimson px-5 py-2">
+                          <AlertTriangle className="h-4 w-4 text-white" aria-hidden="true" />
+                          <span className="font-display text-xs font-extrabold uppercase tracking-[0.15em] text-white">Urgent</span>
+                        </div>
+                        <div className="p-5">
+                          <h3 className="mb-2 font-display text-lg font-bold text-crimson">
+                            {aiResponse.urgentNotice.title}
+                          </h3>
+                          <p className="mb-3 text-sm leading-6 text-foreground">
+                            {aiResponse.urgentNotice.message}
+                          </p>
+                          <ul className="space-y-2">
+                            {aiResponse.urgentNotice.actions.map((action, index) => (
+                              <li key={index} className="flex items-start gap-2 text-sm text-foreground">
+                                <span className="mt-0.5 font-bold text-crimson">&bull;</span>
+                                <span>{action}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    <p className="text-base leading-7 text-foreground">{aiResponse.explanation}</p>
+
+                    {stepTips.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="font-display text-base font-extrabold uppercase tracking-wide text-foreground">What to Try First</h3>
+                        <div className="grid gap-3 md:grid-cols-3">
+                          {stepTips.map((tip, index) => (
+                            <div key={tip} className="rounded-md border-2 border-teal-border bg-teal-tint p-4">
+                              <p className="mb-2 flex items-center gap-2 font-display text-xs font-extrabold uppercase tracking-wide tabular-nums text-primary">
+                                <span className="flex h-5 w-5 items-center justify-center rounded-sm bg-primary text-[10px] tabular-nums text-primary-foreground">
+                                  {index + 1}
+                                </span>
+                                Step {index + 1}
+                              </p>
+                              <p className="text-sm leading-6 text-foreground">{tip}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {moreTips.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="font-display text-base font-extrabold uppercase tracking-wide text-foreground">Helpful Tips</h3>
                         <ul className="space-y-2">
-                          {aiResponse.urgentNotice.actions.map((action, index) => (
-                            <li key={index} className="flex items-start gap-2 text-sm text-red-900">
-                              <span className="font-semibold">•</span>
-                              <span>{action}</span>
+                          {moreTips.map((tip) => (
+                            <li key={tip} className="flex items-start gap-2">
+                              <span className="mt-0.5 font-bold text-primary">&bull;</span>
+                              <span className="text-foreground">{tip}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
                     )}
 
-                    <div className="prose max-w-none">
-                      <p className="text-gray-700">{aiResponse.explanation}</p>
-                    </div>
-
-                    <div className="space-y-3">
-                      <h3 className="text-lg font-semibold">What to Try First</h3>
-                      <div className="grid gap-3 md:grid-cols-3">
-                        {aiResponse.tips.slice(0, 3).map((tip, index) => (
-                          <div key={tip} className="rounded-lg border border-blue-100 bg-blue-50/60 p-4">
-                            <p className="mb-2 text-xs font-semibold uppercase tracking-normal text-blue-700">
-                              Step {index + 1}
-                            </p>
-                            <p className="text-sm leading-6 text-gray-800">{tip}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <h3 className="flex items-center gap-2 text-lg font-semibold">
-                        <Lightbulb className="h-5 w-5 text-yellow-500" />
-                        Helpful Tips
-                      </h3>
-                      <ul className="space-y-2">
-                        {aiResponse.tips.slice(3).map((tip) => (
-                          <li key={tip} className="flex items-start gap-2">
-                            <span className="font-medium text-blue-600">•</span>
-                            <span className="text-gray-700">{tip}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
                     {aiResponse.matchedResources.length > 0 && (
                       <div className="space-y-3">
-                        <h3 className="text-lg font-semibold">Ana&apos;s Related Guides</h3>
+                        <h3 className="flex items-center gap-2 font-display text-base font-extrabold uppercase tracking-wide text-foreground">
+                          <BookOpen className="h-4 w-4 text-primary" aria-hidden="true" />
+                          Ana Garcia&apos;s Related Guides
+                        </h3>
                         <div className="grid gap-3 md:grid-cols-2">
                           {aiResponse.matchedResources.map((resource) => (
                             <a
@@ -424,18 +491,18 @@ export function SearchHero() {
                               href={resource.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="group rounded-lg border border-blue-100 bg-blue-50/60 p-4 transition hover:border-blue-200 hover:bg-blue-50"
+                              className="group rounded-md border-2 border-foreground/15 bg-card p-4 transition-colors hover:border-primary hover:bg-teal-tint"
                             >
                               <div className="mb-2 flex items-start justify-between gap-3">
-                                <div>
-                                  <p className="text-xs font-medium text-blue-700">{resource.category}</p>
-                                  <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
-                                    {resource.title}
-                                  </h4>
-                                </div>
-                                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                                <h4 className="text-sm font-semibold leading-5 text-foreground">
+                                  {resource.title}
+                                </h4>
+                                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-primary" />
                               </div>
-                              <p className="text-sm leading-6 text-gray-600">{resource.summary}</p>
+                              <p className="mb-2 text-sm leading-6 text-muted-foreground">{resource.summary}</p>
+                              <span className="inline-block rounded-sm bg-teal-border/40 px-2 py-0.5 font-display text-[10px] font-bold uppercase tracking-wide text-primary">
+                                {resource.category}
+                              </span>
                             </a>
                           ))}
                         </div>
@@ -444,7 +511,10 @@ export function SearchHero() {
 
                     {aiResponse.trustedSources?.length > 0 && (
                       <div className="space-y-3">
-                        <h3 className="text-lg font-semibold">Trusted Care References</h3>
+                        <h3 className="flex items-center gap-2 font-display text-base font-extrabold uppercase tracking-wide text-foreground">
+                          <ShieldCheck className="h-4 w-4 text-sage" aria-hidden="true" />
+                          Trusted Care References
+                        </h3>
                         <div className="grid gap-3 md:grid-cols-3">
                           {aiResponse.trustedSources.map((source) => (
                             <a
@@ -452,54 +522,56 @@ export function SearchHero() {
                               href={source.url}
                               target="_blank"
                               rel="noreferrer"
-                              className="group rounded-lg border border-gray-200 bg-gray-50 p-4 transition hover:border-blue-200 hover:bg-blue-50/60"
+                              className="group rounded-md border-2 border-sage-border bg-sage-tint p-4 transition-colors hover:border-sage"
                             >
                               <div className="mb-2 flex items-start justify-between gap-3">
-                                <div>
-                                  <p className="text-xs font-medium text-gray-500">{source.publisher}</p>
-                                  <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
-                                    {source.title}
-                                  </h4>
-                                </div>
-                                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                                <h4 className="text-sm font-semibold leading-5 text-foreground">
+                                  {source.title}
+                                </h4>
+                                <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-sage" />
                               </div>
-                              <p className="text-sm leading-6 text-gray-600">{source.summary}</p>
+                              <p className="mb-2 text-sm leading-6 text-muted-foreground">{source.summary}</p>
+                              <span className="inline-block rounded-sm bg-sage-border/40 px-2 py-0.5 font-display text-[10px] font-bold uppercase tracking-wide text-sage">
+                                {source.publisher}
+                              </span>
                             </a>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    <div className="space-y-3">
-                      <h3 className="text-lg font-semibold">Related Topics</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {aiResponse.relatedTopics.map((topic, index) => (
-                          <Badge key={index} variant="secondary">
-                            {topic}
-                          </Badge>
-                        ))}
+                    {aiResponse.relatedTopics.length > 0 && (
+                      <div className="space-y-3">
+                        <h3 className="font-display text-base font-extrabold uppercase tracking-wide text-foreground">Related Topics</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {aiResponse.relatedTopics.map((topic, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs font-medium">
+                              {topic}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
-                    <p className="rounded-lg bg-gray-50 p-3 text-xs leading-5 text-gray-500">
+                    <p className="rounded-md border border-foreground/10 bg-muted p-3 text-xs leading-5 text-muted-foreground">
                       {aiResponse.disclaimer}
                     </p>
                   </div>
                 ) : (
-                  <div className="text-center text-gray-500">
-                    Enter a question above to get AI-powered assistance.
+                  <div className="p-8 text-center text-muted-foreground">
+                    Enter a question above to get practical guidance.
                   </div>
                 )}
               </section>
 
               {(loading || videos.length > 0) && (
                 <section>
-                  <h2 className="mb-6 text-2xl font-semibold">Videos For You</h2>
+                  <h2 className="mb-6 font-display text-2xl font-extrabold text-foreground">Videos For You</h2>
                   {loading ? (
                     <div className="flex items-center justify-center py-12">
-                      <div className="flex items-center gap-3 text-blue-600">
+                      <div className="flex items-center gap-3 text-primary">
                         <Loader2 className="h-6 w-6 animate-spin" />
-                        <span className="text-lg font-medium">Finding helpful videos...</span>
+                        <span className="text-lg font-medium">Finding helpful videos&hellip;</span>
                       </div>
                     </div>
                   ) : (
@@ -510,17 +582,17 @@ export function SearchHero() {
                 </section>
               )}
 
-              <section className="rounded-xl border border-gray-200 bg-gray-50 p-5">
+              <section className="rounded-lg border-2 border-foreground/15 bg-secondary/30 p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <h2 className="text-xl font-semibold text-gray-950">Helpful Tools</h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
+                    <h2 className="font-display text-xl font-extrabold text-foreground">Helpful Tools</h2>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
                       Product suggestions are optional and secondary to the care guidance above.
                     </p>
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full rounded-lg bg-white sm:w-auto"
+                    className="w-full rounded-md border-2 border-foreground/20 bg-card sm:w-auto"
                     onClick={() => setShowHelpfulTools((current) => !current)}
                   >
                     {showHelpfulTools ? 'Hide tools' : 'Show tools'}

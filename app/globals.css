@@ -6,30 +6,47 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #ffffff;
-  --card-foreground: #0a0a0a;
-  --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0a0a0a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0a0a0a;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
-  --input: transparent;
-  --input-background: #f3f3f5;
+
+  /* Library-catalog precision: ivory card stock, neutral charcoal ink, one
+     committed teal stamp-ink accent. Sage/crimson are semantic law, not
+     decoration: sage = safe/confirmed/tip, crimson = urgent/caution. See
+     DESIGN.md. Values are space-separated RGB triples so Tailwind's
+     rgb(var(--x) / <alpha-value>) pattern can apply opacity modifiers. */
+  --background: 247 246 241;
+  --foreground: 38 38 36;
+  --card: 253 252 249;
+  --card-foreground: 38 38 36;
+  --popover: 253 252 249;
+  --popover-foreground: 38 38 36;
+  --primary: 15 107 99;
+  --primary-foreground: 255 255 255;
+  --secondary: 227 240 238;
+  --secondary-foreground: 38 38 36;
+  --muted: 239 238 232;
+  --muted-foreground: 107 106 97;
+  --accent: 227 240 238;
+  --accent-foreground: 38 38 36;
+  --destructive: 176 35 24;
+  --destructive-foreground: 255 255 255;
+  --border: 220 218 208;
+  --input: 220 218 208;
+  --input-background: 253 252 249;
   --switch-background: #cbced4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #94a3b8;
-  --radius: 1rem;
+  --ring: 15 107 99;
+  --radius: 0.625rem;
+
+  /* Semantic law colors: never used decoratively, only for their state */
+  --teal: 15 107 99;
+  --teal-tint: 227 240 238;
+  --teal-border: 169 212 206;
+  --sage: 47 90 61;
+  --sage-tint: 231 240 228;
+  --sage-border: 191 220 195;
+  --crimson: 176 35 24;
+  --crimson-tint: 251 228 225;
+  --crimson-border: 238 187 180;
 }
 
 .dark {

@@ -125,10 +125,10 @@ export function SearchResults() {
   return (
     <div className="min-h-screen">
       {/* Search Section */}
-      <div className="pt-32 pb-16 bg-blue-50/50">
+      <div className="pt-32 pb-16 bg-secondary/30">
         <div className="max-w-2xl mx-auto px-4 w-full">
           <form
-            className="relative"
+            className="relative flex items-stretch gap-3"
             onSubmit={(event) => {
               event.preventDefault();
               submitSearch(draftQuery);
@@ -137,21 +137,20 @@ export function SearchResults() {
             <Input
               type="text"
               placeholder="What do you need help with?"
-              className="w-full px-6 py-6 text-lg rounded-2xl shadow-lg pr-12 bg-white"
+              className="w-full px-5 py-4 text-base rounded-md border-2 border-foreground/25 bg-input-background shadow-sm sm:py-5 sm:text-lg"
               value={draftQuery}
               disabled={isSearchRunning}
               onChange={(e) => setDraftQuery(e.target.value)}
             />
-            <Button 
+            <Button
               type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700"
-              size="icon"
+              className="h-auto w-16 shrink-0 rounded-md sm:w-20"
               disabled={isSearchRunning}
             >
               {isSearchRunning ? (
-                <Loader2 className="w-5 h-5 animate-spin text-white" />
+                <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
-                <Search className="w-5 h-5 text-white" />
+                <Search className="w-5 h-5" />
               )}
             </Button>
           </form>
@@ -167,17 +166,17 @@ export function SearchResults() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-12"
             >
-              <div className="flex items-center justify-center gap-3 text-blue-600 mb-4">
-                <Loader2 
-                  className="w-8 h-8 animate-spin" 
-                  style={{ 
+              <div className="flex items-center justify-center gap-3 text-primary mb-4">
+                <Loader2
+                  className="w-8 h-8 animate-spin"
+                  style={{
                     animation: 'spin 1s linear infinite',
                     transformOrigin: 'center'
                   }}
                 />
                 <span className="text-xl font-semibold">Searching for helpful information...</span>
               </div>
-              <p className="text-gray-600">We're gathering AI insights, videos, and product recommendations for you</p>
+              <p className="text-muted-foreground">We&apos;re gathering AI insights, videos, and product recommendations for you</p>
             </motion.div>
           )}
           
@@ -189,11 +188,11 @@ export function SearchResults() {
               className="space-y-12"
             >
           {/* AI Response Section */}
-          <section className="bg-white rounded-2xl p-8 shadow-lg">
+          <section className="bg-card rounded-lg border-2 border-foreground/15 p-8 shadow-sm">
             <div className="flex justify-between items-start mb-6">
               <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-semibold">Understanding the Situation</h2>
-                <Badge variant="outline" className="bg-blue-50">
+                <h2 className="font-display text-2xl font-extrabold text-foreground">Understanding the Situation</h2>
+                <Badge variant="outline" className="bg-teal-tint text-primary">
                   {aiResponse?.category || 'General'}
                 </Badge>
               </div>
@@ -205,10 +204,10 @@ export function SearchResults() {
             </div>
             {aiLoading ? (
               <div className="flex items-center justify-center py-12">
-                <div className="flex items-center gap-3 text-blue-600">
-                  <Loader2 
-                    className="w-6 h-6 animate-spin" 
-                    style={{ 
+                <div className="flex items-center gap-3 text-primary">
+                  <Loader2
+                    className="w-6 h-6 animate-spin"
+                    style={{
                       animation: 'spin 1s linear infinite',
                       transformOrigin: 'center'
                     }}
@@ -219,17 +218,17 @@ export function SearchResults() {
             ) : aiResponse ? (
               <div className="space-y-6">
                 {aiResponse.urgentNotice && (
-                  <div className="rounded-xl border border-red-200 bg-red-50 p-5">
-                    <h3 className="mb-2 text-lg font-semibold text-red-900">
+                  <div className="rounded-md border-2 border-crimson-border bg-crimson-tint p-5">
+                    <h3 className="mb-2 text-lg font-semibold text-crimson">
                       {aiResponse.urgentNotice.title}
                     </h3>
-                    <p className="mb-3 text-sm leading-6 text-red-900">
+                    <p className="mb-3 text-sm leading-6 text-foreground">
                       {aiResponse.urgentNotice.message}
                     </p>
                     <ul className="space-y-2">
                       {aiResponse.urgentNotice.actions.map((action, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-red-900">
-                          <span className="font-semibold">•</span>
+                        <li key={index} className="flex items-start gap-2 text-sm text-foreground">
+                          <span className="font-semibold text-crimson">•</span>
                           <span>{action}</span>
                         </li>
                       ))}
@@ -239,20 +238,20 @@ export function SearchResults() {
 
                 {/* Main Explanation */}
                 <div className="prose max-w-none">
-                  <p className="text-gray-700">{aiResponse.explanation}</p>
+                  <p className="text-foreground">{aiResponse.explanation}</p>
                 </div>
 
                 {/* Tips */}
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5 text-yellow-500" />
+                  <h3 className="text-lg font-semibold flex items-center gap-2 text-foreground">
+                    <Lightbulb className="w-5 h-5 text-primary" />
                     Helpful Tips
                   </h3>
                   <ul className="space-y-2">
                     {aiResponse.tips.slice(3).map((tip) => (
                       <li key={tip} className="flex items-start gap-2">
-                        <span className="text-blue-600 font-medium">•</span>
-                        <span className="text-gray-700">{tip}</span>
+                        <span className="text-primary font-medium">•</span>
+                        <span className="text-foreground">{tip}</span>
                       </li>
                     ))}
                   </ul>
@@ -260,7 +259,7 @@ export function SearchResults() {
 
                 {aiResponse.matchedResources.length > 0 && (
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold">Ana&apos;s Related Guides</h3>
+                    <h3 className="text-lg font-semibold text-foreground">Ana&apos;s Related Guides</h3>
                     <div className="grid gap-3 md:grid-cols-2">
                       {aiResponse.matchedResources.map((resource) => (
                         <a
@@ -268,18 +267,18 @@ export function SearchResults() {
                           href={resource.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="group rounded-lg border border-blue-100 bg-blue-50/60 p-4 transition hover:border-blue-200 hover:bg-blue-50"
+                          className="group rounded-md border-2 border-foreground/15 bg-card p-4 transition-colors hover:border-primary hover:bg-teal-tint"
                         >
                           <div className="mb-2 flex items-start justify-between gap-3">
-                            <div>
-                              <p className="text-xs font-medium text-blue-700">{resource.category}</p>
-                              <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
-                                {resource.title}
-                              </h4>
-                            </div>
-                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                            <h4 className="text-sm font-semibold leading-5 text-foreground">
+                              {resource.title}
+                            </h4>
+                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-primary" />
                           </div>
-                          <p className="text-sm leading-6 text-gray-600">{resource.summary}</p>
+                          <p className="mb-2 text-sm leading-6 text-muted-foreground">{resource.summary}</p>
+                          <span className="inline-block rounded-sm bg-teal-border/40 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-primary">
+                            {resource.category}
+                          </span>
                         </a>
                       ))}
                     </div>
@@ -288,7 +287,7 @@ export function SearchResults() {
 
                 {aiResponse.trustedSources?.length > 0 && (
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold">Trusted Care References</h3>
+                    <h3 className="text-lg font-semibold text-foreground">Trusted Care References</h3>
                     <div className="grid gap-3 md:grid-cols-3">
                       {aiResponse.trustedSources.map((source) => (
                         <a
@@ -296,18 +295,18 @@ export function SearchResults() {
                           href={source.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="group rounded-lg border border-gray-200 bg-gray-50 p-4 transition hover:border-blue-200 hover:bg-blue-50/60"
+                          className="group rounded-md border-2 border-sage-border bg-sage-tint p-4 transition-colors hover:border-sage"
                         >
                           <div className="mb-2 flex items-start justify-between gap-3">
-                            <div>
-                              <p className="text-xs font-medium text-gray-500">{source.publisher}</p>
-                              <h4 className="text-sm font-semibold leading-5 text-gray-950 group-hover:text-blue-800">
-                                {source.title}
-                              </h4>
-                            </div>
-                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-blue-700" />
+                            <h4 className="text-sm font-semibold leading-5 text-foreground">
+                              {source.title}
+                            </h4>
+                            <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-sage" />
                           </div>
-                          <p className="text-sm leading-6 text-gray-600">{source.summary}</p>
+                          <p className="mb-2 text-sm leading-6 text-muted-foreground">{source.summary}</p>
+                          <span className="inline-block rounded-sm bg-sage-border/40 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-sage">
+                            {source.publisher}
+                          </span>
                         </a>
                       ))}
                     </div>
@@ -316,13 +315,13 @@ export function SearchResults() {
 
                 {/* Related Topics */}
                 <div className="space-y-3">
-                  <h3 className="text-lg font-semibold">Related Topics</h3>
+                  <h3 className="text-lg font-semibold text-foreground">Related Topics</h3>
                   <div className="flex flex-wrap gap-2">
                     {aiResponse.relatedTopics.map((topic, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="cursor-pointer hover:bg-blue-100 transition-colors"
+                        className="cursor-pointer hover:bg-teal-tint transition-colors"
                         onClick={() => submitSearch(topic)}
                         aria-disabled={isSearchRunning}
                       >
@@ -332,12 +331,12 @@ export function SearchResults() {
                   </div>
                 </div>
 
-                <p className="rounded-lg bg-gray-50 p-3 text-xs leading-5 text-gray-500">
+                <p className="rounded-md bg-muted p-3 text-xs leading-5 text-muted-foreground">
                   {aiResponse.disclaimer}
                 </p>
               </div>
             ) : (
-              <div className="text-center text-gray-500">
+              <div className="text-center text-muted-foreground">
                 Enter a question above to get AI-powered assistance
               </div>
             )}
@@ -345,13 +344,13 @@ export function SearchResults() {
 
           {/* Videos Section */}
           <section>
-            <h2 className="text-2xl font-semibold mb-6">Videos For You</h2>
+            <h2 className="font-display text-2xl font-extrabold text-foreground mb-6">Videos For You</h2>
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <div className="flex items-center gap-3 text-blue-600">
-                  <Loader2 
-                    className="w-6 h-6 animate-spin" 
-                    style={{ 
+                <div className="flex items-center gap-3 text-primary">
+                  <Loader2
+                    className="w-6 h-6 animate-spin"
+                    style={{
                       animation: 'spin 1s linear infinite',
                       transformOrigin: 'center'
                     }}
@@ -382,19 +381,11 @@ export function SearchResults() {
             query={activeQuery}
           />
 
-          {/* Related Topics Section */}
-          <section>
-            <h2 className="text-2xl font-semibold mb-6">Other Related Topics</h2>
-            <div className="flex flex-wrap gap-3">
-              {/* Topic pills will be dynamically populated */}
-            </div>
-          </section>
-
           {hasCompletedSearch && !isSearchRunning && (
             <div className="flex justify-center pb-12">
               <Button
                 type="button"
-                className="rounded-lg bg-blue-700 px-6 hover:bg-blue-800"
+                className="px-6"
                 onClick={resetSearch}
               >
                 Let&apos;s do another search

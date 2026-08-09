@@ -42,7 +42,7 @@ export const resourceCategoryMeta: Record<
   'Start Here': {
     description: 'Plain-language guides for understanding dementia, diagnosis, and what changes over time.',
     icon: Brain,
-    accent: 'text-blue-700 bg-blue-50 border-blue-100',
+    accent: 'text-foreground bg-secondary border-border',
   },
   'Caregiver Support': {
     description: 'Support for burnout, guilt, family strain, exhaustion, and asking for help.',

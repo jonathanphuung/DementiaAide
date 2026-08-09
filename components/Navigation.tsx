@@ -18,7 +18,7 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="relative z-50 bg-white shadow-sm">
+    <nav className="relative z-50 bg-card border-b-2 border-foreground/15">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -26,11 +26,11 @@ export function Navigation() {
             href="/"
             className="flex items-center gap-2 hover:opacity-90 transition-opacity"
           >
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-              <Heart className="w-5 h-5 text-white fill-white" />
+            <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center">
+              <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
             </div>
-            <span className="text-xl text-foreground tracking-tight">
-              Dementia<span className="text-blue-600">Aide</span>
+            <span className="font-display text-xl font-extrabold text-foreground tracking-tight">
+              Dementia<span className="text-primary">Aide</span>
             </span>
           </a>
 
@@ -40,11 +40,11 @@ export function Navigation() {
                 <a
                 key={item.label}
                 href={item.href}
-                className="text-sm text-foreground/70 hover:text-foreground transition-colors relative group"
+                className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors relative group"
                 onClick={() => {}}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
               </a>
             ))}
           </div>
@@ -56,17 +56,17 @@ export function Navigation() {
             <Button variant="ghost" className="text-sm" onClick={() => document.getElementById('resources')?.scrollIntoView({ behavior: 'smooth' })}>
               Free Resources
             </Button>
-            <Button variant="outline" className="text-sm relative" onClick={() => setIsOpen(true)}>
+            <Button variant="outline" className="text-sm relative border-2 border-foreground/20" onClick={() => setIsOpen(true)}>
               <ShoppingCart className="w-4 h-4 mr-2" />
               Cart
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Button>
-            <Button 
-              className="text-sm bg-blue-600 hover:bg-blue-700"
+            <Button
+              className="text-sm"
               onClick={() => window.location.href = '/shop'}
             >
               Shop Now
@@ -90,7 +90,7 @@ export function Navigation() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div
-          className="md:hidden bg-white border-t border-border"
+          className="md:hidden bg-card border-t-2 border-foreground/15"
         >
           <div className="px-4 py-6 space-y-4">
             {navItems.map((item) => (
@@ -106,11 +106,11 @@ export function Navigation() {
                 {item.label}
               </a>
             ))}
-            <div className="pt-4 space-y-3 border-t border-border">
-              <Button variant="outline" className="w-full">
+            <div className="pt-4 space-y-3 border-t-2 border-foreground/15">
+              <Button variant="outline" className="w-full border-2 border-foreground/20">
                 Sign In
               </Button>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
+              <Button className="w-full">
                 Get Started
               </Button>
             </div>

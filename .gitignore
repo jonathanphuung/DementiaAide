@@ -36,3 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .next/
+
+# impeccable local cache (machine-specific, not portable)
+.impeccable/hook.cache.json

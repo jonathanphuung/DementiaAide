@@ -34,7 +34,7 @@ export default function SearchPage() {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="text-muted-foreground">Loading...</div>}>
           <SearchResults />
         </Suspense>
       </main>

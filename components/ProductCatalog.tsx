@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from 'react';
 import { Filter } from 'lucide-react';
 import { products, Product } from '@/lib/products';
 import { ProductCard } from './ProductCard';
-import { Badge } from './ui/badge';
 import { Checkbox } from './ui/checkbox';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
@@ -19,26 +17,21 @@ export function ProductCatalog() {
   const [showOnSaleOnly, setShowOnSaleOnly] = useState(false);
   const [showInStockOnly, setShowInStockOnly] = useState(false);
 
-  // Filter and sort products with useCallback for stable reference
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = [...products];
 
-    // Category filter
     if (categoryFilter !== 'all') {
       filtered = filtered.filter((p) => p.category === categoryFilter);
     }
 
-    // Sale filter
     if (showOnSaleOnly) {
       filtered = filtered.filter((p) => p.onSale);
     }
 
-    // Stock filter
     if (showInStockOnly) {
       filtered = filtered.filter((p) => p.inStock);
     }
 
-    // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name-asc':
@@ -60,71 +53,34 @@ export function ProductCatalog() {
   const categories: CategoryFilter[] = ['all', 'Adaptive Wear', 'Awareness'];
 
   return (
-    <section id="shop" className="py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <Badge className="mb-4 px-4 py-2 bg-blue-100 text-blue-700 border-blue-200">
-              Our Products
-            </Badge>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl text-foreground mb-4"
-          >
-            Shop{' '}
-            <span className="text-blue-600">
-              Dementia Care
-            </span>{' '}
-            Products
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-          >
-            Quality products designed to make caregiving easier and raise awareness for Alzheimer's and dementia.
-          </motion.p>
+    <section id="shop" className="bg-secondary/30 py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <h2 className="font-display text-4xl font-extrabold leading-tight text-foreground md:text-5xl">
+            Shop <span className="text-primary">Dementia Care</span> Products
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+            Quality products designed to make caregiving easier and raise awareness for Alzheimer&apos;s and dementia.
+          </p>
         </div>
 
-        {/* Filters and Sort Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-white rounded-2xl shadow-lg p-6 mb-8"
-        >
-          <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
-            {/* Left Side - Filters */}
-            <div className="flex flex-wrap items-center gap-4 flex-1">
+        <div className="mb-8 rounded-lg border-2 border-foreground/15 bg-card p-6 shadow-sm">
+          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+            <div className="flex flex-1 flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
-                <Filter className="w-5 h-5 text-muted-foreground" />
-                <span className="text-sm">Filter:</span>
+                <Filter className="h-5 w-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">Filter:</span>
               </div>
 
-              {/* Category Pills */}
               <div className="flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <button
                     key={category}
                     onClick={() => setCategoryFilter(category)}
-                    className={`px-4 py-2 rounded-lg text-sm transition-all ${
+                    className={`rounded-md border-2 px-4 py-2 text-sm font-medium transition-colors ${
                       categoryFilter === category
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'border-primary bg-primary text-primary-foreground'
+                        : 'border-foreground/15 bg-card text-foreground hover:border-primary hover:bg-teal-tint'
                     }`}
                   >
                     {category === 'all' ? 'All Products' : category}
@@ -132,15 +88,14 @@ export function ProductCatalog() {
                 ))}
               </div>
 
-              {/* Availability Filters */}
-              <div className="flex items-center gap-4 ml-4">
+              <div className="ml-0 flex items-center gap-4 sm:ml-4">
                 <div className="flex items-center gap-2">
                   <Checkbox
                     id="on-sale"
                     checked={showOnSaleOnly}
                     onCheckedChange={(checked) => setShowOnSaleOnly(checked as boolean)}
                   />
-                  <Label htmlFor="on-sale" className="text-sm cursor-pointer">
+                  <Label htmlFor="on-sale" className="cursor-pointer text-sm">
                     On Sale
                   </Label>
                 </div>
@@ -150,22 +105,19 @@ export function ProductCatalog() {
                     checked={showInStockOnly}
                     onCheckedChange={(checked) => setShowInStockOnly(checked as boolean)}
                   />
-                  <Label htmlFor="in-stock" className="text-sm cursor-pointer">
+                  <Label htmlFor="in-stock" className="cursor-pointer text-sm">
                     In Stock
                   </Label>
                 </div>
               </div>
             </div>
 
-            {/* Right Side - Sort */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className="text-sm">Sort by:</span>
-              </div>
-              <select 
-                value={sortBy} 
+              <span className="text-sm font-medium text-foreground">Sort by:</span>
+              <select
+                value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="px-4 py-2 border border-gray-200 rounded-lg bg-white text-sm"
+                className="rounded-md border-2 border-foreground/15 bg-card px-4 py-2 text-sm text-foreground"
               >
                 <option value="name-asc">Alphabetically, A-Z</option>
                 <option value="name-desc">Alphabetically, Z-A</option>
@@ -177,25 +129,17 @@ export function ProductCatalog() {
               </span>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Products Grid */}
         {filteredAndSortedProducts.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredAndSortedProducts.map((product, index) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredAndSortedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
-            <p className="text-xl text-muted-foreground mb-4">
+          <div className="py-16 text-center">
+            <p className="mb-4 text-xl text-muted-foreground">
               No products found matching your filters.
             </p>
             <Button
@@ -207,21 +151,15 @@ export function ProductCatalog() {
             >
               Clear Filters
             </Button>
-          </motion.div>
+          </div>
         )}
 
-        {/* Load More (for future pagination) */}
         {filteredAndSortedProducts.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <p className="text-sm text-muted-foreground mb-4">
+          <div className="mt-12 text-center">
+            <p className="text-sm text-muted-foreground">
               Showing all {filteredAndSortedProducts.length} products
             </p>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

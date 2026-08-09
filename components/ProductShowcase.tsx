@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Check, Shield, Sparkles, Heart, Zap, Star } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -69,58 +68,21 @@ export function ProductShowcase() {
   };
 
   return (
-    <section className="py-24 bg-blue-50/30 relative overflow-hidden">
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "50px" }}
-            transition={{ duration: 0.3 }}
-          >
-            <Badge className="mb-4 px-4 py-2 bg-blue-100 text-blue-700 border-blue-200">
-              Our Flagship Product
-            </Badge>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "50px" }}
-            transition={{ duration: 0.3, delay: 0.05 }}
-            className="text-4xl md:text-5xl text-foreground mb-4"
-          >
-            Anti-Strip{' '}
-            <span className="text-blue-600">
-              Back-zip Jumpsuit
-            </span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "50px" }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-          >
-            Designed specifically for dementia care - making daily routines easier, safer, and more dignified for everyone involved.
-          </motion.p>
+    <section className="bg-background py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 text-center">
+          <h2 className="font-display text-4xl font-extrabold leading-tight text-foreground md:text-5xl">
+            Anti-Strip <span className="text-primary">Back-zip Jumpsuit</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+            Designed specifically for dementia care — making daily routines easier, safer, and more dignified for everyone involved.
+          </p>
         </div>
 
-        {/* Product Display */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Product Images */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white p-8">
-              <div className="aspect-square relative rounded-2xl overflow-hidden bg-blue-100">
+        <div className="mb-16 grid items-center gap-12 lg:grid-cols-2">
+          <div className="relative">
+            <div className="relative rounded-lg border-2 border-foreground/15 bg-card p-6 shadow-sm">
+              <div className="relative aspect-square overflow-hidden rounded-md bg-teal-tint">
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwY2xvdGhpbmclMjBqdW1wc3VpdHxlbnwxfHx8fDE3NjAxMjkwNDR8MA&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Anti-Strip Back-zip Jumpsuit"
@@ -129,23 +91,18 @@ export function ProductShowcase() {
                   className="object-cover"
                 />
               </div>
-              
-              {/* Floating badge */}
-              <div className="absolute top-12 right-12 bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 fill-white" />
-                  <span className="text-sm">Best Seller</span>
-                </div>
+
+              <div className="absolute right-8 top-8 flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-primary-foreground shadow-sm">
+                <Star className="h-4 w-4 fill-primary-foreground" />
+                <span className="font-display text-xs font-bold uppercase tracking-wide">Best Seller</span>
               </div>
             </div>
 
-            {/* Small product images */}
-            <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="mt-4 grid grid-cols-3 gap-4">
               {[1, 2, 3].map((i) => (
-                <motion.div
+                <div
                   key={i}
-                  whileHover={{ scale: 1.05 }}
-                  className="aspect-square relative rounded-xl overflow-hidden bg-gray-100 cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all"
+                  className="aspect-square cursor-pointer overflow-hidden rounded-md border-2 border-foreground/15 transition-colors hover:border-primary"
                 >
                   <ImageWithFallback
                     src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21mb3J0YWJsZSUyMGNsb3RoaW5nJTIwZmFicmljfGVufDF8fHx8MTc2MDEyOTA0NHww&ixlib=rb-4.1.0&q=80&w=1080"
@@ -153,64 +110,50 @@ export function ProductShowcase() {
                     fill
                     className="object-cover"
                   />
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Product Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            {/* Price */}
+          <div className="space-y-8">
             <div className="flex items-baseline gap-4">
-              <span className="text-5xl text-foreground">$69.99</span>
-              <span className="text-2xl text-muted-foreground line-through">$110.95</span>
-              <Badge className="bg-green-100 text-green-700 border-green-200">Save 37%</Badge>
+              <span className="font-display text-4xl font-extrabold text-foreground">$69.99</span>
+              <span className="text-xl text-muted-foreground line-through">$110.95</span>
+              <Badge className="border-sage-border bg-sage-tint text-sage">Save 37%</Badge>
             </div>
 
-            {/* Rating */}
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={`w-5 h-5 ${i < 4 ? 'fill-yellow-400 text-yellow-400' : i === 4 ? 'fill-yellow-400/50 text-yellow-400' : 'fill-gray-200 text-gray-200'}`} />
+                  <Star key={i} className={`h-5 w-5 ${i < 4 ? 'fill-primary text-primary' : i === 4 ? 'fill-primary/50 text-primary' : 'fill-muted text-muted'}`} />
                 ))}
               </div>
               <span className="text-muted-foreground">4.5 (18 reviews)</span>
             </div>
 
-            {/* Features List */}
             <div className="space-y-3">
               {productFeatures.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3"
-                >
-                  <div className="mt-0.5 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-green-600" />
+                <div key={index} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-sage-tint">
+                    <Check className="h-3 w-3 text-sage" />
                   </div>
                   <span className="text-foreground/80">{feature}</span>
                 </div>
               ))}
             </div>
 
-            {/* Size selector */}
             <div className="space-y-3">
-              <label className="text-foreground">Select Size</label>
-              <div className="flex gap-2">
+              <label className="font-display text-xs font-bold uppercase tracking-wide text-foreground">Select Size</label>
+              <div className="flex flex-wrap gap-2">
                 {sizes.map((size) => (
                   <button
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(size)}
-                    className={`px-6 py-3 border-2 rounded-lg transition-all ${
+                    className={`rounded-md border-2 px-5 py-2.5 font-medium transition-colors ${
                       selectedSize === size
-                        ? 'border-blue-600 bg-blue-50 text-blue-700'
-                        : 'border-gray-200 hover:border-blue-600 hover:bg-blue-50'
+                        ? 'border-primary bg-teal-tint text-primary'
+                        : 'border-foreground/15 text-foreground hover:border-primary hover:bg-teal-tint'
                     }`}
                   >
                     {size}
@@ -219,59 +162,41 @@ export function ProductShowcase() {
               </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button
-                size="lg"
-                className="flex-1 bg-blue-600 hover:bg-blue-700 px-8 py-6 rounded-xl shadow-lg"
-                onClick={handleAddToCart}
-              >
+            <div className="flex flex-col gap-4 pt-4 sm:flex-row">
+              <Button size="lg" className="flex-1" onClick={handleAddToCart}>
                 Add Size {selectedSize} to Cart
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="flex-1 border-2 px-8 py-6 rounded-xl"
-              >
+              <Button size="lg" variant="outline" className="flex-1 border-2 border-foreground/20">
                 Learn More
               </Button>
             </div>
 
-            {/* Trust badges */}
             <div className="flex flex-wrap gap-6 pt-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-blue-600" />
+                <Shield className="h-4 w-4 text-primary" />
                 <span>30-day returns</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-green-600" />
+                <Check className="h-4 w-4 text-sage" />
                 <span>Free shipping</span>
               </div>
               <div className="flex items-center gap-2">
-                <Heart className="w-4 h-4 text-red-600" />
+                <Heart className="h-4 w-4 text-crimson" />
                 <span>Lifetime warranty</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Benefits Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {benefits.map((benefit, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
-            >
-              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
-                <benefit.icon className="w-6 h-6 text-blue-600" />
+            <div key={index} className="rounded-lg border-2 border-foreground/15 bg-card p-6 shadow-sm">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-teal-tint">
+                <benefit.icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-lg text-foreground mb-2">{benefit.title}</h3>
+              <h3 className="mb-2 font-display text-lg font-bold text-foreground">{benefit.title}</h3>
               <p className="text-sm text-muted-foreground">{benefit.description}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

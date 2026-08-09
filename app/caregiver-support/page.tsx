@@ -29,16 +29,18 @@ export default function CaregiverSupportPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navigation />
-      <main className="flex-1 pt-32 pb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
-          <div className="flex flex-col items-center justify-center text-center">
-            <Construction className="w-16 h-16 text-blue-600 mb-4" />
-            <h1 className="text-4xl font-bold text-foreground mb-4">Caregiver Support</h1>
-            <div className="max-w-2xl">
-              <p className="text-xl text-muted-foreground mb-6">
-                Comprehensive support and wellness resources for dementia and Alzheimer's caregivers. Your mental health and well-being matter.
+      <main className="flex-1 pb-16 pt-32">
+        <div className="mx-auto flex h-full max-w-3xl items-center justify-center px-4 sm:px-6 lg:px-8">
+          <div className="w-full rounded-lg border-2 border-foreground/15 bg-card p-8 text-center shadow-sm sm:p-10">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-md bg-teal-tint text-primary">
+              <Construction className="h-7 w-7" />
+            </div>
+            <h1 className="font-display text-3xl font-extrabold text-foreground md:text-4xl">Caregiver Support</h1>
+            <div className="mt-6">
+              <p className="mb-6 text-xl text-muted-foreground">
+                Comprehensive support and wellness resources for dementia and Alzheimer&apos;s caregivers. Your mental health and well-being matter.
               </p>
-              <p className="text-lg text-muted-foreground mb-4">
+              <p className="mb-4 text-lg text-muted-foreground">
                 Access stress management techniques, self-care strategies, support group connections, and professional counseling resources designed specifically for dementia caregivers.
               </p>
               <p className="text-sm text-muted-foreground">

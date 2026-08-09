@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Archivo, Public_Sans } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 import { AppProviders } from '@/components/AppProviders'
 import { getSiteUrl } from '@/lib/site-url'
 
-const inter = Inter({ subsets: ['latin'] })
+const archivo = Archivo({ subsets: ['latin'], variable: '--font-display' })
+const publicSans = Public_Sans({ subsets: ['latin'], variable: '--font-body' })
 
 const siteUrl = getSiteUrl()
 
@@ -146,7 +147,33 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body className={inter.className}>
+      <body className={`${archivo.variable} ${publicSans.variable} font-sans`}>
+        {/*
+          THESIS: The search and its answer read like a trusted library card
+          catalog — a calm, orderly reference system, not a chatbot or
+          SaaS landing page.
+          OWN-WORLD: Ivory card-stock ground, neutral charcoal ink, one
+          committed deep-teal stamp-ink accent carrying the CTA/brand. Sage
+          is law for safe/tip states, crimson is law for urgent/caution
+          states — never decorative. Archivo for display/labels, Public
+          Sans for body. Small crisp radii; visible keyline borders frame
+          every card like an index card.
+          STORY: A stressed caregiver types one real situation, sees an
+          instant contents index (steps/guides/sources) before scrolling,
+          then a numbered instruction set with a bold ribbon for anything
+          urgent — filed and findable, the way a catalog card is.
+          FIRST VIEWPORT: Ivory ground, large charcoal headline, one
+          card-framed search field with a big teal submit square beneath
+          it, numbered compartment chips for popular searches/care paths.
+          One authored entrance motion (quart ease-out) reveals results —
+          restrained, not scattered.
+          FORM: Library-catalog precision — grounded candidate 3, seed key
+          8dd335dc, re-roll round 1 (user rejected the round-0 medication-
+          label/amber-brown direction as too brown, and its navy footer as
+          reading literally blue).
+          FINISH: unreviewed and undocumented is unfinished; this build ends
+          with the finish review, the verdict, and DESIGN.md
+        */}
         <AppProviders>{children}</AppProviders>
         <SpeedInsights />
       </body>

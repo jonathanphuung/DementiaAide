@@ -33,10 +33,10 @@ export default function WanderingPreventionPage() {
         <article>
           <header className="mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <Shield className="w-8 h-8 text-blue-600" />
-              <span className="text-sm text-blue-600 font-medium">Safety Topic</span>
+              <Shield className="w-8 h-8 text-primary" />
+              <span className="text-sm text-primary font-medium">Safety Topic</span>
             </div>
-            <h1 className="text-4xl font-bold text-foreground mb-4">
+            <h1 className="font-display text-4xl font-extrabold text-foreground mb-4">
               Wandering Prevention in Dementia: Complete Safety Guide
             </h1>
             <p className="text-xl text-muted-foreground">
@@ -45,19 +45,19 @@ export default function WanderingPreventionPage() {
           </header>
 
           <div className="prose prose-lg max-w-none">
-            <div className="bg-amber-50 border-l-4 border-amber-400 p-6 mb-8">
+            <div className="bg-crimson-tint border-2 border-crimson-border rounded-lg p-6 mb-8">
               <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle className="w-5 h-5 text-amber-600" />
-                <h3 className="text-lg font-semibold text-amber-800">Important Safety Notice</h3>
+                <AlertTriangle className="w-5 h-5 text-crimson" />
+                <h3 className="text-lg font-semibold text-crimson">Important Safety Notice</h3>
               </div>
-              <p className="text-amber-700">
+              <p className="text-foreground">
                 Wandering affects up to 60% of people with dementia. Having a safety plan and prevention strategies in place is crucial for protecting your loved one.
               </p>
             </div>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <MapPin className="w-6 h-6 text-blue-600" />
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 font-display text-foreground">
+                <MapPin className="w-6 h-6 text-primary" />
                 Understanding Wandering Behavior
               </h2>
               <p>
@@ -73,8 +73,8 @@ export default function WanderingPreventionPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Clock className="w-6 h-6 text-green-600" />
+              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2 font-display text-foreground">
+                <Clock className="w-6 h-6 text-sage" />
                 Prevention Strategies
               </h2>
               
@@ -98,7 +98,7 @@ export default function WanderingPreventionPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">Technology Solutions</h2>
+              <h2 className="text-2xl font-bold mb-4 font-display text-foreground">Technology Solutions</h2>
               
               <h3 className="text-xl font-semibold mb-3">GPS Tracking Devices</h3>
               <ul className="list-disc pl-6 mb-6">
@@ -117,9 +117,9 @@ export default function WanderingPreventionPage() {
               </ul>
             </section>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-              <h3 className="text-lg font-semibold text-blue-800 mb-3">Emergency Preparedness</h3>
-              <ul className="text-blue-700 space-y-2">
+            <div className="bg-teal-tint border-2 border-teal-border rounded-lg p-6 mb-8">
+              <h3 className="text-lg font-semibold text-primary mb-3">Emergency Preparedness</h3>
+              <ul className="text-foreground space-y-2">
                 <li>• Register with local police and Alzheimer's Association Safe Return program</li>
                 <li>• Keep recent photos and have emergency contact information readily available</li>
                 <li>• Teach neighbors and local businesses about your loved one's condition</li>
@@ -129,7 +129,7 @@ export default function WanderingPreventionPage() {
             </div>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Get Professional Help</h2>
+              <h2 className="text-2xl font-bold mb-4 font-display text-foreground">Get Professional Help</h2>
               <p className="mb-4">
                 If wandering becomes frequent or dangerous, consult with healthcare professionals who specialize in dementia care. They can help assess triggers, recommend modifications, and adjust care plans.
               </p>

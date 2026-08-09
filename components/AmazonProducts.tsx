@@ -30,7 +30,7 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
       whileHover={{ y: -4 }}
       className="h-full"
     >
-      <Card className="h-full hover:shadow-sm transition-all duration-300 border border-gray-200 group cursor-pointer"
+      <Card className="h-full hover:shadow-sm transition-colors border-2 border-foreground/15 hover:border-primary group cursor-pointer"
             onClick={handleProductClick}>
         <CardContent className="p-0 h-full flex flex-col">
           {/* Product Header */}
@@ -53,7 +53,7 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
           <div className="p-5 flex-1 flex flex-col justify-between">
             <div className="space-y-3">
               {/* Title */}
-              <h3 className="font-semibold text-base leading-snug line-clamp-3 group-hover:text-blue-600 transition-colors min-h-[4rem]">
+              <h3 className="font-semibold text-base leading-snug line-clamp-3 text-foreground group-hover:text-primary transition-colors min-h-[4rem]">
                 {product.title}
               </h3>
 
@@ -65,13 +65,13 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
                       key={i}
                       className={`w-3 h-3 ${
                         i < Math.floor(product.rating)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
+                          ? 'fill-primary text-primary'
+                          : 'text-muted-foreground/40'
                       }`}
                     />
                   ))}
                 </div>
-                <span className="text-xs text-gray-600">
+                <span className="text-xs text-muted-foreground">
                   {product.rating} ({product.reviewCount?.toLocaleString()})
                 </span>
               </div>
@@ -80,11 +80,11 @@ export function AmazonProductCard({ product, index }: AmazonProductCardProps) {
             {/* Price and CTA */}
             <div className="space-y-3 mt-3">
               <div className="flex items-baseline gap-2">
-                <span className="text-lg font-bold text-gray-900">
+                <span className="text-lg font-bold text-foreground">
                   {product.price}
                 </span>
                 {product.originalPrice && (
-                  <span className="text-sm text-gray-500 line-through">
+                  <span className="text-sm text-muted-foreground line-through">
                     {product.originalPrice}
                   </span>
                 )}
@@ -120,7 +120,7 @@ export function AmazonProducts({ products, loading, query }: AmazonProductsProps
     return (
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Recommended Products</h2>
+          <h2 className="font-display text-2xl font-extrabold text-foreground">Recommended Products</h2>
           <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
             Amazon
           </Badge>
@@ -146,14 +146,14 @@ export function AmazonProducts({ products, loading, query }: AmazonProductsProps
     return (
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">Recommended Products</h2>
+          <h2 className="font-display text-2xl font-extrabold text-foreground">Recommended Products</h2>
           <Badge variant="outline" className="bg-orange-50 text-orange-700 border-orange-200">
             Amazon
           </Badge>
         </div>
         
-        <div className="text-center py-8 text-muted-foreground bg-gray-50 rounded-lg">
-          <ShoppingCart className="w-12 h-12 mx-auto mb-4 text-gray-400" />
+        <div className="text-center py-8 text-muted-foreground bg-secondary/40 rounded-lg">
+          <ShoppingCart className="w-12 h-12 mx-auto mb-4 text-muted-foreground/50" />
           <p>No products found for this search.</p>
         </div>
       </section>
@@ -165,8 +165,8 @@ export function AmazonProducts({ products, loading, query }: AmazonProductsProps
       {/* Section Header */}
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-2xl font-semibold">Recommended Products</h2>
-          <p className="text-sm text-gray-600">
+          <h2 className="font-display text-2xl font-extrabold text-foreground">Recommended Products</h2>
+          <p className="text-sm text-muted-foreground">
             Carefully selected products to help with dementia care
           </p>
         </div>
@@ -192,7 +192,7 @@ export function AmazonProducts({ products, loading, query }: AmazonProductsProps
       </div>
 
       {/* Disclaimer */}
-      <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
+      <div className="text-xs text-muted-foreground bg-secondary/40 p-3 rounded-lg">
         <p>
           * As an Amazon Associate, DementiaAide earns from qualifying purchases. 
           Prices and availability subject to change. Product recommendations are based on relevance to dementia care needs.

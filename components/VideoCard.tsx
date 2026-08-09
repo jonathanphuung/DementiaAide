@@ -21,7 +21,7 @@ export function VideoCard({ video }: VideoCardProps) {
       whileHover={{ y: -4 }}
     >
       <Card
-        className="overflow-hidden cursor-pointer group"
+        className="overflow-hidden cursor-pointer group border-2 border-foreground/15 hover:border-primary transition-colors"
         onClick={handleClick}
       >
         {/* Thumbnail */}
@@ -38,7 +38,7 @@ export function VideoCard({ video }: VideoCardProps) {
 
         {/* Content */}
         <div className="p-4">
-          <h3 className="font-medium line-clamp-2 mb-1 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-medium text-foreground line-clamp-2 mb-1 group-hover:text-primary transition-colors">
             {video.title}
           </h3>
           <p className="text-sm text-muted-foreground">{video.channelTitle}</p>

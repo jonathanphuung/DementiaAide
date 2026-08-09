@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { CreditCard, Truck, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { CreditCard, Truck, ShieldCheck, ArrowLeft, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -23,16 +22,16 @@ export function CheckoutPage() {
       id: 'stripe',
       name: 'Credit/Debit Card',
       description: 'Visa, Mastercard, American Express',
-      icon: '💳',
-      color: 'bg-blue-500'
+      icon: CreditCard,
+      color: 'bg-primary',
     },
     {
       id: 'shop_pay',
       name: 'Shop Pay (Shopify Checkout)',
       description: 'Fast checkout through your Shopify store',
-      icon: '🛒',
-      color: 'bg-purple-500'
-    }
+      icon: ShoppingBag,
+      color: 'bg-sage',
+    },
   ];
 
   const handleCheckout = async (paymentMethod: string) => {
@@ -83,10 +82,10 @@ export function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h2>
-          <p className="text-gray-600 mb-6">Add some dementia care products to get started</p>
+          <h2 className="font-display text-2xl font-extrabold text-foreground mb-4">Your cart is empty</h2>
+          <p className="text-muted-foreground mb-6">Add some dementia care products to get started</p>
           <Button onClick={() => window.location.href = '/shop'}>
             Continue Shopping
           </Button>
@@ -96,18 +95,18 @@ export function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => window.history.back()}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold">Secure Checkout</h1>
+          <h1 className="font-display text-3xl font-extrabold text-foreground">Secure Checkout</h1>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -121,40 +120,42 @@ export function CheckoutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {paymentMethods.map((method) => (
-                  <motion.div
-                    key={method.id}
-                    whileHover={{ scale: 1.02 }}
-                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
-                      selectedPayment === method.id 
-                        ? 'border-blue-500 bg-blue-50' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                    onClick={() => setSelectedPayment(method.id)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full ${method.color} flex items-center justify-center text-white text-lg`}>
-                          {method.icon}
+                {paymentMethods.map((method) => {
+                  const Icon = method.icon;
+                  return (
+                    <div
+                      key={method.id}
+                      className={`p-4 border-2 rounded-lg cursor-pointer transition-colors ${
+                        selectedPayment === method.id
+                          ? 'border-primary bg-teal-tint'
+                          : 'border-foreground/15 hover:border-foreground/30'
+                      }`}
+                      onClick={() => setSelectedPayment(method.id)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-full ${method.color} flex items-center justify-center text-primary-foreground`}>
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">{method.name}</p>
+                            <p className="text-sm text-muted-foreground">{method.description}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium">{method.name}</p>
-                          <p className="text-sm text-gray-500">{method.description}</p>
-                        </div>
+                        <div className={`w-4 h-4 rounded-full border-2 ${
+                          selectedPayment === method.id
+                            ? 'bg-primary border-primary'
+                            : 'border-foreground/20'
+                        }`} />
                       </div>
-                      <div className={`w-4 h-4 rounded-full border-2 ${
-                        selectedPayment === method.id 
-                          ? 'bg-blue-500 border-blue-500' 
-                          : 'border-gray-300'
-                      }`} />
                     </div>
-                  </motion.div>
-                ))}
+                  );
+                })}
               </CardContent>
             </Card>
 
             {/* Security Badge */}
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <ShieldCheck className="w-4 h-4" />
               <span>256-bit SSL encrypted checkout</span>
             </div>
@@ -177,11 +178,11 @@ export function CheckoutPage() {
                         className="w-12 h-12 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <p className="font-medium text-sm">{item.title}</p>
+                        <p className="font-medium text-sm text-foreground">{item.title}</p>
                         {item.variant && (
-                          <p className="text-xs text-gray-500">{item.variant}</p>
+                          <p className="text-xs text-muted-foreground">{item.variant}</p>
                         )}
-                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                       </div>
                       <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
@@ -222,9 +223,9 @@ export function CheckoutPage() {
 
                 {/* Free Shipping Notice */}
                 {totalPrice < 50 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <p className="text-sm text-blue-800">
-                      💡 Add ${(50 - totalPrice).toFixed(2)} more for free shipping!
+                  <div className="bg-teal-tint border-2 border-teal-border rounded-lg p-3">
+                    <p className="text-sm text-primary">
+                      Add ${(50 - totalPrice).toFixed(2)} more for free shipping!
                     </p>
                   </div>
                 )}
@@ -239,7 +240,7 @@ export function CheckoutPage() {
                   {isProcessing ? 'Processing...' : `Complete Order - $${finalTotal.toFixed(2)}`}
                 </Button>
 
-                <p className="text-xs text-center text-gray-500">
+                <p className="text-xs text-center text-muted-foreground">
                   By completing your order, you agree to our Terms of Service and Privacy Policy.
                 </p>
               </CardContent>

@@ -122,11 +122,11 @@ function CartDrawer() {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-card shadow-2xl z-50 flex flex-col border-l-2 border-foreground/15"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="text-lg font-semibold">Shopping Cart ({cart.length})</h2>
+            <div className="flex items-center justify-between p-4 border-b-2 border-foreground/15">
+              <h2 className="font-display text-lg font-bold text-foreground">Shopping Cart ({cart.length})</h2>
               <Button
                 variant="ghost"
                 size="sm"
@@ -149,7 +149,7 @@ function CartDrawer() {
                     <motion.div
                       key={item.variantId}
                       layout
-                      className="flex gap-3 p-3 border rounded-lg"
+                      className="flex gap-3 p-3 border-2 border-foreground/15 rounded-md"
                     >
                       <img
                         src={item.image}
@@ -157,7 +157,7 @@ function CartDrawer() {
                         className="w-16 h-16 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium text-sm">{item.title}</h3>
+                        <h3 className="font-medium text-sm text-foreground">{item.title}</h3>
                         {item.variant && (
                           <p className="text-sm text-muted-foreground">{item.variant}</p>
                         )}
@@ -180,12 +180,12 @@ function CartDrawer() {
                             </Button>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="text-sm font-medium text-foreground">${(item.price * item.quantity).toFixed(2)}</p>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => removeFromCart(item.variantId)}
-                              className="text-red-500 h-auto p-0 text-xs"
+                              className="text-crimson h-auto p-0 text-xs"
                             >
                               Remove
                             </Button>
@@ -200,10 +200,10 @@ function CartDrawer() {
 
             {/* Footer */}
             {cart.length > 0 && (
-              <div className="border-t p-4 space-y-4">
+              <div className="border-t-2 border-foreground/15 p-4 space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="font-semibold">Total:</span>
-                  <span className="font-semibold text-lg">${totalPrice.toFixed(2)}</span>
+                  <span className="font-semibold text-foreground">Total:</span>
+                  <span className="font-semibold text-lg text-foreground">${totalPrice.toFixed(2)}</span>
                 </div>
                 <Button
                   onClick={handleCheckout}
